@@ -1,68 +1,63 @@
-/* 基础与大气布局 */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: #fff; overflow-x: hidden; }
+/* 风格：美国主流电商极简主义 */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Arial, sans-serif; }
 
-.announcement-bar { 
+.top-bar { 
     background: #000; color: #fff; text-align: center; 
     padding: 12px; font-size: 11px; letter-spacing: 2px;
 }
 
-/* 横向宽屏导航 */
-.wide-header { 
-    width: 100%; border-bottom: 1px solid #eee; background: #fff; 
-    position: sticky; top: 0; z-index: 1000; 
+/* 宽屏导航 */
+.main-header { 
+    width: 100%; border-bottom: 1px solid #eee; padding: 40px 60px; text-align: center; 
 }
-.header-main { 
-    max-width: 1800px; margin: 0 auto; display: flex; 
-    justify-content: space-between; align-items: center; padding: 25px 50px; 
+.logo-section h1 { font-size: 34px; letter-spacing: 4px; margin-bottom: 5px; }
+.logo-section p { font-size: 14px; color: #888; letter-spacing: 3px; margin-bottom: 30px; }
+
+.mega-nav { display: flex; justify-content: center; gap: 45px; }
+.nav-item { position: relative; padding-bottom: 10px; }
+.nav-item > a { text-decoration: none; color: #000; font-size: 13px; font-weight: 500; letter-spacing: 1px; }
+.sale-link { color: #d0021b !important; }
+
+/* 优雅的下拉菜单 */
+.dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    background: #fff; border: 1px solid #f0f0f0; padding: 20px 0; min-width: 180px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); z-index: 100;
 }
-
-.brand-logo { font-family: 'Playfair Display', serif; font-size: 32px; letter-spacing: 2px; }
-
-/* 二级子目录 (Mega Menu) 逻辑 */
-.mega-menu-nav { display: flex; gap: 35px; }
-.menu-item { position: relative; padding: 10px 0; }
-.menu-item a { text-decoration: none; color: #1a1a1a; font-size: 13px; font-weight: 500; letter-spacing: 1px; }
-.menu-item .sale { color: #d0021b; }
-
-.submenu { 
-    display: none; position: absolute; top: 100%; left: 0; 
-    background: #fff; border: 1px solid #f0f0f0; padding: 30px; 
-    min-width: 450px; display: flex; gap: 40px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+.dropdown-menu a { 
+    display: block; color: #666; padding: 10px 30px; 
+    text-decoration: none; font-size: 12px; text-align: left;
 }
-/* 初始隐藏 */
-.menu-item .submenu { display: none; }
-.menu-item:hover .submenu { display: flex; }
+.dropdown-menu a:hover { background: #f9f9f9; color: #000; }
+.nav-item:hover .dropdown-menu { display: block; }
 
-.submenu-column h4 { font-size: 12px; margin-bottom: 15px; border-bottom: 1px solid #000; padding-bottom: 5px; }
-.submenu-column a { display: block; font-size: 12px; color: #666; padding: 5px 0; font-weight: 400; }
-
-/* 全宽横幅 */
-.hero-fullwidth { 
-    width: 100%; height: 70vh; background: #f9f9f9; 
-    display: flex; align-items: center; padding-left: 100px;
-    /* 建议在此处放一张欧美街拍大图背景 */
+/* 横向横幅 */
+.hero-wide { 
+    height: 480px; background: #f8f8f8; /* 建议后期替换为欧美模特背景大图 */
+    display: flex; align-items: center; justify-content: center; text-align: center; margin-bottom: 60px;
 }
-.hero-overlay h2 { font-family: 'Playfair Display', serif; font-size: 64px; margin-bottom: 15px; }
-.hero-overlay p { font-size: 18px; color: #444; margin-bottom: 30px; }
-.hero-btns { display: flex; gap: 20px; }
-.btn-dark { background: #000; color: #fff; padding: 15px 40px; text-decoration: none; font-size: 13px; }
-.btn-outline { border: 1px solid #000; padding: 15px 40px; text-decoration: none; font-size: 13px; color: #000; }
+.hero-inner h2 { font-size: 56px; letter-spacing: 6px; margin-bottom: 15px; }
+.hero-inner p { font-size: 16px; color: #666; font-weight: 300; }
 
-/* 核心网格内容区 */
-.content-wrapper { max-width: 1800px; margin: 80px auto; padding: 0 50px; }
-.section-header { text-align: center; margin-bottom: 60px; }
-.section-header h3 { font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 10px; }
-.section-header p { color: #888; font-size: 14px; font-style: italic; }
-
-.product-grid-horizontal { 
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px 25px; 
+/* 全宽自适应网格 */
+.full-container { max-width: 1750px; margin: 0 auto; padding: 0 60px 100px; }
+.list-info { 
+    display: flex; justify-content: space-between; align-items: flex-end; 
+    border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 40px; 
 }
-.card { transition: 0.4s; }
-.card .img-wrapper { background: #fcfcfc; overflow: hidden; }
-.card img { width: 100%; display: block; transition: 0.6s; filter: grayscale(10%); }
-.card:hover img { transform: scale(1.03); filter: grayscale(0%); }
-.card .info { padding-top: 15px; }
-.card h5 { font-size: 11px; letter-spacing: 1px; margin-bottom: 5px; }
-.card span { font-size: 11px; color: #888; }
+.list-info h3 { font-size: 20px; letter-spacing: 2px; }
+.list-info span { font-size: 12px; color: #888; }
+
+.product-grid { 
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 50px 30px; 
+}
+.p-card { cursor: pointer; }
+.p-card img { width: 100%; height: auto; margin-bottom: 15px; transition: opacity 0.3s; }
+.p-card:hover img { opacity: 0.8; }
+.p-card p { font-size: 11px; font-weight: bold; margin-bottom: 5px; letter-spacing: 0.5px; }
+.p-card span { font-size: 11px; color: #888; }
+
+/* 响应式：屏幕变小时自动调整列数 */
+@media (max-width: 1400px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
