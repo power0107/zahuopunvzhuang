@@ -3,147 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GENERAL STORE - WINTER COLLECTION 2025</title>
+    <title>个人图片展示</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
             padding: 20px;
             background-color: #f5f5f5;
+            margin: 0;
         }
-        header {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 20px;
+        h1 {
+            text-align: center;
+            color: #333;
             margin-bottom: 30px;
         }
-        nav a {
-            margin-right: 15px;
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-        }
-        .logo {
-            text-align: center;
-            margin: 40px 0;
-        }
-        .logo h1 {
-            font-size: 48px;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-        .logo p {
-            font-size: 16px;
-            color: #777;
-            margin-top: 10px;
-        }
-        .product-grid {
+        .img-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
-        .product-item img {
+        .img-item img {
             width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 10px;
+            height: 250px;
+            object-fit: cover; /* 保持图片比例，裁剪多余部分 */
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        .product-item p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        .price {
-            color: #e63946;
-            font-weight: bold;
+        .img-item p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href=" ">SALE</a >
-            <a href="#">NEW</a >
-            <a href="#">DESIGNERS</a >
-            <a href="#">CLOTHING</a >
-            <a href="#">DRESSES</a >
-            <a href="#">SHOES</a >
-            <a href="#">BAGS</a >
-            <a href="#">ACCESSORIES</a >
-            <a href="#">BEAUTY</a >
-            <a href="#">HOME</a >
-            <input type="text" placeholder="Search..." style="margin-left: 20px; padding: 5px;">
-            <a href="#">SIGN IN</a >
-        </nav>
-        <div class="logo">
-            <h1>GENERAL STORE</h1>
-            <p>WINTER COLLECTION 2025</p >
+    <h1>个人图片展示</h1>
+    <div class="img-container">
+        <div class="img-item">
+            < img src="images/product1" alt="图片1">
+            <p>product1</p >
         </div>
-    </header>
-    <main>
-        <p>12 ITEMS FOUND</p >
-        <div class="product-grid">
-            <div class="product-item">
-                < img src="images/product1.jpg" alt="白色镂空针织衫">
-                <p>白色镂空针织衫</p >
-                <p class="price">$169.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product2.jpg" alt="长款白色羽绒服">
-                <p>长款白色羽绒服</p >
-                <p class="price">$459.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product3.jpg" alt="短款藏蓝色羽绒服">
-                <p>短款藏蓝色羽绒服</p >
-                <p class="price">$399.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product4.jpg" alt="宽松白色羽绒服">
-                <p>宽松白色羽绒服</p >
-                <p class="price">$429.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product5.jpg" alt="米白拼接羽绒服">
-                <p>米白拼接羽绒服</p >
-                <p class="price">$369.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product6.jpg" alt="蓝色漏腰蕾丝针织衫">
-                <p>蓝色漏腰蕾丝针织衫</p >
-                <p class="price">$189.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product7.jpg" alt="蓝色漏肩针织开衫">
-                <p>蓝色漏肩针织开衫</p >
-                <p class="price">$199.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product8.jpg" alt="浅蓝色针织开衫">
-                <p>浅蓝色针织开衫</p >
-                <p class="price">$189.00</p >
-            </div>
-            <div class="product-item">
-                <p>蓝色镂空针织开衫</p >
-                <p class="price">$189.00</p >
-                < img src="images/product9.jpg" alt="蓝色镂空针织开衫">
-            </div>
-            <div class="product-item">
-                < img src="images/product10.jpg" alt="浅灰色短款羽绒服">
-                <p>浅灰色短款羽绒服</p >
-                <p class="price">$329.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product11.jpg" alt="藏色V领针织衫">
-                <p>藏色V领针织衫</p >
-                <p class="price">$179.00</p >
-            </div>
-            <div class="product-item">
-                < img src="images/product12.jpg" alt="冬季新款慵懒风针织衫">
-                <p>冬季新款慵懒风针织衫</p >
-                <p class="price">$169.00</p >
-            </div>
+        <div class="img-item">
+            < img src="images/product2" alt="图片2">
+            <p>product2</p >
         </div>
-    </main>
+        <div class="img-item">
+            < img src="images/product3" alt="图片3">
+            <p>product3</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product4" alt="图片4">
+            <p>product4</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product5" alt="图片5">
+            <p>product5</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product6" alt="图片6">
+            <p>product6</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product7" alt="图片7">
+            <p>product7</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product8" alt="图片8">
+            <p>product8</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product9" alt="图片9">
+            <p>product9</p >
+        </div>
+        <div class="img-item">
+            < img src="images/product10" alt="图片10">
+            <p>product10</p >
+        </div>
+    </div>
 </body>
 </html>
