@@ -3,91 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>杂货铺女装 | THE GROCERY STORE WOMEN</title>
+    <title>杂货铺女装 | THE GROCERY STORE</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="top-promo">首单享 9 折优惠 | 全场满 $199 免运费</div>
+    <div class="top-bar">FREE 2-DAY SHIPPING & RETURNS | 10% OFF YOUR FIRST ORDER</div>
 
-    <header class="navbar">
-        <div class="logo-container">
-            <h1 class="brand-logo">THE GROCERY STORE</h1>
-            <p class="brand-sub">杂货铺女装</p>
-        </div>
+    <header>
+        <div class="logo">杂货铺女装 <small>THE GROCERY STORE</small></div>
         
-        <nav class="nav-links">
+        <nav class="main-nav">
             <div class="dropdown">
-                <a href="#" class="dropbtn">新品 NEW</a>
+                <a href="#">SALE</a>
+                <div class="dropdown-content">
+                    <a href="#">五折优惠</a>
+                    <a href="#">清仓特卖</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#">NEW</a>
                 <div class="dropdown-content">
                     <a href="#">本周上新</a>
-                    <a href="#">趋势周报</a>
-                    <a href="#">独家发售</a>
+                    <a href="#">趋势发布</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn">服装 CLOTHING</a>
+                <a href="#">DESIGNERS</a>
                 <div class="dropdown-content">
-                    <a href="#">外套 & 羽绒服</a>
-                    <a href="#">针织衫 & 毛衣</a>
-                    <a href="#">上装 & 衬衫</a>
-                    <a href="#">裤装 & 牛仔</a>
+                    <a href="#">大牌合作</a>
+                    <a href="#">独立设计师</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn">裙装 DRESSES</a>
+                <a href="#" class="active">CLOTHING</a>
+                <div class="dropdown-content">
+                    <a href="#">外套系列</a>
+                    <a href="#">针织衫</a>
+                    <a href="#">衬衫</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#">DRESSES</a>
                 <div class="dropdown-content">
                     <a href="#">连衣裙</a>
-                    <a href="#">半身裙</a>
-                    <a href="#">礼服系列</a>
+                    <a href="#">礼服裙</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="dropbtn">配饰 ACCESSORIES</a>
+                <a href="#">SHOES</a>
                 <div class="dropdown-content">
-                    <a href="#">包袋</a>
-                    <a href="#">首饰</a>
-                    <a href="#">围巾 & 帽子</a>
+                    <a href="#">靴子</a>
+                    <a href="#">平底鞋</a>
                 </div>
             </div>
-            <a href="#" class="sale-link">折扣 SALE</a>
+            <div class="dropdown">
+                <a href="#">BAGS</a>
+                <div class="dropdown-content">
+                    <a href="#">斜挎包</a>
+                    <a href="#">手提袋</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#">ACCESSORIES</a>
+                <div class="dropdown-content">
+                    <a href="#">珠宝</a>
+                    <a href="#">围巾</a>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <section class="collection-intro">
-        <div class="intro-text">
-            <h2>秋冬精选系列</h2>
-            <p>杂货铺女装致力于为现代女性提供高质感的日常着装。本季我们精选了高品质羊绒、轻盈羽绒以及手工针织系列，将简约美学与实用功能主义完美结合，打造属于您的胶囊衣橱。</p>
-        </div>
-    </section>
-
-    <main class="main-container">
-        <aside class="filter-sidebar">
-            <div class="filter-group">
-                <h4>所有分类</h4>
-                <ul>
-                    <li class="active">全部服装 (10)</li>
-                    <li>羽绒服系列</li>
-                    <li>手工毛衣</li>
-                    <li>阔腿裤装</li>
-                </ul>
-            </div>
-            <div class="filter-group">
-                <h4>价格区间</h4>
-                <div class="price-range">
-                    <input type="checkbox"> $50 - $100<br>
-                    <input type="checkbox"> $100 - $200
-                </div>
-            </div>
+    <main class="container">
+        <aside class="sidebar">
+            <h3>CATEGORY</h3>
+            <ul>
+                <li class="active">ALL CLOTHING</li>
+                <li>ACTIVEWEAR</li>
+                <li>DENIM</li>
+                <li>DRESSES</li>
+                <li>JACKETS & COATS</li>
+                <li>SWEATERS & KNITS</li>
+                <li>TOPS</li>
+            </ul>
         </aside>
 
-        <section class="product-section">
+        <section class="products">
+            <div class="filter-bar">
+                <span>10 ITEMS FOUND</span>
+                <div class="sort">SORT BY: FEATURED ▾</div>
+            </div>
+
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="img-box">
-                        <img src="images/product1.jpg" alt="条纹马儿针织衫">
-                        <div class="quick-add">快速加入购物车</div>
-                    </div>
-                    <p class="p-brand">THE GROCERY STORE</p>
-                    <p class="p-name">条纹小马刺绣针织衫</p
+                    <img src="images/product1.jpg" alt="Product 1">
+                    <p>STRIPED HORSE KNIT</p>
+                    <span class="price">$128.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product2.jpg" alt="Product 2">
+                    <p>NAVY TEXTURED V-NECK</p>
+                    <span class="price">$95.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product3.jpg" alt="Product 3">
+                    <p>BROWN HOODED PUFFER</p>
+                    <span class="price">$210.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product4.jpg" alt="Product 4">
+                    <p>LIGHT GREY SHORT PUFFER</p>
+                    <span class="price">$185.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product5.jpg" alt="Product 5">
+                    <p>SKY BLUE CARDIGAN</p>
+                    <span class="price">$88.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product6.jpg" alt="Product 6">
+                    <p>BLUE PANDA SWEATER</p>
+                    <span class="price">$110.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product7.jpg" alt="Product 7">
+                    <p>WHITE OVERSIZED PUFFER</p>
+                    <span class="price">$195.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product8.jpg" alt="Product 8">
+                    <p>LONG WHITE PUFFER</p>
+                    <span class="price">$245.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product9.jpg" alt="Product 9">
+                    <p>WHITE LACE KNIT</p>
+                    <span class="price">$79.00</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/product10.jpg" alt="Product 10">
+                    <p>PINK TURTLENECK SWEATER</p>
+                    <span class="price">$92.00</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
