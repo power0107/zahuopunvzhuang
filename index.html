@@ -1,52 +1,181 @@
-<div class="product-grid">
-    <div class="product-card">
-        <img src="images/product1.jpg" alt="Striped Horse Knit">
-        <p>STRIPED HORSE EMBROIDERY KNIT</p>
-        <span class="price">$128.00</span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE LUXE BOUTIQUE | Shop Women's Fashion</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="top-announcement">
+        <p>FREE SHIPPING ON ALL ORDERS | EASY RETURNS</p>
     </div>
-    <div class="product-card">
-        <img src="images/product2.jpg" alt="Navy Textured V-Neck">
-        <p>NAVY TEXTURED V-NECK SWEATER</p>
-        <span class="price">$95.00</span>
+
+    <header class="main-header">
+        <div class="header-top">
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button>&#128269;</button> </div>
+            <div class="brand-logo">THE LUXE BOUTIQUE</div>
+            <div class="user-actions">
+                <a href="#">SIGN IN</a>
+                <a href="#">MY ACCOUNT</a>
+                <a href="#">WISHLIST (0)</a>
+                <a href="#">CART (0)</a>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <a href="#" class="nav-item">NEW ARRIVALS</a>
+            <a href="#" class="nav-item">DRESSES</a>
+            <a href="#" class="nav-item active">CLOTHING</a>
+            <a href="#" class="nav-item">SHOES</a>
+            <a href="#" class="nav-item">BAGS</a>
+            <a href="#" class="nav-item">ACCESSORIES</a>
+            <a href="#" class="nav-item">SALE</a>
+            <a href="#" class="nav-item">DESIGNERS</a>
+        </nav>
+    </header>
+
+    <section class="hero-banner">
+        <div classs="hero-content">
+            <h2>ELEVATE YOUR STYLE</h2>
+            <h1>DISCOVER OUR LATEST COLLECTION</h1>
+            <a href="#" class="shop-now-btn">SHOP NOW</a>
+        </div>
+    </section>
+
+    <div class="page-breadcrumb">
+        HOME / CLOTHING
     </div>
-    <div class="product-card">
-        <img src="images/product3.jpg" alt="Brown Hooded Puffer">
-        <p>BROWN HOODED PUFFER JACKET</p>
-        <span class="price">$210.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product4.jpg" alt="Light Grey Short Puffer">
-        <p>LIGHT GREY SHORT PUFFER</p>
-        <span class="price">$185.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product5.jpg" alt="Blue Slim Cardigan">
-        <p>SKY BLUE SLIM RIBBED CARDIGAN</p>
-        <span class="price">$88.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product6.jpg" alt="Blue Panda Sweater">
-        <p>BLUE PANDA INTARSIA SWEATER</p>
-        <span class="price">$110.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product7.jpg" alt="White Oversized Puffer">
-        <p>WHITE OVERSIZED PUFFER JACKET</p>
-        <span class="price">$195.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product8.jpg" alt="Long White Puffer">
-        <p>LONG WHITE BELTED PUFFER</p>
-        <span class="price">$245.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product9.jpg" alt="White Lace Knit">
-        <p>WHITE LACE HOLLOW KNIT TOP</p>
-        <span class="price">$79.00</span>
-    </div>
-    <div class="product-card">
-        <img src="images/product10.jpg" alt="Pink Turtleneck">
-        <p>PINK RIBBED TURTLENECK SWEATER</p>
-        <span class="price">$92.00</span>
-    </div>
-</div>
+
+    <main class="main-content-area">
+        <aside class="sidebar">
+            <h3>SHOP BY CATEGORY</h3>
+            <ul>
+                <li class="active"><a href="#">ALL CLOTHING</a></li>
+                <li><a href="#">DRESSES</a></li>
+                <li><a href="#">TOPS & BLOUSES</a></li>
+                <li><a href="#">SWEATERS & KNITS</a></li>
+                <li><a href="#">JACKETS & COATS</a></li>
+                <li><a href="#">PANTS</a></li>
+                <li><a href="#">SKIRTS</a></li>
+                <li><a href="#">DENIM</a></li>
+                <li><a href="#">ACTIVEWEAR</a></li>
+                <li><a href="#">LOUNGEWEAR</a></li>
+            </ul>
+
+            <h3>FILTER BY</h3>
+            <div class="filter-section">
+                <h4>SIZE</h4>
+                </div>
+            <div class="filter-section">
+                <h4>COLOR</h4>
+                </div>
+        </aside>
+
+        <section class="product-listing">
+            <div class="listing-header">
+                <span class="item-count">10 ITEMS FOUND</span>
+                <div class="sort-options">
+                    <label for="sort-by">SORT BY:</label>
+                    <select id="sort-by">
+                        <option value="featured">FEATURED</option>
+                        <option value="newest">NEWEST</option>
+                        <option value="price-asc">PRICE: LOW TO HIGH</option>
+                        <option value="price-desc">PRICE: HIGH TO LOW</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="images/product1.jpg" alt="Striped Horse Embroidery Knit">
+                    <p class="product-name">STRIPED HORSE EMBROIDERY KNIT</p>
+                    <p class="product-price">$128.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product2.jpg" alt="Navy Textured V-Neck Sweater">
+                    <p class="product-name">NAVY TEXTURED V-NECK SWEATER</p>
+                    <p class="product-price">$95.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product3.jpg" alt="Brown Hooded Puffer Jacket">
+                    <p class="product-name">BROWN HOODED PUFFER JACKET</p>
+                    <p class="product-price">$210.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product4.jpg" alt="Light Grey Short Puffer Jacket">
+                    <p class="product-name">LIGHT GREY SHORT PUFFER JACKET</p>
+                    <p class="product-price">$185.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product5.jpg" alt="Sky Blue Slim Ribbed Cardigan">
+                    <p class="product-name">SKY BLUE SLIM RIBBED CARDIGAN</p>
+                    <p class="product-price">$88.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product6.jpg" alt="Blue Panda Intarsia Sweater">
+                    <p class="product-name">BLUE PANDA INTARSIA SWEATER</p>
+                    <p class="product-price">$110.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product7.jpg" alt="White Oversized Puffer Jacket">
+                    <p class="product-name">WHITE OVERSIZED PUFFER JACKET</p>
+                    <p class="product-price">$195.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product8.jpg" alt="Long White Belted Puffer Coat">
+                    <p class="product-name">LONG WHITE BELTED PUFFER COAT</p>
+                    <p class="product-price">$245.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product9.jpg" alt="White Lace Hollow Knit Top">
+                    <p class="product-name">WHITE LACE HOLLOW KNIT TOP</p>
+                    <p class="product-price">$79.00</p>
+                </div>
+                <div class="product-card">
+                    <img src="images/product10.jpg" alt="Pink Ribbed Turtleneck Sweater">
+                    <p class="product-name">PINK RIBBED TURTLENECK SWEATER</p>
+                    <p class="product-price">$92.00</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-sections">
+            <div class="footer-col">
+                <h4>CUSTOMER SERVICE</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Order Status</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>ABOUT US</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Store Locator</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>CONNECT</h4>
+                <p>Follow us on:</p>
+                <div class="social-icons">
+                    <a href="#">FB</a> <a href="#">IG</a> <a href="#">TW</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 THE LUXE BOUTIQUE. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
