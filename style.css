@@ -1,18 +1,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Arial, sans-serif; }
 body { background: #fff; color: #000; overflow-x: hidden; }
 
-.top-bar { background: #000; color: #fff; text-align: center; padding: 12px; font-size: 11px; letter-spacing: 2px; }
+.top-announcement { background: #000; color: #fff; text-align: center; padding: 12px; font-size: 11px; letter-spacing: 2px; }
 
-/* 大气导航 */
+/* 横屏头部 */
 .main-header { width: 100%; border-bottom: 1px solid #eee; padding: 40px 60px; text-align: center; }
 .logo-area h1 { font-size: 34px; letter-spacing: 5px; margin-bottom: 5px; }
 .logo-area p { font-size: 14px; color: #888; letter-spacing: 3px; margin-bottom: 35px; }
 
+/* 导航与三级子目录 */
 .mega-nav { display: flex; justify-content: center; gap: 45px; }
 .nav-item { position: relative; padding-bottom: 15px; }
-.nav-item > a { text-decoration: none; color: #000; font-size: 13px; font-weight: 500; letter-spacing: 1px; }
+.nav-item > a { text-decoration: none; color: #1a1a1a; font-size: 13px; font-weight: 500; letter-spacing: 1px; }
+.sale-tag { color: #d0021b !important; }
 
-/* 三级目录 Mega Menu */
 .mega-menu {
     display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
     background: #fff; border: 1px solid #f2f2f2; padding: 30px; min-width: 550px;
@@ -27,22 +28,27 @@ body { background: #fff; color: #000; overflow-x: hidden; }
 .menu-display img { width: 120px; height: 160px; object-fit: cover; margin-bottom: 10px; }
 .menu-display span { display: block; font-size: 10px; font-weight: bold; }
 
-/* 商品网格布局 */
+/* 35张图网格容器 */
 .wide-container { max-width: 1800px; margin: 60px auto; padding: 0 60px 100px; }
-.grid-header { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 45px; display: flex; justify-content: space-between; align-items: flex-end; }
-.grid-header h3 { font-size: 20px; letter-spacing: 2px; }
+.section-info { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 45px; }
+.section-info h3 { font-size: 20px; letter-spacing: 2px; }
 
 .product-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 50px 30px; }
-.card { cursor: zoom-in; text-align: left; }
-.card img { width: 100%; height: auto; margin-bottom: 15px; transition: 0.3s; }
-.card:hover img { opacity: 0.8; }
-.card p { font-size: 11px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-.card span { font-size: 11px; color: #888; }
+.product-card { cursor: zoom-in; text-align: left; }
+.product-card img { width: 100%; height: auto; margin-bottom: 15px; transition: 0.3s; background-color: #fcfcfc; }
+.product-card:hover img { opacity: 0.8; }
+.product-card p { font-size: 11px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+.product-card span { font-size: 11px; color: #888; }
 
-/* 最大化遮罩 */
+/* 图片最大化 Lightbox */
 .lightbox {
     display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
     background: rgba(255,255,255,0.95); justify-content: center; align-items: center;
 }
-.lightbox-img { max-height: 90vh; max-width: 90vw; }
+.lightbox-img { max-height: 90vh; max-width: 90vw; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
 .close-btn { position: absolute; top: 30px; right: 50px; font-size: 40px; cursor: pointer; }
+
+/* 响应式排版 */
+@media (max-width: 1400px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
