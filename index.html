@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div class="top-announcement">NEW SEASON ARRIVALS | FREE GLOBAL SHIPPING ON ORDERS OVER $200</div>
+    <div class="top-announcement">NEW SEASON ARRIVALS | 35 EXCLUSIVE PIECES | GLOBAL SHIPPING</div>
 
     <header class="main-header">
         <div class="logo-area">
@@ -19,79 +19,72 @@
         <nav class="mega-nav">
             <div class="nav-item">
                 <a href="#">CLOTHING</a>
-                <div class="dropdown">
-                    <a href="#">New Arrivals</a>
-                    <a href="#">Knits & Sweaters</a>
-                    <a href="#">Jackets & Coats</a>
-                    <a href="#">Denim & Pants</a>
+                <div class="dropdown mega-menu">
+                    <div class="menu-column">
+                        <h4>TOPS</h4>
+                        <a href="#">Knits</a>
+                        <a href="#">Shirts</a>
+                    </div>
+                    <div class="menu-column">
+                        <h4>OUTERWEAR</h4>
+                        <a href="#">Coats</a>
+                        <a href="#">Puffers</a>
+                    </div>
+                    <div class="menu-display">
+                        <img src="images/product1.jpg" alt="Cloth Preview">
+                        <span>NEW IN: KNITWEAR</span>
+                    </div>
                 </div>
             </div>
-            <div class="nav-item">
-                <a href="#">DRESSES</a>
-                <div class="dropdown">
-                    <a href="#">Maxi & Midi</a>
-                    <a href="#">Cocktail & Party</a>
-                    <a href="#">Mini Dresses</a>
-                </div>
-            </div>
+
             <div class="nav-item">
                 <a href="#">SHOES</a>
-                <div class="dropdown">
-                    <a href="#">Ankle Boots</a>
-                    <a href="#">Knee High Boots</a>
-                    <a href="#">Heeled Sandals</a>
-                    <a href="#">Leather Loafers</a>
-                    <a href="#">Designer Sneakers</a>
+                <div class="dropdown mega-menu">
+                    <div class="menu-column">
+                        <h4>BOOTS</h4>
+                        <a href="#">Ankle</a>
+                        <a href="#">Over-knee</a>
+                    </div>
+                    <div class="menu-display">
+                        <img src="images/product4.jpg" alt="Shoes Preview">
+                        <span>SEASONAL BOOTS</span>
+                    </div>
                 </div>
             </div>
+
             <div class="nav-item">
                 <a href="#">BAGS</a>
-                <div class="dropdown">
-                    <a href="#">Shoulder Bags</a>
-                    <a href="#">Crossbody Bags</a>
-                    <a href="#">Tote Bags</a>
-                    <a href="#">Clutches</a>
+                <div class="dropdown mega-menu">
+                    <div class="menu-column">
+                        <h4>COLLECTION</h4>
+                        <a href="#">Totes</a>
+                        <a href="#">Clutches</a>
+                    </div>
+                    <div class="menu-display">
+                        <img src="images/product3.jpg" alt="Bags Preview">
+                        <span>IT BAGS</span>
+                    </div>
                 </div>
             </div>
-            <div class="nav-item">
-                <a href="#">ACCESSORIES</a>
-                <div class="dropdown">
-                    <a href="#">Fine Jewelry</a>
-                    <a href="#">Scarves & Belts</a>
-                    <a href="#">Sunglasses</a>
-                </div>
-            </div>
+            
             <div class="nav-item"><a href="#" class="sale-tag">SALE</a></div>
         </nav>
     </header>
 
-    <section class="hero-banner">
-        <div class="hero-text">
-            <h2>THE MODERN EDIT</h2>
-            <p>呈现欧美极简美学，打造 35 款本季必入单品</p>
-        </div>
-    </section>
-
     <main class="content-wrapper">
         <div class="section-title">
-            <h3>NEW ARRIVALS</h3>
-            <span>35 ITEMS FOUND</span>
+            <h3>SEASONAL EDIT</h3>
+            <span>35 ITEMS TOTAL</span>
         </div>
 
-        <div class="product-grid">
-            <div class="product-card"><img src="images/product1.jpg"><div class="info"><p>STRIPED HORSE KNIT</p><span>$128.00</span></div></div>
-            <div class="product-card"><img src="images/product2.jpg"><div class="info"><p>TEXTURED V-NECK</p><span>$95.00</span></div></div>
-            <div class="product-card"><img src="images/product3.jpg"><div class="info"><p>HOODED PUFFER</p><span>$210.00</span></div></div>
-            <div class="product-card"><img src="images/product4.jpg"><div class="info"><p>SHORT PUFFER</p><span>$185.00</span></div></div>
-            <div class="product-card"><img src="images/product5.jpg"><div class="info"><p>RIBBED CARDIGAN</p><span>$88.00</span></div></div>
-            <div class="product-card"><img src="images/product6.jpg"><div class="info"><p>PANDA SWEATER</p><span>$110.00</span></div></div>
-            <div class="product-card"><img src="images/product7.jpg"><div class="info"><p>OVERSIZED PUFFER</p><span>$195.00</span></div></div>
-            <div class="product-card"><img src="images/product8.jpg"><div class="info"><p>BELTED WHITE COAT</p><span>$245.00</span></div></div>
-            <div class="product-card"><img src="images/product9.jpg"><div class="info"><p>LACE HOLLOW KNIT</p><span>$79.00</span></div></div>
-            <div class="product-card"><img src="images/product10.jpg"><div class="info"><p>PINK TURTLENECK</p><span>$92.00</span></div></div>
-
-            </div>
+        <div class="product-grid" id="productGrid"></div>
     </main>
 
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="lightboxImg">
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
