@@ -1,82 +1,71 @@
-/* 全局重置 */
+/* 基础重置 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版头：极致加大加粗 */
-.main-header {
-    padding: 60px 0 25px; 
+/* 头部样式：确保店名绝对可见 */
+.site-header {
+    padding: 60px 0 30px; 
     text-align: center;
     background: #fff;
+    width: 100%;
 }
-.est-tag { font-size: 11px; letter-spacing: 5px; color: #bbb; margin-bottom: 8px; font-weight: 400; }
+.since-tag { font-size: 11px; letter-spacing: 5px; color: #ccc; margin-bottom: 5px; }
 
-.brand-logo {
-    font-size: 90px; 
-    font-weight: 900; 
-    letter-spacing: -2px; 
+.logo-text {
+    font-size: 96px; /* 进一步加大 */
+    font-weight: 900; /* 极限加粗 */
+    letter-spacing: -2px; /* 紧凑字间距 */
     color: #000;
-    text-transform: none; 
-    line-height: 0.85;
-    white-space: nowrap;
+    line-height: 1;
+    text-transform: none; /* 保持首字母大写 */
 }
 
-/* 横幅区：极致无缝贴合 */
-.banner-hero {
+/* 横幅区：消除缝隙 */
+.hero-section {
     width: 100vw;
-    margin-top: 0;
-    position: relative;
     line-height: 0;
 }
+.hero-wrapper { position: relative; width: 100%; }
 .hero-image { width: 100%; height: auto; cursor: pointer; display: block; }
 
-/* 联系方式：小而精致 */
-.contact-tag-small {
+/* 微信号样式：极简 */
+.v-label-box {
     position: absolute;
     top: 15px;
     left: 15px;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.6);
     color: #fff;
-    padding: 5px 10px;
-    border-radius: 1px;
-}
-.v-label {
-    font-size: 11px; /* 调小字号 */
+    padding: 4px 10px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 /* 商品网格 */
-.main-content { padding: 5px; }
+.gallery-wrapper { padding: 5px; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px; 
+    gap: 5px; /* 保持适中缝隙 */
 }
-.img-box {
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background: #f7f7f7;
-    cursor: pointer;
-}
-.img-box img { width: 100%; height: 100%; object-fit: cover; }
+.grid-item { aspect-ratio: 3 / 4; overflow: hidden; background: #f7f7f7; cursor: pointer; }
+.grid-item img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 灯箱全屏 */
-.lightbox {
+/* 放大器样式 */
+.lightbox-overlay {
     display: none;
     position: fixed;
-    z-index: 9999;
+    z-index: 10000;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.95);
     justify-content: center; align-items: center;
 }
-.lightbox-content { max-width: 95%; max-height: 92%; object-fit: contain; }
-.close-btn { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 45px; cursor: pointer; font-weight: 100; }
+.lightbox-img { max-width: 95%; max-height: 90%; object-fit: contain; }
+.close-x { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 45px; cursor: pointer; }
 
 /* 手机端适配 */
 @media (max-width: 800px) {
-    .brand-logo { font-size: 42px; letter-spacing: -1px; }
-    .main-header { padding: 45px 0 15px; }
+    .logo-text { font-size: 42px; letter-spacing: -1px; }
+    .site-header { padding: 40px 0 20px; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
-    .contact-tag-small { top: 10px; left: 10px; padding: 4px 8px; }
-    .v-label { font-size: 10px; }
 }
