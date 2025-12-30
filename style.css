@@ -2,13 +2,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Montserrat', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版头：确保居中与紧凑 */
+/* 版头设计：确保居中与紧凑 */
 .main-header {
-    padding: 60px 0 0; /* 底部彻底取消间距 */
+    padding: 60px 0 0; /* 底部不留间距 */
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background: #fff;
     position: relative;
     z-index: 10;
@@ -22,15 +19,15 @@ body { font-family: 'Montserrat', sans-serif; background: #fff; color: #000; ove
 }
 
 .brand-logo {
-    font-size: 64px; /* 字号加大 */
-    font-weight: 500; /* 再粗一点点 */
-    letter-spacing: 20px; /* 宽间距 */
+    font-size: 52px; 
+    font-weight: 200; /* 极细体 */
+    letter-spacing: 25px; /* 间距进一步加大 */
     color: #000;
     text-transform: none; 
-    line-height: 1; /* 极窄行高，消除文字下方空白 */
-    /* 核心：通过左边距补偿末尾字母的 20px 间距，实现完美居中 */
-    margin-left: 20px; 
-    margin-bottom: 5px;
+    line-height: 1;
+    /* 关键：增加左侧内边距以抵消末尾字符的间距，实现视觉完美居中 */
+    padding-left: 25px; 
+    margin-bottom: 10px;
 }
 
 .contact-text {
@@ -39,13 +36,13 @@ body { font-family: 'Montserrat', sans-serif; background: #fff; color: #000; ove
     font-size: 14px;
     color: #000;
     letter-spacing: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-/* 横幅大图：极致贴合 */
+/* 横幅区：强制上移贴紧文字，消除所有白边 */
 .banner-hero {
     width: 100vw;
-    margin-top: -20px; /* 强制大图向上贴合文字 */
+    margin-top: -15px; /* 图片向上移动紧贴文字 */
     position: relative;
     line-height: 0;
 }
@@ -58,21 +55,30 @@ body { font-family: 'Montserrat', sans-serif; background: #fff; color: #000; ove
 }
 
 /* 商品网格 */
-.main-content { padding: 10px; }
+.main-content { 
+    padding: 10px; 
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
+
 .img-box {
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background: #f7f7f7;
     cursor: pointer;
 }
-.img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 放大灯箱 */
+.img-box img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+/* 放大预览灯箱 */
 .lightbox {
     display: none;
     position: fixed;
@@ -81,17 +87,33 @@ body { font-family: 'Montserrat', sans-serif; background: #fff; color: #000; ove
     background: rgba(0, 0, 0, 0.95);
     justify-content: center; align-items: center;
 }
-.lightbox-content { max-width: 95%; max-height: 90%; object-fit: contain; }
-.close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; }
 
-/* 手机端适配 */
+.lightbox-content { 
+    max-width: 95%; 
+    max-height: 90%; 
+    object-fit: contain; 
+}
+
+.close-btn { 
+    position: absolute; 
+    top: 20px; 
+    right: 30px; 
+    color: #fff; 
+    font-size: 40px; 
+    cursor: pointer; 
+}
+
+/* 手机端适配：保证居中和比例 */
 @media (max-width: 800px) {
     .brand-logo { 
-        font-size: 28px; 
+        font-size: 24px; 
         letter-spacing: 12px; 
-        margin-left: 12px; 
+        padding-left: 12px; 
     }
-    .main-header { padding: 40px 0 0; }
+    .contact-text { font-size: 12px; }
     .banner-hero { margin-top: -10px; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .product-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 6px; 
+    }
 }
