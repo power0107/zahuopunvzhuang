@@ -5,129 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>general store | Shopbop Style</title>
     <style>
-        /* --- 像素级还原 Shopbop 排版 --- */
+        /* --- 极致压缩：完全消除空白版 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
         body { background: #fff; color: #333; overflow-x: hidden; }
         
-        /* 1. 全局容器：Shopbop 网页通常不设固定宽度，内容居中，两侧留白。此处使用最大宽度确保图片足够大。*/
-        .container { max-width: 1900px; /* 进一步扩大容器以容纳更大图片 */ margin: 0 auto; padding: 0 10px; width: 100%; }
+        /* 1. 容器：全宽展示 */
+        .container { max-width: 100%; padding: 0 4px; margin: 0 auto; }
 
-        /* 2. 顶部辅助栏：小字号，浅色，模拟 Shopbop 顶部信息条 */
-        .utility-bar { background: #f9f9f9; padding: 3px 0; font-size: 10px; color: #777; text-align: center; border-bottom: 1px solid #eee; }
-
-        /* 3. 头部（Logo & 导航）：Shopbop 的 Logo 较大，导航紧凑 */
-        header { padding: 15px 0 0; text-align: center; background: #fff; width: 100%; }
-        .logo { font-family: "Times New Roman", Times, serif; font-size: 44px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 8px; color: #000; }
+        /* 2. 头部：极致压缩高度 */
+        header { padding: 4px 0 0; text-align: center; background: #fff; }
+        .logo { font-family: "Times New Roman", Times, serif; font-size: 34px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 2px; color: #000; }
         
-        nav { display: flex; justify-content: center; gap: 28px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-        nav a { text-decoration: none; color: #333; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; white-space: nowrap; }
-        nav a:hover { color: #e85a2a; }
+        nav { display: flex; justify-content: center; gap: 15px; padding-bottom: 4px; border-bottom: 1px solid #eee; }
+        nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .sale { color: #d0021b !important; }
 
-        /* 4. 营销条：紧贴导航，强调促销信息 */
-        .promo-banner { background: #f5e1d3; padding: 8px; font-size: 12px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 0; }
+        /* 3. 促销条：紧贴导航 */
+        .promo-banner { background: #f5e1d3; padding: 4px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; }
 
-        /* 5. 首页海报 (Product 36)：Shopbop 的海报通常非常大且无上下间距 */
-        .hero-section { width: 100%; position: relative; line-height: 0; font-size: 0; /* 消除图片下方的幽灵间隙 */ background: #fff; }
-        .hero-img { width: 100%; height: auto; display: block; object-fit: contain; } /* 确保图片完整显示不裁剪 */
+        /* 4. Product 36：极致置顶，取消一切边距 */
+        .hero-section { width: 100%; position: relative; line-height: 0; margin: 0; padding: 0; }
+        .hero-img { width: 100%; height: auto; display: block; object-fit: contain; }
         
-        /* 海报文案覆盖层 */
         .hero-overlay { 
-            position: absolute; left: 6%; top: 18%; background: rgba(255,255,255,0.9); 
-            padding: 35px; max-width: 480px; text-align: left; line-height: 1.3; border: 1px solid #eee; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* 增加微妙的阴影 */
+            position: absolute; left: 4%; top: 10%; background: rgba(255,255,255,0.92); 
+            padding: 20px; max-width: 320px; text-align: left; line-height: 1.1; border: 1px solid #eee; 
         }
-        .hero-overlay span { font-size:11px; color:#888; letter-spacing:1px; text-transform: uppercase; }
-        .hero-overlay h2 { font-size: 40px; margin: 8px 0; font-family: serif; font-weight: 300; letter-spacing: 1px; line-height: 1.1; }
-        .hero-overlay p { font-size: 14px; color: #555; margin-bottom: 15px; }
-        .sb-btn { 
-            display: inline-block; background: #e85a2a; color: #fff; padding: 12px 35px; 
-            text-decoration: none; font-weight: bold; font-size: 13px; cursor: pointer; 
-            letter-spacing: 0.5px; transition: background 0.2s ease;
-        }
-        .sb-btn:hover { background: #d04a1f; }
+        .hero-overlay h2 { font-size: 26px; margin: 4px 0; font-family: serif; font-weight: 300; }
 
-        /* 6. 商品展示区（"全新上线"及 6 张图）：紧贴海报，无缝衔接 */
+        /* 5. 重点：六张大图紧凑化 - 使用负边距强行消除空白 */
         .product-section { 
             padding: 0; 
-            margin-top: -60px; /* 负边距向上吸附，消除海报下方空白 */
+            margin-top: -100px; /* 如果还是觉得远，就把这个数字改成 -150px */
             position: relative; 
-            z-index: 10; /* 确保内容在海报上层 */
-            background: #fff; /* 确保标题背景是白色，不会透出海报 */
+            z-index: 10;
         }
-        .section-header { text-align: center; margin-bottom: 25px; position: relative; }
+        .section-header { text-align: center; margin-bottom: 8px; }
         .section-header h3 { 
-            font-size: 24px; 
+            font-size: 18px; 
             font-family: serif; 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
-            border-bottom: 1px solid #333; /* 模拟 Shopbop 标题下划线 */
-            display: inline-block; /* 让下划线只包裹文字 */
-            padding: 0 15px 5px 15px; /* 标题与下划线的间距 */
-            background: #fff; /* 确保标题背景是白色，覆盖负边距可能导致的重叠 */
-            position: relative; /* 确保 z-index 生效 */
-            z-index: 11;
-        }
-        .view-all { 
-            position: absolute; right: 0; bottom: 5px; font-size: 11px; color: #e85a2a; 
-            font-weight: bold; cursor: pointer; text-decoration: underline; white-space: nowrap;
+            background: #fff; 
+            padding: 0 10px;
+            display: inline-block;
+            border-bottom: 1px solid #333;
         }
 
-        /* 7. 首页 6 张大图：强制 6 列，间距极小，图片最大化 */
+        /* 6. 首页网格：6列并排，间距极小，图会变得非常大 */
         .product-grid { 
             display: grid; 
             grid-template-columns: repeat(6, 1fr); 
-            gap: 5px; /* 极小间距，图片会显得更大 */
+            gap: 2px; 
             width: 100%; 
         }
         
-        .p-card { text-align: center; cursor: pointer; transition: transform 0.2s ease-out; }
-        .p-card:hover { transform: translateY(-3px); } /* 悬停微动效果 */
-        .p-card img { width: 100%; height: auto; display: block; margin-bottom: 8px; background: #f9f9f9; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .p-card p { font-size: 12px; font-weight: bold; text-transform: uppercase; color: #111; letter-spacing: 0.5px; line-height: 1.3; }
+        .p-card { text-align: center; cursor: pointer; }
+        .p-card img { width: 100%; height: auto; display: block; margin-bottom: 4px; background: #f9f9f9; }
+        .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; }
 
-        /* 灯箱预览 */
+        /* 灯箱 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
-        .lightbox-img { max-height: 92vh; max-width: 92vw; border: 1px solid #eee; }
-        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; color: #333; }
+        .lightbox-img { max-height: 90vh; max-width: 90vw; }
     </style>
 </head>
 <body>
 
-    <div class="utility-bar">选购男士精品 | CN v | ZH v | $USD v | 免费国际快递 · 轻松退货</div>
-
     <header>
         <div class="logo">general store</div>
         <nav id="top-nav"></nav>
-        <div class="promo-banner">畅享特惠！精选单品现享低至 7 折优惠。 <span style="text-decoration: underline; cursor: pointer;">即刻选购</span></div>
+        <div class="promo-banner">畅享特惠！精选单品现享低至 7 折优惠。</div>
     </header>
 
     <section class="hero-section">
-        <img src="images/product36.jpg" class="hero-img" alt="Main Poster">
+        <img src="images/product36.jpg" class="hero-img" alt="Hero">
         <div class="hero-overlay">
-            <span>NEW COLLECTION</span>
+            <span style="font-size:10px; color:#888;">NEW COLLECTION</span>
             <h2>TIMELESS CHIC</h2>
-            <p>探索极简美学，打造高质感日常衣橱。</p>
-            <div class="sb-btn" onclick="document.getElementById('product-area').scrollIntoView({behavior:'smooth'})">立即选购</div>
+            <div style="background: #e85a2a; color: #fff; padding: 6px 15px; font-size: 10px; display: inline-block; margin-top: 5px; cursor: pointer;" onclick="document.getElementById('product-area').scrollIntoView({behavior:'smooth'})">立即选购</div>
         </div>
     </section>
 
     <main class="container product-section" id="product-area">
         <div class="section-header">
             <h3 id="current-title">全新上线</h3>
-            <div class="view-all" onclick="location.reload()">查看全部</div>
         </div>
-        
         <div class="product-grid" id="productGrid"></div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'">
-        <span class="close-btn">&times;</span>
         <img class="lightbox-img" id="lightboxImg">
     </div>
 
     <script>
-        /* --- 核心业务逻辑 --- */
         const config = [
             { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
             { name: "长裤", id: 2, items: [12, 13, 14, 15] },
@@ -138,38 +107,31 @@
         ];
 
         const grid = document.getElementById('productGrid');
-        const topNav = document.getElementById('top-nav');
+        const nav = document.getElementById('top-nav');
         const title = document.getElementById('current-title');
 
-        // 生成导航
         let navHtml = '<a onclick="location.reload()">首页</a>';
-        config.forEach(cat => {
-            navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a>`;
-        });
-        navHtml += '<a class="sale">折扣促销</a>';
-        topNav.innerHTML = navHtml;
+        config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a>`; });
+        nav.innerHTML = navHtml;
 
-        // 进入分类逻辑
         window.enterCategory = function(name) {
             const data = config.find(c => c.name === name);
             if (!data) return;
             title.innerText = name;
+            // 进入子目录后，取消负边距，恢复正常排版
+            document.getElementById('product-area').style.marginTop = '20px';
             grid.innerHTML = ''; 
             data.items.forEach(id => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
-                // 动态匹配 images/分类名/product编号.jpg
-                const path = `images/${name}/product${id}.jpg`;
-                card.innerHTML = `<img src="${path}" class="zoomable" onerror="this.src='https://via.placeholder.com/600x800?text=IMAGE+MISSING'"><p>STYLE NO.${id}</p>`;
+                card.innerHTML = `<img src="images/${name}/product${id}.jpg" class="zoomable"><p>NO.${id}</p>`;
                 grid.appendChild(card);
             });
-            // 滚动到商品区域，并留出顶部一点空间
-            window.scrollTo({ top: document.getElementById('product-area').offsetTop - 20, behavior: 'smooth' });
         };
 
-        // 首页渲染：6 张主图并列
         function renderHome() {
             grid.innerHTML = '';
+            document.getElementById('product-area').style.marginTop = '-100px';
             config.forEach(cat => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
@@ -180,13 +142,10 @@
         }
         renderHome();
 
-        // 灯箱放大功能
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('zoomable')) {
-                const lightbox = document.getElementById('lightbox');
-                const img = document.getElementById('lightboxImg');
-                lightbox.style.display = 'flex';
-                img.src = e.target.src;
+                document.getElementById('lightbox').style.display = 'flex';
+                document.getElementById('lightboxImg').src = e.target.src;
             }
         });
     </script>
