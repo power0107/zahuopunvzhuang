@@ -2,33 +2,37 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>General Store | Shopbop Style</title>
+    <title>General Store | 极简高端</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="top-announcement">FREE INTERNATIONAL SHIPPING | 免费国际快递 · 轻松退货</div>
-
+    <div class="top-bar">FREE SHIPPING & RETURNS | NEW SEASON COLLECTIONS</div>
+    
     <header class="main-header">
         <div class="logo">General Store</div>
         <nav class="main-nav">
-            <div id="category-nav" class="nav-container"></div>
-            <a href="#" class="sale-tag">SALE</a>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('毛衣', [7,8,9,10,11])">毛衣</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('长裤', [12,13,14,15])">长裤</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('羽绒服', [16,17,18,19,20])">羽绒服</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('外套', [21,22,23,24,25])">外套</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('打底', [26,27,28,29,30])">打底</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('风衣', [31,32,33,34,35])">风衣</a></div>
+            <a href="#" style="color:#d0021b; font-weight:bold; font-size:13px; text-decoration:none;">SALE</a>
         </nav>
     </header>
 
     <section class="hero-section">
         <div class="hero-image" style="background-image: url('images/product36.jpg');">
             <div class="hero-content">
-                <span class="sub">NEW COLLECTION</span>
                 <h2>GENERAL STORE</h2>
-                <p>探索极简美学，打造高质感日常衣橱。</p>
-                <a href="#product-area" class="btn-shop">立即选购</a>
+                <p>探索极简美学，打造高质感日常衣橱</p>
+                <a href="#product-area" class="btn-shop">开始选购</a>
             </div>
         </div>
     </section>
 
     <main class="wide-container" id="product-area">
-        <div class="section-title">
+        <div class="section-header">
             <h3 id="current-title">FEATURED CATEGORIES</h3>
         </div>
         <div class="product-grid" id="productGrid"></div>
