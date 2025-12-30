@@ -1,66 +1,102 @@
+/* 全局基础方案 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Montserrat', sans-serif; background-color: #ffffff; color: #000; }
+body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 强烈的版头设计 */
+/* 版头设计：参考图2的超粗字体视觉 */
 .main-header {
-    padding: 60px 0;
+    padding: 60px 0 40px;
     text-align: center;
-    border-bottom: 5px solid #000;
     background: #fff;
 }
-.est { font-size: 12px; letter-spacing: 5px; color: #888; margin-bottom: 10px; }
-.shop-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 70px; /* 超大店名 */
-    font-weight: 900;
-    letter-spacing: -2px;
-    line-height: 0.9;
+.est-text { font-size: 11px; letter-spacing: 5px; color: #999; margin-bottom: 10px; font-weight: 700; }
+
+.brand-logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 85px; /* 超大字体 */
+    line-height: 0.85;
+    letter-spacing: -4px; /* 紧凑字间距 */
     text-transform: uppercase;
+    color: #000;
+    margin: 0 auto;
 }
-.desc { font-size: 12px; letter-spacing: 8px; margin-top: 15px; font-weight: 700; }
 
-/* 主图样式 */
-.hero-section { padding: 20px 4%; }
-.hero-container { position: relative; width: 100%; height: 70vh; background: #eee; overflow: hidden; border: 1px solid #000; }
-.hero-img { width: 100%; height: 100%; object-fit: cover; }
-
-/* 微信悬浮窗 */
-.wechat-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-}
-.wechat-content {
+.line-sep {
+    width: 60px;
+    height: 4px;
     background: #000;
-    color: #fff;
-    padding: 30px 60px;
-    text-align: center;
-    border: 2px solid #fff;
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    margin: 25px auto 0;
 }
-.wechat-hint { font-size: 10px; letter-spacing: 4px; display: block; margin-bottom: 10px; color: #aaa; }
-.wechat-id { font-size: 32px; font-weight: 700; letter-spacing: 1px; }
 
-/* 紧密三列网格 */
-.grid-container { padding: 40px 4%; }
+/* 横幅区：首屏不留白 */
+.banner-hero {
+    width: 100vw; /* 占据整个视口宽度 */
+    position: relative;
+    margin: 0;
+    line-height: 0; /* 消除图片下方间隙 */
+}
+
+.banner-container {
+    width: 100%;
+    height: auto;
+    min-height: 40vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 二维码：店招上方靠左 */
+.qr-float-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.mini-qr {
+    width: 70px; /* 缩小后的二维码 */
+    height: 70px;
+    display: block;
+}
+
+.qr-hint {
+    font-size: 9px;
+    font-weight: 700;
+    margin-top: 4px;
+    letter-spacing: 1px;
+}
+
+/* 商品网格：三列紧凑 */
+.main-content { padding: 10px; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px; /* 紧凑间距 */
+    gap: 6px; /* 极致紧凑 */
 }
-.product-card { width: 100%; background: #fff; }
+
+.product-item { width: 100%; }
 .img-box {
     aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: #f0f0f0;
+    background: #f2f2f2;
 }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 手机端 */
+/* 手机端适配：重要 */
 @media (max-width: 800px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); }
-    .shop-name { font-size: 40px; }
-    .wechat-content { padding: 20px; width: 90vw; }
+    .brand-logo { font-size: 50px; letter-spacing: -2px; }
+    .main-header { padding: 40px 0 30px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; } /* 移动端改为2列增加细节 */
+    .qr-float-left { top: 15px; left: 15px; }
+    .mini-qr { width: 60px; height: 60px; }
 }
