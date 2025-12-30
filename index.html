@@ -2,41 +2,69 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>General Store | 极简高端</title>
+    <title>General Store | Shopbop Style</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="top-bar">FREE SHIPPING & RETURNS | NEW SEASON COLLECTIONS</div>
-    
-    <header class="main-header">
+
+    <div class="shopbop-top-utility">
+        <div class="container">
+            <div class="left">选购男士精品 | CN v | ZH v | $USD v</div>
+            <div class="center">免费国际快递 · 轻松退货</div>
+            <div class="right">登录/注册 | ❤️ | 🛒 0</div>
+        </div>
+    </div>
+
+    <header class="shopbop-header">
         <div class="logo">General Store</div>
-        <nav class="main-nav">
-            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('毛衣', [7,8,9,10,11])">毛衣</a></div>
-            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('长裤', [12,13,14,15])">长裤</a></div>
-            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('羽绒服', [16,17,18,19,20])">羽绒服</a></div>
-            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('外套', [21,22,23,24,25])">外套</a></div>
-            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('打底', [26,27,28,29,30])">打底</a></div>
-            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('风衣', [31,32,33,34,35])">风衣</a></div>
-            <a href="#" style="color:#d0021b; font-weight:bold; font-size:13px; text-decoration:none;">SALE</a>
+        <nav class="shopbop-nav">
+            <a href="javascript:location.reload()">首页</a>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('毛衣')">毛衣</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('长裤')">长裤</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('羽绒服')">羽绒服</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('外套')">外套</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('打底')">打底</a></div>
+            <div class="nav-item"><a href="javascript:void(0)" onclick="enterCategory('裙子')">裙子</a></div>
+            <a href="#" class="sale-red">折扣促销</a>
         </nav>
+        <div class="promo-strip">
+            畅享夏季特惠！精选单品现享低至 7 折优惠。 <a href="#">即刻选购</a>
+        </div>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-image" style="background-image: url('images/product36.jpg');">
-            <div class="hero-content">
-                <h2>GENERAL STORE</h2>
-                <p>探索极简美学，打造高质感日常衣橱</p>
-                <a href="#product-area" class="btn-shop">开始选购</a>
+    <section class="shopbop-hero">
+        <div class="hero-inner" style="background-image: url('images/product36.jpg');">
+            <div class="hero-box">
+                <span class="label">NEW COLLECTION</span>
+                <h2>TIMLESS CHIC</h2>
+                <p>探索本季最值得投资的高级感单品</p>
+                <a href="#product-area" class="shopbop-btn">立即选购</a>
             </div>
         </div>
     </section>
 
-    <main class="wide-container" id="product-area">
-        <div class="section-header">
-            <h3 id="current-title">FEATURED CATEGORIES</h3>
+    <main class="shopbop-main container" id="product-area">
+        <div class="shopbop-section-title">
+            <h3 id="current-title">全新上线</h3>
+            <a href="javascript:location.reload()" class="view-all">选购全部</a>
         </div>
-        <div class="product-grid" id="productGrid"></div>
+        
+        <div class="shopbop-grid" id="productGrid"></div>
     </main>
+
+    <section class="shopbop-inspiration container">
+        <div class="shopbop-section-title">
+            <h3>灵感启迪</h3>
+            <p>正在寻找新装备？</p>
+        </div>
+        <div class="ins-grid">
+            <div class="ins-item"><img src="images/product1.jpg"><span>日常基本款</span></div>
+            <div class="ins-item"><img src="images/product2.jpg"><span>上衣精选</span></div>
+            <div class="ins-item"><img src="images/product3.jpg"><span>夏日挚爱</span></div>
+            <div class="ins-item"><img src="images/product4.jpg"><span>裙装精品</span></div>
+            <div class="ins-item"><img src="images/product5.jpg"><span>运动鞋一角</span></div>
+        </div>
+    </section>
 
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
