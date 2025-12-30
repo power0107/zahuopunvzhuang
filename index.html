@@ -2,37 +2,35 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GENERAL STORE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GENERAL STORE | Est. 2008</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="main-header">
-        <div class="logo-area">
-            <p class="est">SINCE 2025</p>
-            <h1 class="shop-name">GENERAL STORE</h1>
-            <p class="desc">PREMIUM CURATED COLLECTION</p>
+        <div class="header-inner">
+            <p class="est-text">SINCE 2008</p>
+            <h1 class="brand-logo">GENERAL<br>STORE</h1>
+            <div class="line-sep"></div>
         </div>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-container">
-            <img src="images/product36.jpg" alt="Featured" class="hero-img" id="mainHero">
+    <section class="banner-hero">
+        <div class="banner-container">
+            <img src="images/product36.jpg" alt="Collection" class="hero-image">
             
-            <div class="wechat-overlay">
-                <div class="wechat-content">
-                    <span class="wechat-hint">CONTACT WECHAT</span>
-                    <h2 class="wechat-id">lanxiaoqi1981</h2>
-                </div>
+            <div class="qr-float-left">
+                <img src="images/qr.jpg" alt="WeChat QR" class="mini-qr">
+                <span class="qr-hint">扫码咨询</span>
             </div>
         </div>
     </section>
 
-    <div class="grid-container">
-        <main class="product-grid" id="productGrid"></main>
-    </div>
+    <main class="main-content">
+        <div class="product-grid" id="mainGrid"></div>
+    </main>
 
     <script src="script.js"></script>
 </body>
