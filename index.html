@@ -5,67 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* --- 极致还原与修复版 --- */
+        /* --- 极致紧贴版 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #fff; color: #000; overflow-x: hidden; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
         
-        .container { max-width: 1800px; margin: 0 auto; padding: 0 10px; width: 100%; }
+        .container { max-width: 1800px; margin: 0 auto; padding: 0 5px; width: 100%; }
 
         /* 顶部辅助条 */
         .utility-bar { background: #f9f9f9; padding: 4px 0; font-size: 10px; color: #666; text-align: center; border-bottom: 1px solid #eee; }
 
         /* 头部 Logo 与 导航 */
         header { padding: 10px 0 0; text-align: center; background: #fff; }
-        .logo { font-family: "Georgia", serif; font-size: 38px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 8px; color: #000; }
-        nav { display: flex; justify-content: center; gap: 20px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .logo { font-family: "Georgia", serif; font-size: 38px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 5px; color: #000; }
+        nav { display: flex; justify-content: center; gap: 20px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
         nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .sale { color: #d0021b !important; }
 
         /* 营销条 */
-        .promo-banner { background: #f5e1d3; padding: 6px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; }
+        .promo-banner { background: #f5e1d3; padding: 5px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 0; }
 
-        /* --- 新增：Timeless Chic 独立长条区 (海报上方) --- */
+        /* Timeless Chic 长条区 - 极致紧凑 */
         .chic-strip { 
             background: #fff; 
-            padding: 20px 0; 
+            padding: 10px 0; /* 缩小内边距 */
             text-align: center; 
             border-bottom: 1px solid #f0f0f0;
         }
-        .chic-strip span { font-size: 10px; color: #888; letter-spacing: 2px; text-transform: uppercase; }
-        .chic-strip h2 { font-family: "Georgia", serif; font-size: 32px; font-weight: normal; letter-spacing: 4px; margin-top: 5px; }
+        .chic-strip span { font-size: 9px; color: #888; letter-spacing: 1px; }
+        .chic-strip h2 { font-family: "Georgia", serif; font-size: 28px; font-weight: normal; letter-spacing: 3px; margin-top: 2px; }
 
-        /* --- Product 36：纯净展示，不遮挡 --- */
-        .hero-section { width: 100%; line-height: 0; font-size: 0; }
+        /* Product 36：消除底部一切缝隙 */
+        .hero-section { width: 100%; line-height: 0; font-size: 0; margin-top: -1px; }
         .hero-img { width: 100%; height: auto; display: block; object-fit: contain; }
 
-        /* --- 商品展示区：紧凑对齐 --- */
-        .product-section { padding: 0; margin-top: 15px; }
-        .section-header { text-align: center; margin-bottom: 20px; }
+        /* 商品展示区：强力向上吸附 */
+        .product-section { 
+            padding: 0; 
+            margin-top: -5px; /* 强制贴近海报 */
+        }
+        .section-header { text-align: center; margin-bottom: 10px; padding-top: 10px; }
         .section-header h3 { 
-            font-size: 18px; 
+            font-size: 16px; 
             font-family: "Georgia", serif; 
             text-transform: uppercase; 
             letter-spacing: 1px; 
             border-bottom: 1px solid #333; 
             display: inline-block; 
-            padding-bottom: 3px;
+            padding-bottom: 2px;
         }
 
-        /* 首页 6 张大图网格：强制不交错 */
+        /* 首页 6 张图：强制整齐 */
         .product-grid { 
             display: grid; 
             grid-template-columns: repeat(6, 1fr); 
-            gap: 10px; 
+            gap: 5px; /* 缩小间距，图更大 */
             width: 100%; 
         }
         
         .p-card { text-align: center; cursor: pointer; }
         .p-card img { 
             width: 100%; 
-            aspect-ratio: 3 / 4; /* 强制所有图片比例统一，解决错落问题 */
+            aspect-ratio: 3 / 4; /* 强制所有图比例统一 */
             object-fit: cover; 
             display: block; 
-            margin-bottom: 8px; 
+            margin-bottom: 5px; 
             background: #f9f9f9; 
         }
         .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; }
@@ -91,7 +94,7 @@
     </div>
 
     <section class="hero-section">
-        <img src="images/product36.jpg" class="hero-img" alt="Main Poster">
+        <img src="images/product36.jpg" class="hero-img" alt="Hero Poster">
     </section>
 
     <main class="container product-section" id="product-area">
@@ -123,7 +126,6 @@
         config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a>`; });
         nav.innerHTML = navHtml;
 
-        // 子目录进入逻辑
         window.enterCategory = function(name) {
             const data = config.find(c => c.name === name);
             if (!data) return;
@@ -132,15 +134,14 @@
             data.items.forEach(id => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
-                // 自动处理路径，请确保 images/分类名/ 文件夹里图片存在
+                // 修正后的路径逻辑
                 const path = `images/${name}/product${id}.jpg`;
-                card.innerHTML = `<img src="${path}" class="zoomable" onerror="this.src='https://via.placeholder.com/600x800?text=Check+Path+product${id}'"><p>STYLE NO.${id}</p>`;
+                card.innerHTML = `<img src="${path}" class="zoomable" onerror="this.src='https://via.placeholder.com/600x800?text=Check+${name}+product${id}'"><p>STYLE NO.${id}</p>`;
                 grid.appendChild(card);
             });
-            window.scrollTo({ top: document.getElementById('product-area').offsetTop - 10, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('product-area').offsetTop - 5, behavior: 'smooth' });
         };
 
-        // 首页渲染
         function renderHome() {
             grid.innerHTML = '';
             config.forEach(cat => {
