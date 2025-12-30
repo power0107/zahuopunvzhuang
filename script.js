@@ -1,44 +1,62 @@
-const config = [
-    { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
-    { name: "长裤", id: 2, items: [12, 13, 14, 15] },
-    { name: "羽绒服", id: 3, items: [16, 17, 18, 19, 20] },
-    { name: "外套", id: 4, items: [21, 22, 23, 24, 25] },
-    { name: "打底", id: 5, items: [26, 27, 28] },
-    { name: "裙子", id: 6, items: [33, 34, 35] }
-];
-
-const grid = document.getElementById('productGrid');
-
-// 首页初始加载：1-6号图并列一排
-function renderHome() {
-    grid.innerHTML = '';
-    config.forEach(cat => {
-        const card = document.createElement('div');
-        card.className = 'p-card';
-        card.onclick = () => enterCategory(cat.name);
-        card.innerHTML = `
-            <img src="images/product${cat.id}.jpg">
-            <p>${cat.name}</p>
-        `;
-        grid.appendChild(card);
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. 导航栏滚动效果 (Scroll Effect)
+    // 当用户向下滚动时，缩小 Header 尺寸，模拟高端电商的简洁感
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.style.padding = '15px 0 10px';
+            header.querySelector('.site-logo').style.fontSize = '24px';
+            header.querySelector('.site-logo').style.marginBottom = '10px';
+        } else {
+            header.style.padding = '40px 0 20px';
+            header.querySelector('.site-logo').style.fontSize = '38px';
+            header.querySelector('.site-logo').style.marginBottom = '30px';
+        }
     });
-}
 
-// 进入二级分类（逻辑保持：去对应的文件夹找图）
-window.enterCategory = function(name) {
-    const data = config.find(c => c.name === name);
-    if (!data) return;
+    // 2. 模拟加入收藏夹 (Heart Toggle)
+    // 为每个产品卡片添加一个交互点
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        // 创建一个心型按钮
+        const heartBtn = document.createElement('div');
+        heartBtn.innerHTML = '♡';
+        heartBtn.className = 'heart-icon';
+        card.querySelector('.img-box').appendChild(heartBtn);
 
-    grid.innerHTML = ''; 
-    data.items.forEach(id => {
-        const card = document.createElement('div');
-        card.className = 'p-card';
-        card.innerHTML = `
-            <img src="images/${name}/product${id}.jpg">
-            <p>Style No.${id}</p>
-        `;
-        grid.appendChild(card);
+        heartBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // 防止触发卡片点击
+            heartBtn.innerHTML = heartBtn.innerHTML === '♡' ? '♥' : '♡';
+            heartBtn.style.color = heartBtn.innerHTML === '♥' ? '#ff4757' : '#fff';
+        });
     });
-};
 
-renderHome();
+    // 3. 图片点击反馈
+    // 点击商品图片时跳转（此处用 console 模拟）
+    productCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const itemName = card.querySelector('.item-name').innerText;
+            console.log(`正在前往商品详情页: ${itemName}`);
+            // window.location.href = 'product-detail.html'; // 实际开发时取消注释
+        });
+    });
+
+    // 4. 移动端二级菜单适配
+    // 在小屏幕上，通过点击一级菜单来显示二级目录
+    const navItems = document.querySelectorAll('.nav-item');
+    if (window.innerWidth < 900) {
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const dropdown = item.querySelector('.dropdown');
+                if (dropdown) {
+                    const isVisible = dropdown.style.display === 'block';
+                    // 先隐藏所有其他的
+                    document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+                    // 切换当前的
+                    dropdown.style.display = isVisible ? 'none' : 'block';
+                }
+            });
+        });
+    }
+});
