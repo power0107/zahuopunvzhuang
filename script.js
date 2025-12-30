@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('mainGrid');
     const folder = 'images/'; 
     
-    // 渲染 product1 到 product78
+    // 自动加载 78 张图片
     for (let i = 1; i <= 78; i++) {
         const item = document.createElement('div');
         item.className = 'product-item';
