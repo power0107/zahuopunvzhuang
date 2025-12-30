@@ -1,112 +1,94 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store | Shopbop Style Official</title>
-    <style>
-        /* 核心基础样式 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #fff; color: #333; font-family: "Helvetica Neue", Arial, sans-serif; overflow-x: hidden; }
-        .container { max-width: 100%; padding: 0 4px; margin: 0 auto; }
-        nav { display: flex; justify-content: center; gap: 15px; padding-bottom: 5px; border-bottom: 1px solid #eee; }
-        nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .p-card { text-align: center; cursor: pointer; }
-        .p-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; background: #f9f9f9; }
-        .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 4px; }
-        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
-    </style>
+    <title>SÉLECTION | Chic Curated Women's Wear</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header style="padding: 5px 0 0; text-align: center;">
-        <div style="font-family: serif; font-size: 36px; font-weight: bold; text-transform: lowercase; margin-bottom: 2px;">general store</div>
-        <nav id="top-nav"></nav>
-        <div style="background: #f5e1d3; padding: 5px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee;">精选单品现享低至 7 折优惠。</div>
+    <div class="top-banner">Free Express Shipping on Orders Over $100</div>
+
+    <header>
+        <div class="site-logo">SÉLECTION</div>
+        <nav>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">VESTS</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Quilted Vests</a></li>
+                        <li><a href="#">Knitted Vests</a></li>
+                        <li><a href="#">Tailored Vests</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">KNITWEAR</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Cardigans</a></li>
+                        <li><a href="#">Pullowers</a></li>
+                        <li><a href="#">Cashmere</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">SWEATERS</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Turtlenecks</a></li>
+                        <li><a href="#">Crewnecks</a></li>
+                        <li><a href="#">Oversized</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">DOWN JACKETS</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Long Coats</a></li>
+                        <li><a href="#">Short Puffers</a></li>
+                        <li><a href="#">Lightweight</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 0 0; text-align: center; border: 0;">
-        <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase;">NEW COLLECTION</span>
-        <h2 style="font-family: serif; font-size: 28px; font-weight: normal; letter-spacing: 4px; margin-top: 1px;">TIMELESS CHIC</h2>
-    </div>
-
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -1px; padding: 0;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Main Banner">
+    <section class="hero-section">
+        <div class="hero-container">
+            <img src="product36.jpg" alt="Featured Look" class="hero-img">
+            <div class="hero-overlay">
+                <p class="hero-subtitle">NEW ARRIVALS</p>
+                <h1 class="hero-title">Winter Edit 2024</h1>
+                <a href="#" class="hero-link">SHOP THE COLLECTION</a>
+            </div>
+        </div>
     </section>
 
-    <main class="container" id="product-area" style="margin-top: -1px; position: relative; z-index: 10; background: #fff;">
-        <div style="text-align: center; padding: 5px 0 10px;">
-            <h3 id="current-title" style="font-size: 16px; font-family: serif; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block;">全新上线</h3>
+    <div class="section-title">TRENDING NOW</div>
+    <main class="product-grid">
+        <div class="product-card">
+            <div class="img-box"><img src="p1.jpg" alt="Item"></div>
+            <div class="product-detail">
+                <span class="brand-name">STUDIO B</span>
+                <p class="item-name">Soft Wool Blend Cardigan</p>
+                <p class="item-price">$185.00</p>
+            </div>
         </div>
-        <div id="productGrid" style="display: grid; gap: 4px; width: 100%;"></div>
+        <div class="product-card">
+            <div class="img-box"><img src="p2.jpg" alt="Item"></div>
+            <div class="product-detail">
+                <span class="brand-name">ESSENTIALS</span>
+                <p class="item-name">Quilted Down Vest</p>
+                <p class="item-price">$240.00</p>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="img-box"><img src="p3.jpg" alt="Item"></div>
+            <div class="product-detail">
+                <span class="brand-name">LUXE KNIT</span>
+                <p class="item-name">Oversized Cashmere Sweater</p>
+                <p class="item-price">$310.00</p>
+            </div>
+        </div>
     </main>
 
-    <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" style="max-height: 90vh; max-width: 90vw;"></div>
-
-    <script>
-        const config = [
-            { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
-            { name: "长裤", id: 2, items: [12, 13, 14, 15] },
-            { name: "羽绒服", id: 3, items: [16, 17, 18, 19, 20] },
-            { name: "外套", id: 4, items: [21, 22, 23, 24, 25] },
-            { name: "打底", id: 5, items: [26, 27, 28] },
-            { name: "裙子", id: 6, items: [33, 34, 35] }
-        ];
-
-        const grid = document.getElementById('productGrid');
-        const nav = document.getElementById('top-nav');
-        const title = document.getElementById('current-title');
-
-        // 初始化导航
-        let navHtml = '<a onclick="location.reload()">首页</a>';
-        config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a>`; });
-        nav.innerHTML = navHtml;
-
-        // 子分类逻辑：一行两张，共三行
-        window.enterCategory = function(catName) {
-            title.innerText = catName;
-            const data = config.find(c => c.name === catName);
-            
-            // 强制切换网格为一行两张
-            grid.style.gridTemplateColumns = "repeat(2, 1fr)";
-            grid.innerHTML = ''; 
-
-            data.items.forEach(id => {
-                const card = document.createElement('div');
-                card.className = 'p-card';
-                // 路径纠错逻辑：确保路径中没有多余空格
-                const imgPath = "images/" + catName.trim() + "/product" + id + ".jpg";
-                
-                card.innerHTML = `
-                    <img src="${imgPath}" class="zoomable" 
-                         onerror="this.src='https://via.placeholder.com/800x1066?text=Check+Folder+${catName}+product${id}'">
-                    <p>STYLE NO.${id}</p>`;
-                grid.appendChild(card);
-            });
-            window.scrollTo({ top: document.getElementById('product-area').offsetTop, behavior: 'smooth' });
-        };
-
-        // 首页渲染：一行六张
-        function renderHome() {
-            grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            grid.innerHTML = '';
-            config.forEach(cat => {
-                const card = document.createElement('div');
-                card.className = 'p-card';
-                card.onclick = () => enterCategory(cat.name);
-                card.innerHTML = `<img src="images/product${cat.id}.jpg"><p>${cat.name}</p>`;
-                grid.appendChild(card);
-            });
-        }
-
-        renderHome();
-
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('zoomable')) {
-                document.getElementById('lightbox').style.display = 'flex';
-                document.getElementById('lightboxImg').src = e.target.src;
-            }
-        });
-    </script>
 </body>
 </html>
