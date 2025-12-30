@@ -2,86 +2,77 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版头：图2风格，宽间距设计 */
+/* 版头：极致紧凑排版 */
 .main-header {
-    padding: 60px 0 40px;
+    padding: 40px 0 0px; /* 彻底取消底部内边距 */
     text-align: center;
     background: #fff;
 }
-.est-text { font-size: 10px; letter-spacing: 6px; color: #aaa; margin-bottom: 15px; font-weight: 400; }
+.est-text { 
+    font-size: 10px; 
+    letter-spacing: 5px; 
+    color: #bbb; 
+    margin-bottom: 0px; /* 取消年份下方间距 */
+}
 
 .brand-logo {
-    font-family: 'Lexend Exa', sans-serif; /* 类似图2的圆润粗体 */
-    font-size: 45px; /* 调整为更协调的大小 */
-    font-weight: 800;
-    letter-spacing: 12px; /* 按照要求加宽间距 */
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 34px; 
+    font-weight: 400; /* 调至常规粗细，不再太粗 */
+    letter-spacing: 15px; /* 间距加大，更有设计感 */
     text-transform: uppercase;
     color: #000;
-    line-height: 1.2;
+    white-space: nowrap; 
+    line-height: 1;
 }
 
-.header-line {
-    width: 40px;
-    height: 3px;
-    background: #000;
-    margin: 20px auto 0;
-}
-
-/* 横幅区：完全消除留白 */
+/* 横幅区：负边距让图片上移贴近字体 */
 .banner-hero {
     width: 100vw;
-    margin: 0;
-    padding: 0;
+    margin-top: -30px; /* 负值越大，图片越靠上，紧贴店名 */
     position: relative;
     line-height: 0;
-}
-
-.banner-container {
-    width: 100%;
-    position: relative;
+    z-index: 1;
 }
 
 .hero-image {
     width: 100%;
     height: auto;
     display: block;
-    margin: 0;
 }
 
-/* 二维码：缩小并靠左上角 */
+/* 二维码样式 */
 .qr-float-left {
     position: absolute;
-    top: 15px;
-    left: 15px;
-    background: rgba(255, 255, 255, 0.85);
-    padding: 6px;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 4px;
     border: 1px solid #000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    backdrop-filter: blur(4px);
 }
 
 .mini-qr {
-    width: 55px; /* 二维码进一步缩小 */
-    height: 55px;
-    display: block;
+    width: 45px;
+    height: 45px;
 }
 
 .qr-hint {
-    font-size: 8px;
-    font-weight: 800;
-    margin-top: 3px;
-    letter-spacing: 1px;
+    font-size: 7px;
+    font-weight: 700;
+    margin-top: 2px;
     color: #000;
+    letter-spacing: 1px;
 }
 
-/* 网格布局 */
-.main-content { padding: 8px; }
+/* 商品网格布局 */
+.main-content { padding: 5px; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 5px;
 }
 
 .product-item { width: 100%; }
@@ -92,17 +83,14 @@ body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; ove
 }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 手机端适配优化 */
+/* 手机端适配 */
 @media (max-width: 800px) {
     .brand-logo { 
-        font-size: 22px; 
-        letter-spacing: 6px; /* 手机端适当缩减间距防止折行 */
+        font-size: 16px; 
+        letter-spacing: 6px; 
     }
-    .main-header { padding: 40px 10px 30px; }
-    .product-grid { 
-        grid-template-columns: repeat(2, 1fr); /* 手机端2列观感更紧凑 */
-        gap: 4px;
-    }
-    .qr-float-left { top: 10px; left: 10px; }
-    .mini-qr { width: 45px; height: 45px; }
+    .main-header { padding: 30px 0 0px; }
+    .banner-hero { margin-top: -20px; } /* 手机端适当调整上移距离 */
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+    .mini-qr { width: 35px; height: 35px; }
 }
