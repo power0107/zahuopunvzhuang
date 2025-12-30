@@ -1,12 +1,124 @@
-.hero-section {
-    width: 100%;
-    height: 75vh;
-    /* 路径必须带 images/ 且文件名后缀 .jpg 必须是小写 */
-    background-image: url('images/product36.jpg'); 
+/* Shopbop Style Master */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+body { background: #fff; color: #333; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+/* 1. 顶部辅助条 */
+.shopbop-top-utility {
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+.shopbop-top-utility .container { display: flex; justify-content: space-between; }
+
+/* 2. 头部 */
+.shopbop-header { padding: 40px 0 0; text-align: center; }
+.logo {
+    font-family: "Times New Roman", Times, serif; /* 仿衬线体Logo */
+    font-size: 52px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    text-transform: lowercase; /* Shopbop 风格 */
+}
+.shopbop-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+.shopbop-nav a, .nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+    font-weight: bold;
+}
+.sale-red { color: #d0021b !important; }
+
+.promo-strip {
+    background: #f5e1d3; /* 经典的肉粉色通告条 */
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* 3. 海报区域 */
+.shopbop-hero { width: 100%; height: 650px; overflow: hidden; margin-bottom: 60px; }
+.hero-inner {
+    width: 100%; height: 100%;
     background-size: cover;
     background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 60px;
+    position: relative;
 }
+.hero-box {
+    position: absolute;
+    left: 8%;
+    top: 25%;
+    background: rgba(255,255,255,0.9);
+    padding: 50px;
+    max-width: 450px;
+    text-align: left;
+}
+.hero-box .label { font-size: 12px; letter-spacing: 2px; color: #888; }
+.hero-box h2 { font-size: 52px; margin: 15px 0; font-family: serif; }
+.hero-box p { font-size: 16px; color: #666; margin-bottom: 30px; }
+.shopbop-btn {
+    display: inline-block;
+    background: #e85a2a; /* 经典的 Shopbop 橘红 */
+    color: #fff;
+    padding: 15px 40px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* 4. 商品网格 */
+.shopbop-section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+.shopbop-section-title h3 {
+    font-size: 26px;
+    display: inline-block;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    font-family: serif;
+}
+.view-all { position: absolute; right: 0; bottom: 5px; font-size: 12px; color: #e85a2a; font-weight: bold; text-decoration: none; }
+
+.shopbop-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 经典的 5 列 */
+    gap: 30px 15px;
+}
+.p-card { text-align: left; cursor: zoom-in; }
+.p-card img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    margin-bottom: 12px;
+    background: #fcfcfc;
+}
+.p-card p { font-size: 12px; font-weight: bold; margin-bottom: 5px; }
+.p-card span { font-size: 12px; color: #888; }
+
+/* 5. 灵感九宫格 */
+.ins-grid { display: flex; gap: 10px; margin-top: 20px; }
+.ins-item { flex: 1; text-align: center; cursor: pointer; }
+.ins-item img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 10px; }
+.ins-item span { font-size: 12px; color: #d0021b; border-bottom: 1px solid #d0021b; padding-bottom: 2px; }
+
+/* Lightbox */
+.lightbox {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;
+}
+.lightbox-img { max-height: 90vh; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+.close-btn { position: absolute; top: 20px; right: 40px; font-size: 50px; cursor: pointer; }
