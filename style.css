@@ -1,66 +1,52 @@
-/* 全局基础方案 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版面头部 */
+/* 版头区域 */
 .main-header {
-    padding: 40px 0 0; 
+    padding: 40px 0 20px;
     text-align: center;
     background: #fff;
 }
-.est-text { font-size: 10px; letter-spacing: 5px; color: #aaa; margin-bottom: 5px; }
+.est-text { font-size: 10px; letter-spacing: 4px; color: #bbb; margin-bottom: 8px; }
 
 .brand-logo {
-    font-family: 'Lexend Exa', sans-serif;
-    font-size: 42px; 
-    font-weight: 600; /* 保持粗一点点的设置 */
-    letter-spacing: 15px; 
-    text-transform: none; 
+    font-size: 48px; 
+    font-weight: 700; 
+    letter-spacing: 2px;
     color: #000;
-    line-height: 1.1;
-    white-space: nowrap;
+    text-transform: none; 
+    line-height: 1;
+    margin-bottom: 15px;
 }
 
-/* 横幅区：上移紧贴店名 */
+/* 二维码在字头下方 */
+.qr-under-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.header-qr {
+    width: 80px; /* 适中的二维码大小 */
+    height: 80px;
+    border: 1px solid #eee;
+    margin-bottom: 5px;
+}
+.v-id { font-size: 12px; font-weight: 700; color: #333; }
+
+/* 图片区域：紧凑布局 */
 .banner-hero {
     width: 100vw;
-    margin-top: -30px; 
-    position: relative;
     line-height: 0;
-    z-index: 1;
 }
+.hero-image { width: 100%; height: auto; cursor: pointer; }
 
-.hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    cursor: pointer;
-}
-
-/* 联系方式 */
-.contact-box-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    padding: 8px 15px;
-}
-
-.v-id {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-/* 商品网格：按照要求调大了一点点间距 */
-.main-content { padding: 0; margin-top: 0; }
+.main-content { padding: 8px; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px; /* 间距从 3px 增加到 8px */
+    gap: 8px;
 }
-
 .img-box {
     aspect-ratio: 3 / 4;
     overflow: hidden;
@@ -74,26 +60,16 @@ body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; ove
     display: none;
     position: fixed;
     z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    justify-content: center;
-    align-items: center;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center; align-items: center;
 }
 .lightbox-content { max-width: 95%; max-height: 90%; object-fit: contain; }
-.close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+.close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 50px; cursor: pointer; }
 
-/* 手机端适配 */
+/* 手机端 */
 @media (max-width: 800px) {
-    .brand-logo { font-size: 18px; letter-spacing: 6px; }
-    .main-header { padding: 30px 0 0; }
-    .banner-hero { margin-top: -20px; }
-    .product-grid { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 5px; /* 手机端间距同步调大 */
-    }
-    .contact-box-left { top: 10px; left: 10px; padding: 6px 10px; }
-    .v-id { font-size: 10px; }
+    .brand-logo { font-size: 32px; letter-spacing: 1px; }
+    .header-qr { width: 60px; height: 60px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
 }
