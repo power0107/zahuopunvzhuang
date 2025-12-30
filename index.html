@@ -1,106 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store</title>
+    <title>General Store | 精选分类</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="top-announcement">FREE US SHIPPING & RETURNS | NEW ARRIVALS DAILY</div>
+    <div class="top-utility">
+        <div class="wide-container">
+            <span>FREE INTERNATIONAL SHIPPING</span>
+            <span>General Store 官方旗舰店</span>
+            <span>登录/注册 | ❤️ | 🛒</span>
+        </div>
+    </div>
 
     <header class="main-header">
-        <div class="logo-area">
-            <h1>General Store</h1>
-            <p>CURATED APPAREL & GOODS</p>
-        </div>
-
-        <nav class="mega-nav">
-            <div class="nav-item">
-                <a href="#">WOMEN</a>
-                <div class="mega-menu">
-                    <div class="menu-column">
-                        <h4>CLOTHING</h4>
-                        <a href="#">Dresses</a>
-                        <a href="#">Tops</a>
-                        <a href="#">Outerwear</a>
-                        <a href="#">Denim</a>
-                    </div>
-                    <div class="menu-column">
-                        <h4>SHOES</h4>
-                        <a href="#">Boots</a>
-                        <a href="#">Heels</a>
-                        <a href="#">Flats</a>
-                    </div>
-                    <div class="menu-display">
-                        <img src="images/product1.jpg" alt="Women's Clothing">
-                        <span>SHOP NEW WOMEN</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nav-item">
-                <a href="#">MEN</a>
-                <div class="mega-menu">
-                    <div class="menu-column">
-                        <h4>APPAREL</h4>
-                        <a href="#">Shirts</a>
-                        <a href="#">Jackets</a>
-                        <a href="#">Pants</a>
-                    </div>
-                    <div class="menu-column">
-                        <h4>ACCESSORIES</h4>
-                        <a href="#">Bags</a>
-                        <a href="#">Wallets</a>
-                    </div>
-                    <div class="menu-display">
-                        <img src="images/product2.jpg" alt="Men's Clothing">
-                        <span>SHOP NEW MEN</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nav-item">
-                <a href="#">HOME</a>
-                <div class="mega-menu">
-                    <div class="menu-column">
-                        <h4>DECOR</h4>
-                        <a href="#">Candles</a>
-                        <a href="#">Vases</a>
-                    </div>
-                    <div class="menu-column">
-                        <h4>LIVING</h4>
-                        <a href="#">Bedding</a>
-                        <a href="#">Kitchen</a>
-                    </div>
-                    <div class="menu-display">
-                        <img src="images/product3.jpg" alt="Home Goods">
-                        <span>SHOP HOME GOODS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nav-item"><a href="#" class="sale-tag">SALE</a></div>
+        <div class="logo">General Store</div>
+        <nav class="main-nav">
+            <div id="category-nav" class="nav-wrapper"></div>
+            <a href="#" class="sale">SALE</a>
         </nav>
     </header>
 
-    <section class="hero-full-width" style="background-image: url('images/product36.jpg');">
-        <div class="hero-overlay">
-            <h2>THE NEW ARRIVALS</h2>
-            <p>Discover our latest collection, curated for timeless style.</p>
-            <a href="#" class="hero-btn">SHOP NOW</a>
+    <section class="hero-section">
+        <div class="hero-image" style="background-image: url('images/product36.jpg');">
+            <div class="hero-content">
+                <h2>WINTER ESSENTIALS</h2>
+                <p>探索本季最值得投资的时尚单品</p>
+                <a href="#shop" class="btn-cta">立即选购</a>
+            </div>
         </div>
     </section>
 
-    <main class="content-wrapper">
-        <div class="section-header">
-            <h3>FEATURED PRODUCTS</h3>
-            <span>35 ITEMS TOTAL</span>
+    <main class="wide-container" id="shop">
+        <div class="section-title">
+            <h3 id="current-category-name">ALL COLLECTIONS</h3>
         </div>
-
-        <div class="product-grid" id="productGrid">
-            </div>
+        <div class="product-grid" id="productGrid"></div>
     </main>
 
     <div id="lightbox" class="lightbox">
