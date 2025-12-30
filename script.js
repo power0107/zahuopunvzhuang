@@ -1,4 +1,3 @@
-// 映射你截图中的真实编号
 const config = [
     { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
     { name: "长裤", id: 2, items: [12, 13, 14, 15] },
@@ -9,33 +8,8 @@ const config = [
 ];
 
 const grid = document.getElementById('productGrid');
-const title = document.getElementById('current-title');
 
-// 进入二级子目录函数
-window.enterCategory = function(name) {
-    const data = config.find(c => c.name === name);
-    if (!data) return;
-
-    title.innerText = name;
-    grid.innerHTML = ''; 
-
-    data.items.forEach(id => {
-        const card = document.createElement('div');
-        card.className = 'p-card';
-        // 关键：读取子文件夹内的图片
-        const imgPath = `images/${name}/product${id}.jpg`;
-        
-        card.innerHTML = `
-            <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/400x500?text=图片路径错误'">
-            <p>GENERAL STORE NO.${id}</p>
-        `;
-        grid.appendChild(card);
-    });
-    
-    document.getElementById('product-area').scrollIntoView({ behavior: 'smooth' });
-};
-
-// 首页初始渲染 (1-6)
+// 首页初始加载：1-6号图并列一排
 function renderHome() {
     grid.innerHTML = '';
     config.forEach(cat => {
@@ -43,11 +17,28 @@ function renderHome() {
         card.className = 'p-card';
         card.onclick = () => enterCategory(cat.name);
         card.innerHTML = `
-            <img src="images/product${cat.id}.jpg" onerror="this.src='https://via.placeholder.com/400x500?text=首页图丢失'">
-            <p>${cat.name}系列</p>
+            <img src="images/product${cat.id}.jpg">
+            <p>${cat.name}</p>
         `;
         grid.appendChild(card);
     });
 }
+
+// 进入二级分类（逻辑保持：去对应的文件夹找图）
+window.enterCategory = function(name) {
+    const data = config.find(c => c.name === name);
+    if (!data) return;
+
+    grid.innerHTML = ''; 
+    data.items.forEach(id => {
+        const card = document.createElement('div');
+        card.className = 'p-card';
+        card.innerHTML = `
+            <img src="images/${name}/product${id}.jpg">
+            <p>Style No.${id}</p>
+        `;
+        grid.appendChild(card);
+    });
+};
 
 renderHome();
