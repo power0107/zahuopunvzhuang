@@ -1,178 +1,68 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE MODERN ARCHIVE | Women's Boutique</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        /* === CSS 样式部分 === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #fff; color: #111; line-height: 1.5; }
+/* 基础重置 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', sans-serif; background: #fff; color: #111; }
 
-        /* 顶部通栏 */
-        .top-promo { background: #000; color: #fff; text-align: center; padding: 10px; font-size: 11px; letter-spacing: 2px; }
+/* 增强版版头设计 */
+header {
+    background: #fff;
+    padding: 60px 0 30px;
+    border-bottom: 2px solid #000;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.header-top-line { font-size: 10px; letter-spacing: 4px; color: #888; margin-bottom: 10px; }
+.site-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; /* 加大店名展示 */
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #000;
+    line-height: 1;
+}
+.header-tagline { font-size: 11px; letter-spacing: 5px; color: #444; margin-top: 15px; font-weight: 700; }
 
-        /* 导航栏 */
-        header { 
-            padding: 40px 0 20px; 
-            border-bottom: 1px solid #f0f0f0; 
-            text-align: center; 
-            background: #fff; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            transition: 0.3s; 
-        }
-        .site-logo { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 38px; 
-            letter-spacing: 6px; 
-            margin-bottom: 30px; 
-        }
+/* 主图区域 */
+.hero { padding: 0 4%; margin: 30px 0; }
+.hero-container { position: relative; width: 100%; height: 75vh; background: #eee; overflow: hidden; }
+.hero-img { width: 100%; height: 100%; object-fit: cover; }
 
-        .nav-menu { list-style: none; display: flex; justify-content: center; gap: 50px; }
-        .nav-item { position: relative; padding-bottom: 15px; }
-        .nav-item > a { text-decoration: none; color: #000; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+/* 微信号码样式 - 置于大图之上 */
+.wechat-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    color: #fff;
+    padding: 25px 50px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+.wechat-title { display: block; font-size: 10px; letter-spacing: 4px; margin-bottom: 10px; color: #ccc; }
+.wechat-id { display: block; font-size: 28px; font-weight: 700; letter-spacing: 1px; }
 
-        /* 二级菜单逻辑 */
-        .submenu {
-            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-            background: #fff; border: 1px solid #eee; min-width: 160px;
-            list-style: none; padding: 10px 0; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .submenu li a { display: block; padding: 10px 20px; text-decoration: none; color: #666; font-size: 12px; text-align: left; }
-        .nav-item:hover .submenu { display: block; }
+.hero-label { position: absolute; bottom: 20px; right: 20px; font-size: 12px; letter-spacing: 3px; font-weight: 700; }
 
-        /* 主视觉区 Hero (product36) */
-        .hero { padding: 0 4%; margin-top: 20px; }
-        .hero-container { position: relative; height: 85vh; overflow: hidden; background: #f5f5f5; }
-        .hero-img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-label { position: absolute; bottom: 8%; left: 5%; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .hero-label h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 64px); margin: 10px 0 20px; }
-        .btn-shop { background: #fff; color: #000; padding: 12px 35px; text-decoration: none; font-size: 12px; font-weight: 600; border: 1px solid #fff; }
+/* 三张一行紧凑网格 */
+.gallery { padding: 0 4% 60px; }
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px; /* 更加紧凑的间距，模仿 Shopbop 设计感 */
+}
+.product-card { margin-bottom: 15px; }
+.img-wrap {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f7f7f7;
+}
+.img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 核心网格布局：三张图一行 */
-        .gallery-container { padding: 60px 4%; }
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 15px; /* 紧凑间距 */
-        }
-
-        .product-card { margin-bottom: 30px; cursor: pointer; }
-        .img-wrap { 
-            aspect-ratio: 3 / 4; /* Shopbop 经典的纵向画报比例 */
-            overflow: hidden; 
-            background: #f9f9f9; 
-            margin-bottom: 12px;
-        }
-        .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .product-card:hover img { transform: scale(1.04); }
-
-        /* 商品信息文字 */
-        .info { text-align: left; }
-        .info .brand { font-size: 10px; font-weight: 600; color: #888; letter-spacing: 1px; display: block; margin-bottom: 4px; }
-        .info .name { font-size: 13px; color: #333; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .info .price { font-weight: 600; font-size: 14px; color: #000; }
-
-        /* 响应式适配 */
-        @media (max-width: 900px) {
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .nav-menu { gap: 20px; }
-            .site-logo { font-size: 28px; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="top-promo">NEW SEASON ARRIVALS: SHOP THE EDIT</div>
-
-    <header id="mainHeader">
-        <div class="site-logo">THE MODERN ARCHIVE</div>
-        <nav>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#">马甲</a>
-                    <ul class="submenu">
-                        <li><a href="#">羽绒马甲</a></li>
-                        <li><a href="#">针织马甲</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#">毛衫</a>
-                    <ul class="submenu">
-                        <li><a href="#">羊绒衫</a></li>
-                        <li><a href="#">修身开衫</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#">毛衣</a>
-                    <ul class="submenu">
-                        <li><a href="#">高领毛衣</a></li>
-                        <li><a href="#">粗棒针织</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#">羽绒服</a>
-                    <ul class="submenu">
-                        <li><a href="#">廓形羽绒</a></li>
-                        <li><a href="#">长款保暖</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-container">
-            <img src="product36.jpg" alt="Featured Look" class="hero-img">
-            <div class="hero-label">
-                <p>NEW ARRIVALS</p>
-                <h1>Season Edit 2025</h1>
-                <a href="#" class="btn-shop">SHOP NOW</a>
-            </div>
-        </div>
-    </section>
-
-    <main class="gallery-container">
-        <div class="product-grid" id="mainGrid">
-            </div>
-    </main>
-
-    <script>
-        /* === JS 脚本部分 === */
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('mainGrid');
-            
-            // 自动加载 78 张图
-            for (let i = 1; i <= 78; i++) {
-                const productHTML = `
-                    <div class="product-card">
-                        <div class="img-wrap">
-                            <img src="product${i}.jpg" alt="Product ${i}" loading="lazy" onerror="this.src='https://via.placeholder.com/600x800?text=Image+Missing'">
-                        </div>
-                        <div class="info">
-                            <span class="brand">BOUTIQUE COLLECTION</span>
-                            <p class="name">Product Style Item ${i}</p>
-                            <p class="price">¥ ${Math.floor(Math.random() * 1500) + 400}</p>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += productHTML;
-            }
-
-            // 滚动时导航栏缩小的动态效果
-            const header = document.getElementById('mainHeader');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.style.padding = '15px 0 10px';
-                } else {
-                    header.style.padding = '40px 0 20px';
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+/* 手机端适配 */
+@media (max-width: 800px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .site-logo { font-size: 32px; }
+    .wechat-box { width: 85%; padding: 20px; }
+}
