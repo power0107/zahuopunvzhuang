@@ -1,68 +1,39 @@
-/* 基础重置 */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Montserrat', sans-serif; background: #fff; color: #111; }
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENERAL STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-/* 增强版版头设计 */
-header {
-    background: #fff;
-    padding: 60px 0 30px;
-    border-bottom: 2px solid #000;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-.header-top-line { font-size: 10px; letter-spacing: 4px; color: #888; margin-bottom: 10px; }
-.site-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 52px; /* 加大店名展示 */
-    font-weight: 900;
-    letter-spacing: 8px;
-    color: #000;
-    line-height: 1;
-}
-.header-tagline { font-size: 11px; letter-spacing: 5px; color: #444; margin-top: 15px; font-weight: 700; }
+    <header class="main-header">
+        <div class="logo-area">
+            <p class="est">SINCE 2025</p>
+            <h1 class="shop-name">GENERAL STORE</h1>
+            <p class="desc">PREMIUM CURATED COLLECTION</p>
+        </div>
+    </header>
 
-/* 主图区域 */
-.hero { padding: 0 4%; margin: 30px 0; }
-.hero-container { position: relative; width: 100%; height: 75vh; background: #eee; overflow: hidden; }
-.hero-img { width: 100%; height: 100%; object-fit: cover; }
+    <section class="hero-section">
+        <div class="hero-container">
+            <img src="images/product36.jpg" alt="Featured" class="hero-img" id="mainHero">
+            
+            <div class="wechat-overlay">
+                <div class="wechat-content">
+                    <span class="wechat-hint">CONTACT WECHAT</span>
+                    <h2 class="wechat-id">lanxiaoqi1981</h2>
+                </div>
+            </div>
+        </div>
+    </section>
 
-/* 微信号码样式 - 置于大图之上 */
-.wechat-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #000;
-    color: #fff;
-    padding: 25px 50px;
-    text-align: center;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-}
-.wechat-title { display: block; font-size: 10px; letter-spacing: 4px; margin-bottom: 10px; color: #ccc; }
-.wechat-id { display: block; font-size: 28px; font-weight: 700; letter-spacing: 1px; }
+    <div class="grid-container">
+        <main class="product-grid" id="productGrid"></main>
+    </div>
 
-.hero-label { position: absolute; bottom: 20px; right: 20px; font-size: 12px; letter-spacing: 3px; font-weight: 700; }
-
-/* 三张一行紧凑网格 */
-.gallery { padding: 0 4% 60px; }
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px; /* 更加紧凑的间距，模仿 Shopbop 设计感 */
-}
-.product-card { margin-bottom: 15px; }
-.img-wrap {
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background: #f7f7f7;
-}
-.img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-
-/* 手机端适配 */
-@media (max-width: 800px) {
-    .product-grid { grid-template-columns: repeat(2, 1fr); }
-    .site-logo { font-size: 32px; }
-    .wechat-box { width: 85%; padding: 20px; }
-}
+    <script src="script.js"></script>
+</body>
+</html>
