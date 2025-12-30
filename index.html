@@ -5,87 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>general store | Shopbop Style</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-        body { background: #fff; color: #333; overflow-x: hidden; }
+        /* --- 彻底清除所有浏览器边距 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Times New Roman", Times, serif; }
+        body { background: #fff; color: #000; overflow-x: hidden; }
+
+        /* 顶部辅助条 - 极细 */
+        .sb-utility { background: #f9f9f9; padding: 5px 0; font-size: 10px; color: #666; text-align: center; border-bottom: 1px solid #eee; }
+
+        /* 头部 Logo 区 - 极致压缩 */
+        .sb-header { padding: 10px 0; text-align: center; }
+        .logo { font-size: 40px; font-weight: bold; text-transform: lowercase; letter-spacing: 1px; color: #000; cursor: pointer; }
+
+        /* 导航栏 - 紧凑排列 */
+        .sb-nav { display: flex; justify-content: center; gap: 20px; padding: 5px 0; border-bottom: 1px solid #eee; }
+        .sb-nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer; }
+        .sb-nav a.sale { color: #d0021b; }
+
+        /* 促销条 - 紧贴下方 */
+        .sb-promo { background: #f5e1d3; padding: 6px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; }
+
+        /* --- 首页大海报区 (Product 36) --- */
+        .sb-hero { width: 100%; position: relative; line-height: 0; font-size: 0; overflow: hidden; }
+        .sb-hero img { width: 100%; height: auto; display: block; object-fit: contain; }
         
-        /* 头部样式 */
-        header { padding: 4px 0 0; text-align: center; background: #fff; }
-        .logo { font-family: "Times New Roman", Times, serif; font-size: 34px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 2px; color: #000; }
-        nav { display: flex; justify-content: center; gap: 15px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
-        nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .promo-banner { background: #f5e1d3; padding: 2px 0; font-size: 11px; font-weight: bold; text-align: center; margin-bottom: 2px; }
+        /* 海报上的浮动卡片 */
+        .hero-card { 
+            position: absolute; left: 5%; top: 15%; background: rgba(255,255,255,0.95); 
+            padding: 30px; max-width: 350px; text-align: left; border: 1px solid #eee; z-index: 2;
+        }
+        .hero-card span { font-size: 10px; color: #888; letter-spacing: 1px; }
+        .hero-card h2 { font-size: 32px; margin: 5px 0; font-weight: normal; line-height: 1; }
+        .sb-btn { 
+            display: inline-block; background: #e85a2a; color: #fff; padding: 10px 30px; 
+            text-decoration: none; font-size: 11px; font-weight: bold; margin-top: 10px; cursor: pointer;
+        }
 
-        /* 横版图：固定在六张图上方，100%宽度显示 */
-        .hero-section { 
-            width: 100%; 
-            height: 280px; /* 可调整横版图高度 */
-            overflow: hidden; 
-            position: relative; 
-            margin-bottom: 8px; /* 横版图与六张图的间距，可改0实现紧贴 */
+        /* --- 6 张并排大图区 --- */
+        .sb-main { width: 100%; padding: 0 4px; background: #fff; position: relative; }
+        
+        /* 强力向上拉：消除海报和图片之间的白色鸿沟 */
+        .sb-grid-container { 
+            margin-top: -80px; /* 强行覆盖空白 */
+            position: relative; z-index: 5;
         }
-        .hero-img { width: 100%; height: 100%; display: block; object-fit: cover; }
-        .hero-overlay { 
-            position: absolute; left: 4%; top: 50%; transform: translateY(-50%); 
-            background: rgba(255,255,255,0.92); padding: 15px; max-width: 280px; 
-            line-height: 1.1; border: 1px solid #eee; 
+        
+        .section-title { 
+            text-align: center; margin-bottom: 10px; background: transparent; 
         }
-        .hero-overlay h2 { font-size: 22px; margin: 4px 0; font-family: serif; font-weight: 300; }
+        .section-title h3 { 
+            font-size: 18px; display: inline-block; border-bottom: 1px solid #000; 
+            padding-bottom: 2px; text-transform: uppercase; background: #fff; padding: 0 10px;
+        }
 
-        /* 六张图区域：紧跟横版图下方 */
-        .product-section { width: 100%; padding: 0 4px; }
-        .section-header { text-align: center; margin-bottom: 8px; }
-        .section-header h3 { 
-            font-size: 18px; font-family: serif; text-transform: uppercase; 
-            background: #fff; padding: 0 10px; display: inline-block; border-bottom: 1px solid #333; 
-        }
-        .product-grid { 
-            display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; width: 100%; 
+        /* 6 列网格：图片最大化 */
+        .sb-grid { 
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; width: 100%; 
         }
         .p-card { text-align: center; cursor: pointer; }
-        .p-card img { 
-            width: 100%; height: auto; display: block; margin-bottom: 4px; 
-            background: #f9f9f9; 
-            background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%);
-            background-size: 8px 8px;
-        }
-        .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; }
+        .p-card img { width: 100%; height: auto; display: block; background: #f9f9f9; }
+        .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 5px; color: #000; }
 
-        /* 灯箱样式 */
+        /* 预览层 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
         .lightbox-img { max-height: 90vh; max-width: 90vw; }
     </style>
 </head>
 <body>
-    <header>
+
+    <div class="sb-utility">选购男士精品 | CN | $USD | 免费国际快递 · 轻松退货</div>
+
+    <header class="sb-header">
         <div class="logo">general store</div>
-        <nav id="top-nav"></nav>
-        <div class="promo-banner">畅享特惠！精选单品现享低至 7 折优惠。</div>
+        <nav class="sb-nav" id="top-nav"></nav>
+        <div class="sb-promo">畅享特惠！精选单品现享低至 7 折优惠。 即刻选购</div>
     </header>
 
-    <!-- 横版图：固定在六张图上方的核心区域 -->
-    <section class="hero-section">
-        < img src="images/product36.jpg" class="hero-img" alt="女装新品横版banner">
-        <div class="hero-overlay">
-            <span style="font-size:10px; color:#888;">NEW COLLECTION</span>
+    <section class="sb-hero">
+        <img src="images/product36.jpg" alt="Hero">
+        <div class="hero-card">
+            <span>NEW COLLECTION</span>
             <h2>TIMELESS CHIC</h2>
-            <div style="background: #e85a2a; color: #fff; padding: 6px 15px; font-size: 10px; display: inline-block; margin-top: 5px; cursor: pointer;" onclick="document.getElementById('product-area').scrollIntoView({behavior:'smooth'})">立即选购</div>
+            <div class="sb-btn" onclick="document.getElementById('product-area').scrollIntoView({behavior:'smooth'})">立即选购</div>
         </div>
     </section>
 
-    <!-- 六张分类图：紧跟横版图下方 -->
-    <main class="product-section" id="product-area">
-        <div class="section-header">
-            <h3 id="current-title">全新上线</h3>
+    <main class="sb-main" id="product-area">
+        <div class="sb-grid-container">
+            <div class="section-title">
+                <h3 id="current-title">全新上线</h3>
+            </div>
+            <div class="sb-grid" id="productGrid"></div>
         </div>
-        <div class="product-grid" id="productGrid"></div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'">
-        < img class="lightbox-img" id="lightboxImg">
+        <img class="lightbox-img" id="lightboxImg">
     </div>
 
     <script>
-        // 分类配置
         const config = [
             { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
             { name: "长裤", id: 2, items: [12, 13, 14, 15] },
@@ -99,41 +116,45 @@
         const nav = document.getElementById('top-nav');
         const title = document.getElementById('current-title');
 
-        // 生成导航
-        let navHtml = '<a onclick="location.reload()">首页</a >';
-        config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a >`; });
+        // 生成导航栏
+        let navHtml = '<a onclick="location.reload()">首页</a>';
+        config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a>`; });
+        navHtml += '<a class="sale">折扣促销</a>';
         nav.innerHTML = navHtml;
 
-        // 分类切换逻辑
+        // 进入子分类逻辑
         window.enterCategory = function(name) {
             const data = config.find(c => c.name === name);
             if (!data) return;
             title.innerText = name;
+            // 进入分类后，取消首页的负毛利拉升，恢复正常间距
+            document.querySelector('.sb-grid-container').style.marginTop = '20px';
             grid.innerHTML = ''; 
             data.items.forEach(id => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
-                const imgSrc = `images/${name}/product${id}.jpg`;
-                card.innerHTML = `< img src="${imgSrc}" class="zoomable" onerror="this.src='images/error.png'; this.alt='图片加载失败'"><p>NO.${id}</p >`;
+                card.innerHTML = `<img src="images/${name}/product${id}.jpg" class="zoomable"><p>NO.${id}</p>`;
                 grid.appendChild(card);
             });
+            window.scrollTo({ top: document.getElementById('product-area').offsetTop - 10, behavior: 'smooth' });
         };
 
-        // 渲染首页六张图
+        // 初始化渲染首页 1-6 号图
         function renderHome() {
             grid.innerHTML = '';
+            document.querySelector('.sb-grid-container').style.marginTop = '-80px';
             config.forEach(cat => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
                 card.onclick = () => enterCategory(cat.name);
-                const imgSrc = `images/product${cat.id}.jpg`;
-                card.innerHTML = `< img src="${imgSrc}" onerror="this.src='images/error.png'; this.alt='分类图加载失败'"><p>${cat.name}</p >`;
+                card.innerHTML = `<img src="images/product${cat.id}.jpg"><p>${cat.name}</p>`;
                 grid.appendChild(card);
             });
         }
+
         renderHome();
 
-        // 灯箱功能
+        // 点击图片放大
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('zoomable')) {
                 document.getElementById('lightbox').style.display = 'flex';
