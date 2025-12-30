@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.appendChild(item);
     }
 
-    // 图片放大预览逻辑
+    // 全局点击放大逻辑
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('zoom-trigger')) {
             lightbox.style.display = 'flex';
@@ -28,15 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 关闭放大预览
-    closeBtn.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-    });
-
-    // 点击背景关闭
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-            lightbox.style.display = 'none';
-        }
-    });
+    // 关闭逻辑
+    const hideLightbox = () => { lightbox.style.display = 'none'; };
+    closeBtn.addEventListener('click', hideLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) hideLightbox(); });
 });
