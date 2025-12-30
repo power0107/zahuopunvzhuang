@@ -1,16 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('mainGrid');
-    const imagePath = 'images/'; // 确保文件夹名为 images
+    const folder = 'images/'; 
     
-    // 加载 1 到 78 张图片
+    // 渲染 product1 到 product78
     for (let i = 1; i <= 78; i++) {
         const item = document.createElement('div');
         item.className = 'product-item';
         
-        // 渲染图片
         item.innerHTML = `
             <div class="img-box">
-                <img src="${imagePath}product${i}.jpg" alt="Item ${i}" loading="lazy" 
+                <img src="${folder}product${i}.jpg" alt="Item ${i}" loading="lazy" 
                      onerror="this.parentElement.parentElement.style.display='none'">
             </div>
         `;
