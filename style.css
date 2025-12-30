@@ -1,45 +1,66 @@
-/* Shopbop 风格深度还原 */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
-body { background: #fff; color: #333; scroll-behavior: smooth; }
-.container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+// 保持您已调通的分类映射与图片编号
+const config = [
+    { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
+    { name: "长裤", id: 2, items: [12, 13, 14, 15] },
+    { name: "羽绒服", id: 3, items: [16, 17, 18, 19, 20] },
+    { name: "外套", id: 4, items: [21, 22, 23, 24, 25] },
+    { name: "打底", id: 5, items: [26, 27, 28] },
+    { name: "裙子", id: 6, items: [33, 34, 35] }
+];
 
-/* 顶部工具栏 */
-.top-utility { background: #f9f9f9; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 11px; color: #666; }
-.top-utility .container { display: flex; justify-content: space-between; }
+const grid = document.getElementById('productGrid');
+const title = document.getElementById('current-title');
 
-/* 头部 */
-.main-header { padding: 40px 0 0; text-align: center; }
-.logo { font-family: "Times New Roman", Times, serif; font-size: 52px; font-weight: bold; letter-spacing: 2px; margin-bottom: 25px; text-transform: lowercase; color: #000; }
-.main-nav { display: flex; justify-content: center; gap: 30px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-.main-nav a { text-decoration: none; color: #333; font-size: 13px; font-weight: bold; }
-.sale-red { color: #d0021b !important; }
-.promo-strip { background: #f5e1d3; padding: 10px; font-size: 13px; font-weight: bold; margin-bottom: 0; text-align: center; }
+// 进入二级分类：根据文件夹路径寻找图片
+window.enterCategory = function(name) {
+    const data = config.find(c => c.name === name);
+    if (!data) return;
 
-/* 海报 */
-.hero-section { width: 100%; height: 650px; overflow: hidden; }
-.hero-inner { width: 100%; height: 100%; background-size: cover; background-position: center; position: relative; }
-.hero-content { position: absolute; left: 8%; top: 25%; background: rgba(255,255,255,0.92); padding: 50px; max-width: 450px; border: 1px solid #f2f2f2; }
-.hero-content h2 { font-size: 52px; margin: 15px 0; font-family: serif; font-weight: 300; }
-.btn-shop { display: inline-block; background: #e85a2a; color: #fff; padding: 15px 40px; text-decoration: none; font-weight: bold; font-size: 13px; }
+    title.innerText = name;
+    grid.innerHTML = ''; 
 
-/* 商品网格 */
-.section-title { text-align: center; margin: 60px 0 40px; position: relative; }
-.section-title h3 { font-size: 26px; border-bottom: 2px solid #000; padding-bottom: 5px; font-family: serif; display: inline-block; }
-.view-all { position: absolute; right: 0; bottom: 5px; font-size: 12px; color: #e85a2a; font-weight: bold; text-decoration: none; }
+    data.items.forEach(id => {
+        const card = document.createElement('div');
+        card.className = 'p-card';
+        // 关键路径：images/分类名/product编号.jpg
+        const imgPath = `images/${name}/product${id}.jpg`;
+        
+        card.innerHTML = `
+            <img src="${imgPath}" class="zoom-target" onerror="this.src='https://via.placeholder.com/400x500?text=图片路径错误'">
+            <p>STYLE ITEM NO.${id}</p>
+            <span>$${(Math.random()*200 + 100).toFixed(2)}</span>
+        `;
+        grid.appendChild(card);
+    });
+    
+    document.getElementById('product-area').scrollIntoView({ behavior: 'smooth' });
+};
 
-.product-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 30px 15px; }
-.p-card { text-align: center; cursor: pointer; }
-.p-card img { width: 100%; height: 420px; object-fit: cover; margin-bottom: 12px; }
-.p-card p { font-size: 12px; font-weight: bold; margin-bottom: 4px; }
-.p-card span { font-size: 12px; color: #888; }
+// 首页初始加载：仅显示 product 1-6
+function renderHome() {
+    grid.innerHTML = '';
+    config.forEach(cat => {
+        const card = document.createElement('div');
+        card.className = 'p-card';
+        card.onclick = () => enterCategory(cat.name);
+        card.innerHTML = `
+            <img src="images/product${cat.id}.jpg" onerror="this.src='https://via.placeholder.com/400x500?text=首页图丢失'">
+            <p>${cat.name}系列</p>
+            <span>点击浏览更多</span>
+        `;
+        grid.appendChild(card);
+    });
+}
 
-/* 灵感宫格 */
-.ins-grid { display: flex; gap: 10px; margin: 20px 0 100px; }
-.ins-item { flex: 1; text-align: center; cursor: pointer; }
-.ins-item img { width: 100%; height: 320px; object-fit: cover; margin-bottom: 10px; }
-.ins-item span { font-size: 12px; color: #d0021b; border-bottom: 1px solid #d0021b; padding-bottom: 2px; }
+renderHome();
 
-/* Lightbox */
-.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
-.lightbox-img { max-height: 90vh; }
-.close-btn { position: absolute; top: 20px; right: 40px; font-size: 50px; cursor: pointer; }
+// Lightbox 功能
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('zoom-target')) {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = e.target.src;
+    }
+});
+document.querySelector('.close-btn').onclick = () => lightbox.style.display = 'none';
