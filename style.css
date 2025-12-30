@@ -1,102 +1,108 @@
-/* 全局基础方案 */
+/* 全局重置 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
+body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版头设计：参考图2的超粗字体视觉 */
+/* 版头：图2风格，宽间距设计 */
 .main-header {
     padding: 60px 0 40px;
     text-align: center;
     background: #fff;
 }
-.est-text { font-size: 11px; letter-spacing: 5px; color: #999; margin-bottom: 10px; font-weight: 700; }
+.est-text { font-size: 10px; letter-spacing: 6px; color: #aaa; margin-bottom: 15px; font-weight: 400; }
 
 .brand-logo {
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 85px; /* 超大字体 */
-    line-height: 0.85;
-    letter-spacing: -4px; /* 紧凑字间距 */
+    font-family: 'Lexend Exa', sans-serif; /* 类似图2的圆润粗体 */
+    font-size: 45px; /* 调整为更协调的大小 */
+    font-weight: 800;
+    letter-spacing: 12px; /* 按照要求加宽间距 */
     text-transform: uppercase;
     color: #000;
-    margin: 0 auto;
+    line-height: 1.2;
 }
 
-.line-sep {
-    width: 60px;
-    height: 4px;
+.header-line {
+    width: 40px;
+    height: 3px;
     background: #000;
-    margin: 25px auto 0;
+    margin: 20px auto 0;
 }
 
-/* 横幅区：首屏不留白 */
+/* 横幅区：完全消除留白 */
 .banner-hero {
-    width: 100vw; /* 占据整个视口宽度 */
-    position: relative;
+    width: 100vw;
     margin: 0;
-    line-height: 0; /* 消除图片下方间隙 */
+    padding: 0;
+    position: relative;
+    line-height: 0;
 }
 
 .banner-container {
     width: 100%;
-    height: auto;
-    min-height: 40vh;
     position: relative;
-    overflow: hidden;
 }
 
 .hero-image {
     width: 100%;
     height: auto;
     display: block;
+    margin: 0;
 }
 
-/* 二维码：店招上方靠左 */
+/* 二维码：缩小并靠左上角 */
 .qr-float-left {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 8px;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 6px;
     border: 1px solid #000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    backdrop-filter: blur(4px);
 }
 
 .mini-qr {
-    width: 70px; /* 缩小后的二维码 */
-    height: 70px;
+    width: 55px; /* 二维码进一步缩小 */
+    height: 55px;
     display: block;
 }
 
 .qr-hint {
-    font-size: 9px;
-    font-weight: 700;
-    margin-top: 4px;
+    font-size: 8px;
+    font-weight: 800;
+    margin-top: 3px;
     letter-spacing: 1px;
+    color: #000;
 }
 
-/* 商品网格：三列紧凑 */
-.main-content { padding: 10px; }
+/* 网格布局 */
+.main-content { padding: 8px; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px; /* 极致紧凑 */
+    gap: 6px;
 }
 
 .product-item { width: 100%; }
 .img-box {
     aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: #f2f2f2;
+    background: #f7f7f7;
 }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 手机端适配：重要 */
+/* 手机端适配优化 */
 @media (max-width: 800px) {
-    .brand-logo { font-size: 50px; letter-spacing: -2px; }
-    .main-header { padding: 40px 0 30px; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; } /* 移动端改为2列增加细节 */
-    .qr-float-left { top: 15px; left: 15px; }
-    .mini-qr { width: 60px; height: 60px; }
+    .brand-logo { 
+        font-size: 22px; 
+        letter-spacing: 6px; /* 手机端适当缩减间距防止折行 */
+    }
+    .main-header { padding: 40px 10px 30px; }
+    .product-grid { 
+        grid-template-columns: repeat(2, 1fr); /* 手机端2列观感更紧凑 */
+        gap: 4px;
+    }
+    .qr-float-left { top: 10px; left: 10px; }
+    .mini-qr { width: 45px; height: 45px; }
 }
