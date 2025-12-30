@@ -1,200 +1,73 @@
-/* 基础重置 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    color: #111;
-    background-color: #fff;
-    -webkit-font-smoothing: antialiased;
-}
+/* 全局样式 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: #fff; color: #000; -webkit-font-smoothing: antialiased; }
 
 /* 顶部公告 */
-.top-banner {
-    background: #f5f5f5;
-    text-align: center;
-    padding: 10px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.announcement-bar {
+    background: #000; color: #fff; text-align: center;
+    padding: 10px; font-size: 11px; letter-spacing: 1.5px;
 }
 
 /* 导航 */
 header {
-    padding: 40px 0 20px;
-    border-bottom: 1px solid #eee;
-    background: #fff;
-    text-align: center;
+    text-align: center; padding: 40px 0 20px;
+    border-bottom: 1px solid #eee; background: #fff;
+    position: sticky; top: 0; z-index: 1000;
 }
-
 .site-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 38px;
-    letter-spacing: 4px;
-    margin-bottom: 30px;
+    font-family: 'Playfair Display', serif; font-size: 38px;
+    letter-spacing: 6px; margin-bottom: 30px;
 }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-}
+.main-menu { list-style: none; display: flex; justify-content: center; gap: 50px; }
+.menu-item { position: relative; padding-bottom: 15px; }
+.menu-item > a { text-decoration: none; color: #000; font-size: 13px; font-weight: 600; letter-spacing: 1px; }
 
-.nav-item {
-    position: relative;
-    padding-bottom: 15px;
-}
-
-.nav-item > a {
-    text-decoration: none;
-    color: #000;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-}
-
-/* 二级目录 */
+/* 二级目录悬浮 */
 .dropdown {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    min-width: 180px;
-    list-style: none;
-    padding: 15px 0;
-    border: 1px solid #eee;
-    display: none; /* 默认隐藏 */
-    z-index: 100;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    background: #fff; border: 1px solid #eee; min-width: 150px;
+    list-style: none; padding: 10px 0; display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.dropdown li a { display: block; padding: 10px 20px; text-decoration: none; color: #666; font-size: 12px; text-align: left; }
+.dropdown li a:hover { color: #000; background: #f9f9f9; }
+.menu-item:hover .dropdown { display: block; }
+
+/* 主视觉区 */
+.hero-section { padding: 0 4%; margin: 20px 0; }
+.hero-wrapper { position: relative; height: 80vh; overflow: hidden; }
+.hero-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+.hero-text { position: absolute; bottom: 8%; left: 5%; color: #fff; }
+.hero-text .subtitle { font-size: 12px; letter-spacing: 2px; margin-bottom: 10px; }
+.hero-text .title { font-family: 'Playfair Display', serif; font-size: 52px; margin-bottom: 20px; }
+.cta-btn { 
+    display: inline-block; background: #fff; color: #000; 
+    padding: 12px 35px; text-decoration: none; font-size: 12px; font-weight: 600;
 }
 
-.dropdown li a {
-    text-decoration: none;
-    color: #666;
-    font-size: 12px;
-    display: block;
-    padding: 8px 20px;
-    text-align: left;
-}
-
-.dropdown li a:hover {
-    color: #000;
-    background: #f9f9f9;
-}
-
-.nav-item:hover .dropdown {
-    display: block;
-}
-
-/* 主展示图 product36 */
-.hero-section {
-    padding: 0 4%;
-    margin: 20px 0;
-}
-
-.hero-container {
-    position: relative;
-    height: 80vh;
-    overflow: hidden;
-}
-
-.hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.hero-overlay {
-    position: absolute;
-    bottom: 10%;
-    left: 5%;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 56px;
-    margin-bottom: 15px;
-}
-
-.hero-link {
-    color: #fff;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-decoration: underline;
-    text-underline-offset: 5px;
-}
-
-/* 产品网格 (3列) */
-.section-title {
-    text-align: center;
-    font-size: 18px;
-    letter-spacing: 3px;
-    margin: 60px 0 30px;
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 核心：三列布局 */
+/* 三列紧凑网格 */
+.collection-grid { padding: 40px 4%; }
+.grid-container { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); /* 核心：三列 */
     gap: 15px; /* 紧凑间距 */
-    padding: 0 4%;
 }
-
-.product-card {
-    margin-bottom: 40px;
-    cursor: pointer;
+.product-item { cursor: pointer; margin-bottom: 30px; }
+.img-holder { 
+    aspect-ratio: 3 / 4; /* 时尚比例 */
+    overflow: hidden; background: #f7f7f7;
 }
+.img-holder img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+.product-item:hover img { opacity: 0.85; }
 
-.img-box {
-    aspect-ratio: 3 / 4; /* Shopbop 常用的长方形比例 */
-    overflow: hidden;
-    background: #f9f9f9;
-}
+.product-meta { padding: 15px 0; }
+.brand { font-size: 11px; font-weight: 600; color: #888; letter-spacing: 1px; }
+.name { font-size: 14px; margin: 4px 0; }
+.price { font-size: 14px; font-weight: 600; }
 
-.img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.product-card:hover img {
-    transform: scale(1.03);
-}
-
-.product-detail {
-    padding: 15px 5px;
-    text-align: left;
-}
-
-.brand-name {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.item-name {
-    font-size: 14px;
-    color: #444;
-    margin-bottom: 5px;
-}
-
-.item-price {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-/* 响应式适配 */
+/* 响应式 */
 @media (max-width: 900px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .grid-container { grid-template-columns: repeat(2, 1fr); }
+    .site-logo { font-size: 28px; }
 }
