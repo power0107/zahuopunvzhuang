@@ -2,44 +2,41 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store | 极简高端女装</title>
+    <title>General Store | Shopbop Style</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="top-bar">FREE SHIPPING & RETURNS | NEW SEASON COLLECTIONS</div>
+    <div class="top-announcement">FREE INTERNATIONAL SHIPPING | 免费国际快递 · 轻松退货</div>
 
     <header class="main-header">
         <div class="logo">General Store</div>
         <nav class="main-nav">
             <div id="category-nav" class="nav-container"></div>
-            <a href="#" class="sale-link">SALE</a>
+            <a href="#" class="sale-tag">SALE</a>
         </nav>
     </header>
 
     <section class="hero-section">
         <div class="hero-image" style="background-image: url('images/product36.jpg');">
             <div class="hero-content">
-                <h2>THE GENERAL STORE</h2>
-                <p>探索欧美极简美学，打造高质感日常衣橱</p>
-                <a href="#product-area" class="btn-shop">开始选购</a>
+                <span class="sub">NEW COLLECTION</span>
+                <h2>GENERAL STORE</h2>
+                <p>探索极简美学，打造高质感日常衣橱。</p>
+                <a href="#product-area" class="btn-shop">立即选购</a>
             </div>
         </div>
     </section>
 
     <main class="wide-container" id="product-area">
-        <div class="section-header">
+        <div class="section-title">
             <h3 id="current-title">FEATURED CATEGORIES</h3>
-            <span id="item-count">6 CATEGORIES</span>
         </div>
-
         <div class="product-grid" id="productGrid"></div>
     </main>
 
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
-        <img class="lightbox-content" id="lightboxImg">
+        <img class="lightbox-img" id="lightboxImg">
     </div>
 
     <script src="script.js"></script>
