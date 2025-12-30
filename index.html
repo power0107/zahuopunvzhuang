@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>general store | Shopbop Style</title>
     <style>
-        /* --- 极致压缩：完全消除空白版 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
         body { background: #fff; color: #333; overflow-x: hidden; }
         
-        /* 1. 容器：全宽展示 */
         .container { max-width: 100%; padding: 0 4px; margin: 0 auto; }
 
-        /* 2. 头部：极致压缩高度 */
         header { padding: 4px 0 0; text-align: center; background: #fff; }
         .logo { font-family: "Times New Roman", Times, serif; font-size: 34px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 2px; color: #000; }
         
@@ -20,11 +17,10 @@
         nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .sale { color: #d0021b !important; }
 
-        /* 3. 促销条：紧贴导航 */
-        .promo-banner { background: #f5e1d3; padding: 4px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; }
+        .promo-banner { background: #f5e1d3; padding: 4px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; margin-bottom: -5px; /* 促销条底部向上收窄 */ }
 
-        /* 4. Product 36：极致置顶，取消一切边距 */
-        .hero-section { width: 100%; position: relative; line-height: 0; margin: 0; padding: 0; }
+        /* 横版图区域：底部间距改为负数，往上移 */
+        .hero-section { width: 100%; position: relative; line-height: 0; margin: 0; padding: 0; margin-bottom: -120px; /* 数值越大，横版图越往上靠 */ }
         .hero-img { width: 100%; height: auto; display: block; object-fit: contain; }
         
         .hero-overlay { 
@@ -33,10 +29,10 @@
         }
         .hero-overlay h2 { font-size: 26px; margin: 4px 0; font-family: serif; font-weight: 300; }
 
-        /* 5. 重点：六张大图紧凑化 - 使用负边距强行消除空白 */
+        /* 六张图区域：负边距加大，更贴近横版图 */
         .product-section { 
             padding: 0; 
-            margin-top: -100px; /* 如果还是觉得远，就把这个数字改成 -150px */
+            margin-top: -150px; /* 比原来的-100px更靠近，可继续调大负数 */
             position: relative; 
             z-index: 10;
         }
@@ -51,7 +47,6 @@
             border-bottom: 1px solid #333;
         }
 
-        /* 6. 首页网格：6列并排，间距极小，图会变得非常大 */
         .product-grid { 
             display: grid; 
             grid-template-columns: repeat(6, 1fr); 
@@ -63,7 +58,6 @@
         .p-card img { width: 100%; height: auto; display: block; margin-bottom: 4px; background: #f9f9f9; }
         .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; }
 
-        /* 灯箱 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
         .lightbox-img { max-height: 90vh; max-width: 90vw; }
     </style>
@@ -77,7 +71,7 @@
     </header>
 
     <section class="hero-section">
-        <img src="images/product36.jpg" class="hero-img" alt="Hero">
+        < img src="images/product36.jpg" class="hero-img" alt="Hero">
         <div class="hero-overlay">
             <span style="font-size:10px; color:#888;">NEW COLLECTION</span>
             <h2>TIMELESS CHIC</h2>
@@ -93,7 +87,7 @@
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'">
-        <img class="lightbox-img" id="lightboxImg">
+        < img class="lightbox-img" id="lightboxImg">
     </div>
 
     <script>
@@ -110,33 +104,32 @@
         const nav = document.getElementById('top-nav');
         const title = document.getElementById('current-title');
 
-        let navHtml = '<a onclick="location.reload()">首页</a>';
-        config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a>`; });
+        let navHtml = '<a onclick="location.reload()">首页</a >';
+        config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a >`; });
         nav.innerHTML = navHtml;
 
         window.enterCategory = function(name) {
             const data = config.find(c => c.name === name);
             if (!data) return;
             title.innerText = name;
-            // 进入子目录后，取消负边距，恢复正常排版
             document.getElementById('product-area').style.marginTop = '20px';
             grid.innerHTML = ''; 
             data.items.forEach(id => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
-                card.innerHTML = `<img src="images/${name}/product${id}.jpg" class="zoomable"><p>NO.${id}</p>`;
+                card.innerHTML = `< img src="images/${name}/product${id}.jpg" class="zoomable"><p>NO.${id}</p >`;
                 grid.appendChild(card);
             });
         };
 
         function renderHome() {
             grid.innerHTML = '';
-            document.getElementById('product-area').style.marginTop = '-100px';
+            document.getElementById('product-area').style.marginTop = '-150px'; // 同步修改首页负边距
             config.forEach(cat => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
                 card.onclick = () => enterCategory(cat.name);
-                card.innerHTML = `<img src="images/product${cat.id}.jpg"><p>${cat.name}</p>`;
+                card.innerHTML = `< img src="images/product${cat.id}.jpg"><p>${cat.name}</p >`;
                 grid.appendChild(card);
             });
         }
