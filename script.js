@@ -5,21 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close-btn');
     const folder = 'images/'; 
     
-    // 渲染 1 到 78 张图片
+    // 生成78张图
     for (let i = 1; i <= 78; i++) {
         const item = document.createElement('div');
         item.className = 'product-item';
+        const imgPath = `${folder}product${i}.jpg`;
         
         item.innerHTML = `
             <div class="img-box">
-                <img src="${folder}product${i}.jpg" alt="Item ${i}" loading="lazy" class="zoom-trigger"
-                     onerror="this.parentElement.parentElement.style.display='none'">
+                <img src="${imgPath}" alt="Item ${i}" loading="lazy" class="zoom-trigger"
+                     onerror="this.src='product${i}.jpg'; this.onerror=function(){this.parentElement.parentElement.style.display='none';}">
             </div>
         `;
         grid.appendChild(item);
     }
 
-    // 点击放大功能
+    // 放大功能
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('zoom-trigger')) {
             lightbox.style.display = 'flex';
@@ -27,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const hideLightbox = () => { lightbox.style.display = 'none'; };
-    closeBtn.addEventListener('click', hideLightbox);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) hideLightbox(); });
+    const hide = () => lightbox.style.display = 'none';
+    closeBtn.addEventListener('click', hide);
+    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) hide(); });
 });
