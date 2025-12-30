@@ -4,34 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Est. 2008</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Playfair+Display:italic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="header-content">
+    <header class="main-header">
+        <div class="header-inner">
             <p class="since-tag">SINCE 2008</p>
-            <h1 class="logo-text">General Store</h1>
+            <h1 class="brand-logo">General Store</h1>
+            <p class="contact-black">V: lanxiaoqi1981</p>
         </div>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-wrapper">
-            <img src="images/product36.jpg" alt="Featured" class="hero-image zoom-item">
-            <div class="v-label-box">
-                <span>V: lanxiaoqi1981</span>
-            </div>
+    <section class="banner-hero">
+        <div class="banner-wrapper">
+            <img src="images/product36.jpg" alt="Featured" class="hero-image zoom-trigger">
         </div>
     </section>
 
-    <main class="gallery-wrapper">
+    <main class="main-content">
         <div class="product-grid" id="mainGrid"></div>
     </main>
 
-    <div id="lightboxOverlay" class="lightbox-overlay">
-        <span class="close-x">&times;</span>
-        <img class="lightbox-img" id="lightboxImg">
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="lightboxImg">
     </div>
 
     <script src="script.js"></script>
