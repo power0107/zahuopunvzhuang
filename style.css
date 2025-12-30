@@ -2,44 +2,33 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版头：极致紧凑排版 */
+/* 版头设计 */
 .main-header {
-    padding: 40px 0 0px; /* 彻底取消底部内边距 */
+    padding: 60px 0 0px; /* 底部彻底取消间距 */
     text-align: center;
     background: #fff;
 }
-.est-text { 
-    font-size: 10px; 
-    letter-spacing: 5px; 
-    color: #bbb; 
-    margin-bottom: 0px; /* 取消年份下方间距 */
-}
+.est-text { font-size: 11px; letter-spacing: 5px; color: #bbb; margin-bottom: 5px; }
 
 .brand-logo {
     font-family: 'Lexend Exa', sans-serif;
-    font-size: 34px; 
-    font-weight: 400; /* 调至常规粗细，不再太粗 */
-    letter-spacing: 15px; /* 间距加大，更有设计感 */
-    text-transform: uppercase;
+    font-size: 64px; /* 加大字号 */
+    font-weight: 400;
+    letter-spacing: 15px; /* 加大间距 */
     color: #000;
-    white-space: nowrap; 
+    text-transform: none; /* 保持首字母大写 */
+    white-space: nowrap;
     line-height: 1;
 }
 
-/* 横幅区：负边距让图片上移贴近字体 */
+/* 横幅区：极致向上移动贴紧字体 */
 .banner-hero {
     width: 100vw;
-    margin-top: -30px; /* 负值越大，图片越靠上，紧贴店名 */
+    margin-top: -35px; /* 向上移动紧贴店名 */
     position: relative;
     line-height: 0;
-    z-index: 1;
 }
-
-.hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
+.hero-image { width: 100%; height: auto; cursor: pointer; }
 
 /* 二维码样式 */
 .qr-float-left {
@@ -53,44 +42,57 @@ body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; ove
     flex-direction: column;
     align-items: center;
 }
+.mini-qr { width: 50px; height: 50px; display: block; cursor: pointer; }
+.qr-hint { font-size: 8px; font-weight: 700; margin-top: 2px; color: #000; letter-spacing: 1px; }
 
-.mini-qr {
-    width: 45px;
-    height: 45px;
-}
-
-.qr-hint {
-    font-size: 7px;
-    font-weight: 700;
-    margin-top: 2px;
-    color: #000;
-    letter-spacing: 1px;
-}
-
-/* 商品网格布局 */
-.main-content { padding: 5px; }
+/* 网格布局：极致缩减间距 */
+.main-content { padding: 2px 5px; margin-top: -2px; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 4px;
 }
-
-.product-item { width: 100%; }
 .img-box {
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background: #f7f7f7;
+    cursor: pointer;
 }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
+/* 全屏放大遮罩样式 */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+}
+.lightbox-content {
+    max-width: 95%;
+    max-height: 90%;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 /* 手机端适配 */
 @media (max-width: 800px) {
-    .brand-logo { 
-        font-size: 16px; 
-        letter-spacing: 6px; 
-    }
-    .main-header { padding: 30px 0 0px; }
-    .banner-hero { margin-top: -20px; } /* 手机端适当调整上移距离 */
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
-    .mini-qr { width: 35px; height: 35px; }
+    .brand-logo { font-size: 28px; letter-spacing: 8px; }
+    .main-header { padding: 40px 0 0px; }
+    .banner-hero { margin-top: -20px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+    .mini-qr { width: 40px; height: 40px; }
 }
