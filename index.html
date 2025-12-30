@@ -3,47 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store | 精选分类</title>
+    <title>General Store | 简约·高端女装</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="top-utility">
-        <div class="wide-container">
-            <span>FREE INTERNATIONAL SHIPPING</span>
-            <span>General Store 官方旗舰店</span>
-            <span>登录/注册 | ❤️ | 🛒</span>
-        </div>
-    </div>
+    <div class="top-bar">FREE SHIPPING ON ALL ORDERS | NEW SEASON ARRIVALS</div>
 
     <header class="main-header">
         <div class="logo">General Store</div>
         <nav class="main-nav">
-            <div id="category-nav" class="nav-wrapper"></div>
-            <a href="#" class="sale">SALE</a>
+            <div id="category-nav" class="nav-container"></div>
+            <a href="#" class="sale-link">SALE</a>
         </nav>
     </header>
 
     <section class="hero-section">
         <div class="hero-image" style="background-image: url('images/product36.jpg');">
             <div class="hero-content">
-                <h2>WINTER ESSENTIALS</h2>
-                <p>探索本季最值得投资的时尚单品</p>
-                <a href="#shop" class="btn-cta">立即选购</a>
+                <h2>THE NEW COLLECTION</h2>
+                <p>探索极简美学，打造高质感日常衣橱</p>
+                <a href="#product-area" class="btn-shop">SHOP NOW</a>
             </div>
         </div>
     </section>
 
-    <main class="wide-container" id="shop">
-        <div class="section-title">
-            <h3 id="current-category-name">ALL COLLECTIONS</h3>
+    <main class="wide-container" id="product-area">
+        <div class="section-header">
+            <h3 id="current-cat-title">FEATURED ITEMS</h3>
+            <span id="item-count">6 ITEMS</span>
         </div>
+
         <div class="product-grid" id="productGrid"></div>
     </main>
 
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
-        <img class="lightbox-img" id="lightboxImg">
+        <img class="lightbox-content" id="lightboxImg">
     </div>
 
     <script src="script.js"></script>
