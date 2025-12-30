@@ -1,52 +1,52 @@
+// 重新定义配置，匹配你截图中的文件夹名称
+const config = [
+    { name: "毛衣", id: 1, items: [7, 8, 9, 10, 11] },
+    { name: "长裤", id: 2, items: [12, 13, 14, 15] },
+    { name: "羽绒服", id: 3, items: [16, 17, 18, 19, 20] },
+    { name: "外套", id: 4, items: [21, 22, 23, 24, 25] },
+    { name: "打底", id: 5, items: [26, 27, 28, 29, 30] },
+    { name: "裙子", id: 6, items: [31, 32, 33, 34, 35] }
+];
+
 const grid = document.getElementById('productGrid');
 const title = document.getElementById('current-title');
 
-// 1. 进入二级子目录函数
-window.enterCategory = function(name, items) {
-    console.log("正在加载分类:", name); // 调试用
+// 进入二级子目录函数
+window.enterCategory = function(name) {
+    const data = config.find(c => c.name === name);
     title.innerText = `COLLECTION: ${name}`;
     grid.innerHTML = ''; 
 
-    items.forEach(id => {
+    data.items.forEach(id => {
         const card = document.createElement('div');
         card.className = 'p-card';
         
-        // 关键点：显式拼接路径
-        const imgPath = "images/product" + id + ".jpg";
+        // 【核心修改点】：路径现在包含中文文件夹名
+        // 比如：images/毛衣/product7.jpg
+        const imgPath = `images/${name}/product${id}.jpg`;
         
         card.innerHTML = `
             <img src="${imgPath}" class="zoomable" 
-                 onerror="this.src='https://via.placeholder.com/400x500?text=Missing+Product+${id}'">
+                 onerror="this.src='https://via.placeholder.com/400x500?text=图片路径错误'">
             <p>${name} NO.${id}</p>
         `;
         grid.appendChild(card);
     });
     
-    // 跳转
     document.getElementById('product-area').scrollIntoView({ behavior: 'smooth' });
 };
 
-// 2. 首页渲染 (1-6)
+// 首页渲染 (1-6) - 保持不变，因为这些图在 images 根目录下
 function renderHome() {
     grid.innerHTML = '';
-    const homeConfig = [
-        { n: "毛衣", id: 1, list: [7,8,9,10,11] },
-        { n: "长裤", id: 2, list: [12,13,14,15] },
-        { n: "羽绒服", id: 3, list: [16,17,18,19,20] },
-        { n: "外套", id: 4, list: [21,22,23,24,25] },
-        { n: "打底", id: 5, list: [26,27,28,29,30] },
-        { n: "风衣", id: 6, list: [31,32,33,34,35] }
-    ];
-
-    homeConfig.forEach(cat => {
+    config.forEach(cat => {
         const card = document.createElement('div');
         card.className = 'p-card home-entry';
-        // 直接绑定点击事件
-        card.onclick = function() { enterCategory(cat.n, cat.list); };
+        card.onclick = function() { enterCategory(cat.name); };
         
         card.innerHTML = `
             <div class="img-wrap">
-                <img src="images/product${cat.id}.jpg" onerror="console.log('首页图丢失:${cat.id}')">
+                <img src="images/product${cat.id}.jpg">
                 <div class="overlay">VIEW MORE</div>
             </div>
             <p>${cat.n}</p>
@@ -55,19 +55,4 @@ function renderHome() {
     });
 }
 
-// 执行初始化
 renderHome();
-
-// 3. Lightbox 功能
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('zoomable')) {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = e.target.src;
-    }
-});
-
-document.querySelector('.close-btn').onclick = () => lightbox.style.display = 'none';
-lightbox.onclick = (e) => { if(e.target === lightbox) lightbox.style.display = 'none'; };
