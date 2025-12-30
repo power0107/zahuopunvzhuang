@@ -1,54 +1,350 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Arial, sans-serif; }
-body { background: #fff; color: #000; overflow-x: hidden; }
+/* General Store - Minimalist & Wide Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
 
-.top-announcement { background: #000; color: #fff; text-align: center; padding: 12px; font-size: 11px; letter-spacing: 2px; }
+body {
+    background: #fff;
+    color: #1a1a1a;
+    overflow-x: hidden; /* 防止横向滚动条 */
+}
 
-/* 横屏头部 */
-.main-header { width: 100%; border-bottom: 1px solid #eee; padding: 40px 60px; text-align: center; }
-.logo-area h1 { font-size: 34px; letter-spacing: 5px; margin-bottom: 5px; }
-.logo-area p { font-size: 14px; color: #888; letter-spacing: 3px; margin-bottom: 35px; }
+/* Top Announcement Bar */
+.top-announcement {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
 
-/* 导航与三级子目录 */
-.mega-nav { display: flex; justify-content: center; gap: 45px; }
-.nav-item { position: relative; padding-bottom: 15px; }
-.nav-item > a { text-decoration: none; color: #1a1a1a; font-size: 13px; font-weight: 500; letter-spacing: 1px; }
-.sale-tag { color: #d0021b !important; }
+/* Main Header */
+.main-header {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    padding: 40px 60px;
+    text-align: center;
+}
 
+.logo-area h1 {
+    font-size: 38px;
+    letter-spacing: 6px;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.logo-area p {
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 3px;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+}
+
+/* Mega Navigation */
+.mega-nav {
+    display: flex;
+    justify-content: center;
+    gap: 55px; /* 增加间距使其更宽敞 */
+}
+
+.nav-item {
+    position: relative;
+    padding-bottom: 15px; /* 留出下拉菜单的空隙 */
+}
+
+.nav-item > a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+}
+
+.nav-item > a:hover {
+    color: #666;
+}
+
+.sale-tag {
+    color: #d0021b !important;
+    font-weight: 600;
+}
+
+/* Mega Menu Dropdown */
 .mega-menu {
-    display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-    background: #fff; border: 1px solid #f2f2f2; padding: 30px; min-width: 550px;
-    gap: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); z-index: 100;
+    display: none;
+    position: absolute;
+    top: 100%; /* 紧贴导航项下方 */
+    left: 50%;
+    transform: translateX(-50%); /* 居中显示 */
+    background: #fff;
+    border: 1px solid #f2f2f2;
+    padding: 30px 40px;
+    min-width: 600px; /* 更宽的菜单 */
+    gap: 50px; /* 栏目间距 */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    z-index: 1000;
+    text-align: left; /* 内部内容左对齐 */
 }
-.nav-item:hover .mega-menu { display: flex; }
 
-.menu-column h4 { font-size: 12px; margin-bottom: 15px; border-bottom: 1px solid #000; padding-bottom: 5px; text-align: left; }
-.menu-column a { display: block; padding: 6px 0; text-decoration: none; color: #666; font-size: 12px; text-align: left; }
+.nav-item:hover .mega-menu {
+    display: flex; /* 悬停时显示 */
+}
 
-.menu-display { text-align: center; border-left: 1px solid #eee; padding-left: 30px; }
-.menu-display img { width: 120px; height: 160px; object-fit: cover; margin-bottom: 10px; }
-.menu-display span { display: block; font-size: 10px; font-weight: bold; }
+.menu-column {
+    flex: 1; /* 自动分配宽度 */
+}
 
-/* 35张图网格容器 */
-.wide-container { max-width: 1800px; margin: 60px auto; padding: 0 60px 100px; }
-.section-info { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 45px; }
-.section-info h3 { font-size: 20px; letter-spacing: 2px; }
+.menu-column h4 {
+    font-size: 12px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-.product-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 50px 30px; }
-.product-card { cursor: zoom-in; text-align: left; }
-.product-card img { width: 100%; height: auto; margin-bottom: 15px; transition: 0.3s; background-color: #fcfcfc; }
-.product-card:hover img { opacity: 0.8; }
-.product-card p { font-size: 11px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-.product-card span { font-size: 11px; color: #888; }
+.menu-column a {
+    display: block;
+    padding: 8px 0;
+    text-decoration: none;
+    color: #666;
+    font-size: 12px;
+    transition: color 0.2s ease;
+}
 
-/* 图片最大化 Lightbox */
+.menu-column a:hover {
+    color: #000;
+}
+
+.menu-display {
+    border-left: 1px solid #eee;
+    padding-left: 40px;
+    text-align: center;
+    display: flex; /* 使图片和文字垂直居中 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-display img {
+    width: 140px;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 1px solid #f0f0f0;
+}
+
+.menu-display span {
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #444;
+}
+
+/* Hero Section (Wide Image) */
+.hero-full-width {
+    width: 100%;
+    height: 60vh; /* 确保高宽比大气 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.hero-overlay {
+    background-color: rgba(255, 255, 255, 0.7); /* 半透明白色背景 */
+    padding: 40px 60px;
+    max-width: 700px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.hero-overlay h2 {
+    font-size: 48px;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+    font-weight: 300;
+    color: #1a1a1a;
+    text-transform: uppercase;
+}
+
+.hero-overlay p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero-btn {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 15px 40px;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+}
+
+.hero-btn:hover {
+    background: #444;
+}
+
+/* Product Grid Section */
+.content-wrapper {
+    max-width: 1800px; /* 保持宽屏 */
+    margin: 0 auto 100px;
+    padding: 0 60px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 45px;
+}
+
+.section-header h3 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.section-header span {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5列排版 */
+    gap: 50px 30px; /* 大间距 */
+}
+
+.product-card {
+    text-align: left;
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* 悬停微动效果 */
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    transition: opacity 0.3s ease;
+    background-color: #fcfcfc; /* 占位符背景 */
+}
+
+.product-card:hover img {
+    opacity: 0.8;
+}
+
+.product-card p {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.product-card span {
+    font-size: 11px;
+    color: #888;
+}
+
+/* Lightbox for Image Zoom */
 .lightbox {
-    display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
-    background: rgba(255,255,255,0.95); justify-content: center; align-items: center;
+    display: none;
+    position: fixed;
+    z-index: 2000; /* 确保在最上层 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.98); /* 更亮的背景 */
+    justify-content: center;
+    align-items: center;
 }
-.lightbox-img { max-height: 90vh; max-width: 90vw; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
-.close-btn { position: absolute; top: 30px; right: 50px; font-size: 40px; cursor: pointer; }
 
-/* 响应式排版 */
-@media (max-width: 1400px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+.lightbox-img {
+    max-height: 90vh;
+    max-width: 90vw;
+    box-shadow: 0 0 40px rgba(0,0,0,0.15); /* 更强的阴影效果 */
+}
+
+.close-btn {
+    position: absolute;
+    top: 40px; /* 调整位置 */
+    right: 60px; /* 调整位置 */
+    font-size: 45px; /* 放大叉号 */
+    cursor: pointer;
+    color: #333; /* 颜色 */
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1400px) {
+    .product-grid { grid-template-columns: repeat(4, 1fr); }
+    .main-header { padding: 30px 40px; }
+    .mega-nav { gap: 30px; }
+}
+
+@media (max-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero-overlay h2 { font-size: 38px; }
+    .hero-overlay p { font-size: 14px; }
+    .hero-overlay { padding: 30px 40px; }
+    .mega-menu { min-width: 450px; gap: 30px; padding: 25px; }
+}
+
+@media (max-width: 768px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .main-header { padding: 20px; }
+    .logo-area h1 { font-size: 30px; letter-spacing: 4px; }
+    .logo-area p { font-size: 12px; letter-spacing: 2px; }
+    .mega-nav { justify-content: space-around; gap: 0; }
+    .nav-item { padding-bottom: 10px; }
+    .mega-menu { /* 在小屏幕上禁用三级菜单的图片显示 */
+        flex-direction: column;
+        min-width: unset;
+        width: 100%;
+        left: 0;
+        transform: translateX(0);
+        padding: 20px;
+    }
+    .menu-display { display: none; }
+    .menu-column { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+    .menu-column:last-child { border-bottom: none; margin-bottom: 0; }
+    .hero-full-width { height: 40vh; margin-bottom: 50px; }
+    .hero-overlay h2 { font-size: 32px; letter-spacing: 5px; }
+    .hero-overlay p { display: none; } /* 小屏幕上隐藏描述 */
+    .hero-btn { padding: 12px 30px; font-size: 12px; }
+    .close-btn { top: 20px; right: 20px; font-size: 35px; }
+}
