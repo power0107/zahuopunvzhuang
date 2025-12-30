@@ -1,30 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('mainGrid');
-    const lightbox = document.getElementById('lightboxOverlay');
+    const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
-    const closeBtn = document.querySelector('.close-x');
-    const imgFolder = 'images/'; 
+    const closeBtn = document.querySelector('.close-btn');
+    const folder = 'images/'; 
     
-    // 生成78张缩略图
+    // 加载 78 张图片
     for (let i = 1; i <= 78; i++) {
-        const div = document.createElement('div');
-        div.className = 'grid-item';
-        const path = `${imgFolder}product${i}.jpg`;
+        const item = document.createElement('div');
+        item.className = 'product-item';
         
-        div.innerHTML = `<img src="${path}" alt="Product ${i}" loading="lazy" class="zoom-item"
-                        onerror="this.src='product${i}.jpg'; this.onerror=function(){this.parentElement.style.display='none';}">`;
-        grid.appendChild(div);
+        item.innerHTML = `
+            <div class="img-box">
+                <img src="${folder}product${i}.jpg" alt="Item ${i}" loading="lazy" class="zoom-trigger"
+                     onerror="this.src='product${i}.jpg'; this.onerror=function(){this.parentElement.parentElement.style.display='none';}">
+            </div>
+        `;
+        grid.appendChild(item);
     }
 
-    // 全屏点击逻辑
+    // 全局点击放大
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('zoom-item')) {
+        if (e.target.classList.contains('zoom-trigger')) {
             lightbox.style.display = 'flex';
             lightboxImg.src = e.target.src;
         }
     });
 
-    const closeLightbox = () => { lightbox.style.display = 'none'; };
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    const hide = () => { lightbox.style.display = 'none'; };
+    closeBtn.addEventListener('click', hide);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) hide(); });
 });
