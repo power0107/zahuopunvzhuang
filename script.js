@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close-btn');
     const folder = 'images/'; 
     
-    // 加载图片
+    // 自动加载 78 张商品图
     for (let i = 1; i <= 78; i++) {
         const item = document.createElement('div');
         item.className = 'product-item';
+        
         item.innerHTML = `
             <div class="img-box">
                 <img src="${folder}product${i}.jpg" alt="Item ${i}" loading="lazy" class="zoom-trigger"
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.appendChild(item);
     }
 
-    // 放大逻辑
+    // 点击放大逻辑
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('zoom-trigger')) {
             lightbox.style.display = 'flex';
