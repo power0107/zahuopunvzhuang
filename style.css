@@ -1,56 +1,52 @@
 /* 全局重置 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
+body { font-family: 'Inter', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
-/* 版头设计 */
+/* 版头设计：加大、加粗、紧凑 */
 .main-header {
-    padding: 60px 0 0px; /* 底部彻底取消间距 */
+    padding: 60px 0 0; /* 彻底取消底部内边距 */
     text-align: center;
     background: #fff;
 }
-.est-text { font-size: 11px; letter-spacing: 5px; color: #bbb; margin-bottom: 5px; }
+.est-text { font-size: 12px; letter-spacing: 3px; color: #999; margin-bottom: 5px; }
 
 .brand-logo {
-    font-family: 'Lexend Exa', sans-serif;
-    font-size: 64px; /* 加大字号 */
-    font-weight: 400;
-    letter-spacing: 15px; /* 加大间距 */
+    font-size: 80px; /* 巨型字体 */
+    font-weight: 900; /* 极粗 */
+    letter-spacing: 2px; /* 字间距变近 */
     color: #000;
-    text-transform: none; /* 保持首字母大写 */
+    text-transform: none; 
+    line-height: 0.9;
     white-space: nowrap;
-    line-height: 1;
 }
 
-/* 横幅区：极致向上移动贴紧字体 */
+/* 横幅区：极致向上移动，无缝贴合 */
 .banner-hero {
     width: 100vw;
-    margin-top: -35px; /* 向上移动紧贴店名 */
+    margin-top: -10px; /* 向上微调贴近标题 */
     position: relative;
     line-height: 0;
 }
 .hero-image { width: 100%; height: auto; cursor: pointer; }
 
-/* 二维码样式 */
-.qr-float-left {
+/* 微信号码样式 */
+.v-contact-box {
     position: absolute;
     top: 20px;
     left: 20px;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 4px;
-    border: 1px solid #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 2px;
 }
-.mini-qr { width: 50px; height: 50px; display: block; cursor: pointer; }
-.qr-hint { font-size: 8px; font-weight: 700; margin-top: 2px; color: #000; letter-spacing: 1px; }
+.v-text { font-size: 14px; font-weight: 700; letter-spacing: 1px; }
 
-/* 网格布局：极致缩减间距 */
-.main-content { padding: 2px 5px; margin-top: -2px; }
+/* 商品网格：彻底消除与大图的间距 */
+.main-content { padding: 0; margin-top: 0; }
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    gap: 2px; /* 极紧凑缝隙 */
 }
 .img-box {
     aspect-ratio: 3 / 4;
@@ -60,11 +56,11 @@ body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; ove
 }
 .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 全屏放大遮罩样式 */
+/* 全屏灯箱样式 */
 .lightbox {
     display: none;
     position: fixed;
-    z-index: 2000;
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;
@@ -73,26 +69,21 @@ body { font-family: 'Lexend Exa', sans-serif; background: #fff; color: #000; ove
     justify-content: center;
     align-items: center;
 }
-.lightbox-content {
-    max-width: 95%;
-    max-height: 90%;
-    box-shadow: 0 0 20px rgba(255,255,255,0.1);
-}
+.lightbox-content { max-width: 95%; max-height: 90%; object-fit: contain; }
 .close-btn {
     position: absolute;
     top: 20px;
     right: 30px;
     color: #fff;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bold;
     cursor: pointer;
 }
 
 /* 手机端适配 */
 @media (max-width: 800px) {
-    .brand-logo { font-size: 28px; letter-spacing: 8px; }
-    .main-header { padding: 40px 0 0px; }
-    .banner-hero { margin-top: -20px; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
-    .mini-qr { width: 40px; height: 40px; }
+    .brand-logo { font-size: 35px; letter-spacing: 1px; }
+    .main-header { padding: 40px 0 0; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1px; }
+    .v-text { font-size: 12px; }
 }
