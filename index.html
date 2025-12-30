@@ -8,70 +8,63 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
         body { background: #fff; color: #333; overflow-x: hidden; }
         
-        .container { max-width: 100%; padding: 0 4px; margin: 0 auto; }
-
+        /* 头部样式 */
         header { padding: 4px 0 0; text-align: center; background: #fff; }
         .logo { font-family: "Times New Roman", Times, serif; font-size: 34px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 2px; color: #000; }
-        
-        nav { display: flex; justify-content: center; gap: 15px; padding-bottom: 4px; border-bottom: 1px solid #eee; }
-        nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .sale { color: #d0021b !important; }
+        nav { display: flex; justify-content: center; gap: 15px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
+        nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        .promo-banner { background: #f5e1d3; padding: 2px 0; font-size: 11px; font-weight: bold; text-align: center; margin-bottom: 2px; }
 
-        .promo-banner { background: #f5e1d3; padding: 4px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; margin-bottom: -5px; /* 促销条底部向上收窄 */ }
-
-        /* 横版图区域：底部间距改为负数，往上移 */
-        .hero-section { width: 100%; position: relative; line-height: 0; margin: 0; padding: 0; margin-bottom: -120px; /* 数值越大，横版图越往上靠 */ }
-        .hero-img { width: 100%; height: auto; display: block; object-fit: contain; }
-        
-        .hero-overlay { 
-            position: absolute; left: 4%; top: 10%; background: rgba(255,255,255,0.92); 
-            padding: 20px; max-width: 320px; text-align: left; line-height: 1.1; border: 1px solid #eee; 
-        }
-        .hero-overlay h2 { font-size: 26px; margin: 4px 0; font-family: serif; font-weight: 300; }
-
-        /* 六张图区域：负边距加大，更贴近横版图 */
-        .product-section { 
-            padding: 0; 
-            margin-top: -150px; /* 比原来的-100px更靠近，可继续调大负数 */
+        /* 横版图：固定在六张图上方，100%宽度显示 */
+        .hero-section { 
+            width: 100%; 
+            height: 280px; /* 可调整横版图高度 */
+            overflow: hidden; 
             position: relative; 
-            z-index: 10;
+            margin-bottom: 8px; /* 横版图与六张图的间距，可改0实现紧贴 */
         }
+        .hero-img { width: 100%; height: 100%; display: block; object-fit: cover; }
+        .hero-overlay { 
+            position: absolute; left: 4%; top: 50%; transform: translateY(-50%); 
+            background: rgba(255,255,255,0.92); padding: 15px; max-width: 280px; 
+            line-height: 1.1; border: 1px solid #eee; 
+        }
+        .hero-overlay h2 { font-size: 22px; margin: 4px 0; font-family: serif; font-weight: 300; }
+
+        /* 六张图区域：紧跟横版图下方 */
+        .product-section { width: 100%; padding: 0 4px; }
         .section-header { text-align: center; margin-bottom: 8px; }
         .section-header h3 { 
-            font-size: 18px; 
-            font-family: serif; 
-            text-transform: uppercase; 
-            background: #fff; 
-            padding: 0 10px;
-            display: inline-block;
-            border-bottom: 1px solid #333;
+            font-size: 18px; font-family: serif; text-transform: uppercase; 
+            background: #fff; padding: 0 10px; display: inline-block; border-bottom: 1px solid #333; 
         }
-
         .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 2px; 
-            width: 100%; 
+            display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; width: 100%; 
         }
-        
         .p-card { text-align: center; cursor: pointer; }
-        .p-card img { width: 100%; height: auto; display: block; margin-bottom: 4px; background: #f9f9f9; }
+        .p-card img { 
+            width: 100%; height: auto; display: block; margin-bottom: 4px; 
+            background: #f9f9f9; 
+            background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%);
+            background-size: 8px 8px;
+        }
         .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; }
 
+        /* 灯箱样式 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
         .lightbox-img { max-height: 90vh; max-width: 90vw; }
     </style>
 </head>
 <body>
-
     <header>
         <div class="logo">general store</div>
         <nav id="top-nav"></nav>
         <div class="promo-banner">畅享特惠！精选单品现享低至 7 折优惠。</div>
     </header>
 
+    <!-- 横版图：固定在六张图上方的核心区域 -->
     <section class="hero-section">
-        < img src="images/product36.jpg" class="hero-img" alt="Hero">
+        < img src="images/product36.jpg" class="hero-img" alt="女装新品横版banner">
         <div class="hero-overlay">
             <span style="font-size:10px; color:#888;">NEW COLLECTION</span>
             <h2>TIMELESS CHIC</h2>
@@ -79,7 +72,8 @@
         </div>
     </section>
 
-    <main class="container product-section" id="product-area">
+    <!-- 六张分类图：紧跟横版图下方 -->
+    <main class="product-section" id="product-area">
         <div class="section-header">
             <h3 id="current-title">全新上线</h3>
         </div>
@@ -91,6 +85,7 @@
     </div>
 
     <script>
+        // 分类配置
         const config = [
             { name: "毛衣", id: 1, items: [29, 30, 31, 32] },
             { name: "长裤", id: 2, items: [12, 13, 14, 15] },
@@ -104,37 +99,41 @@
         const nav = document.getElementById('top-nav');
         const title = document.getElementById('current-title');
 
+        // 生成导航
         let navHtml = '<a onclick="location.reload()">首页</a >';
         config.forEach(cat => { navHtml += `<a onclick="enterCategory('${cat.name}')">${cat.name}</a >`; });
         nav.innerHTML = navHtml;
 
+        // 分类切换逻辑
         window.enterCategory = function(name) {
             const data = config.find(c => c.name === name);
             if (!data) return;
             title.innerText = name;
-            document.getElementById('product-area').style.marginTop = '20px';
             grid.innerHTML = ''; 
             data.items.forEach(id => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
-                card.innerHTML = `< img src="images/${name}/product${id}.jpg" class="zoomable"><p>NO.${id}</p >`;
+                const imgSrc = `images/${name}/product${id}.jpg`;
+                card.innerHTML = `< img src="${imgSrc}" class="zoomable" onerror="this.src='images/error.png'; this.alt='图片加载失败'"><p>NO.${id}</p >`;
                 grid.appendChild(card);
             });
         };
 
+        // 渲染首页六张图
         function renderHome() {
             grid.innerHTML = '';
-            document.getElementById('product-area').style.marginTop = '-150px'; // 同步修改首页负边距
             config.forEach(cat => {
                 const card = document.createElement('div');
                 card.className = 'p-card';
                 card.onclick = () => enterCategory(cat.name);
-                card.innerHTML = `< img src="images/product${cat.id}.jpg"><p>${cat.name}</p >`;
+                const imgSrc = `images/product${cat.id}.jpg`;
+                card.innerHTML = `< img src="${imgSrc}" onerror="this.src='images/error.png'; this.alt='分类图加载失败'"><p>${cat.name}</p >`;
                 grid.appendChild(card);
             });
         }
         renderHome();
 
+        // 灯箱功能
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('zoomable')) {
                 document.getElementById('lightbox').style.display = 'flex';
