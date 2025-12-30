@@ -5,97 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style</title>
     <style>
-        /* --- 最终极致紧凑大图版 --- */
+        /* --- 极致紧凑 Shopbop 风格 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
         body { background: #fff; color: #333; overflow-x: hidden; }
         
-        /* 1. 容器：进一步加宽到 1850px，让 6 张图有空间变大 */
-        .container { max-width: 1850px; margin: 0 auto; padding: 0 5px; width: 100%; }
+        /* 容器宽度 */
+        .container { max-width: 1750px; margin: 0 auto; padding: 0 10px; width: 100%; }
 
-        /* 2. 头部：极致压缩高度，取消所有不必要的留白 */
-        header { padding: 5px 0 0; text-align: center; background: #fff; }
-        .logo { font-family: "Times New Roman", Times, serif; font-size: 38px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 2px; color: #000; }
-        nav { display: flex; justify-content: center; gap: 20px; padding-bottom: 4px; border-bottom: 1px solid #eee; }
+        /* 顶部辅助条 */
+        .utility-bar { background: #f9f9f9; border-bottom: 1px solid #eee; padding: 5px 0; font-size: 11px; color: #666; text-align: center; }
+
+        /* 头部：完全压缩高度 */
+        header { padding: 10px 0 0; text-align: center; background: #fff; }
+        .logo { font-family: "Times New Roman", Times, serif; font-size: 42px; letter-spacing: 1px; text-transform: lowercase; font-weight: bold; margin-bottom: 5px; color: #000; }
+        nav { display: flex; justify-content: center; gap: 25px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
         nav a { text-decoration: none; color: #333; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        
-        /* 3. 营销条：紧贴导航，无底边距 */
-        .promo-banner { background: #f5e1d3; padding: 4px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 0; }
+        .sale { color: #d0021b !important; }
 
-        /* 4. Product 36：使用负边距向上提，并消除下方间隙 */
-        .hero-section { width: 100%; position: relative; line-height: 0; margin-top: -1px; }
+        /* 营销条 */
+        .promo-banner { background: #f5e1d3; padding: 6px; font-size: 11px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 0; }
+
+        /* 首页大海报：消除所有下方间距 */
+        .hero-section { width: 100%; position: relative; line-height: 0; font-size: 0; }
         .hero-img { width: 100%; height: auto; display: block; object-fit: contain; }
         
         .hero-overlay { 
-            position: absolute; left: 4%; top: 8%; background: rgba(255,255,255,0.92); 
-            padding: 20px; max-width: 320px; text-align: left; line-height: 1.1; border: 1px solid #eee; 
+            position: absolute; left: 5%; top: 12%; background: rgba(255,255,255,0.9); 
+            padding: 30px; max-width: 400px; text-align: left; line-height: 1.2; border: 1px solid #eee; 
         }
-        .hero-overlay h2 { font-size: 26px; margin: 5px 0; font-family: serif; font-weight: 300; }
+        .hero-overlay h2 { font-size: 36px; margin: 5px 0; font-family: serif; font-weight: 300; }
+        .sb-btn { display: inline-block; background: #e85a2a; color: #fff; padding: 10px 30px; text-decoration: none; font-weight: bold; font-size: 11px; margin-top: 10px; cursor: pointer; }
 
-        /* 5. 商品展示区：使用负边距紧贴 Product 36 海报 */
+        /* 商品展示区：使用负边距向上“吸附” */
         .product-section { 
-            padding: 0; 
-            margin-top: -5px; /* 关键：强制向上移动，紧贴海报 */
-        }
-        .section-header { 
-            text-align: center; 
-            margin-bottom: 8px; 
-            border-bottom: 1px solid #eee; 
-            padding-bottom: 4px; 
+            padding: 0 0 50px; 
+            margin-top: -30px; /* 关键点：向上提，消除大片空白 */
             position: relative; 
+            z-index: 10;
         }
-        .section-header h3 { font-size: 16px; font-family: serif; text-transform: uppercase; letter-spacing: 1px; }
+        .section-header { text-align: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 6px; position: relative; }
+        .section-header h3 { font-size: 20px; font-family: serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* 6. 核心：6 列并列，图片变大（缩小 gap 和 padding） */
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 4px; /* 极小间距 */
-            width: 100%; 
-        }
-        
+        /* 六张大图并排网格 */
+        .product-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; width: 100%; }
         .p-card { text-align: center; cursor: pointer; }
-        .p-card img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            margin-bottom: 4px; 
-            background: #f9f9f9; 
-            transition: transform 0.2s;
-        }
-        .p-card:hover img { transform: scale(1.01); }
-        .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; letter-spacing: 0.5px; }
+        .p-card img { width: 100%; height: auto; display: block; margin-bottom: 5px; background: #f9f9f9; }
+        .p-card p { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #111; margin-top: 2px; }
 
-        /* 灯箱 */
+        /* 灯箱预览 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center; }
-        .lightbox-img { max-height: 90vh; max-width: 95vw; }
+        .lightbox-img { max-height: 90vh; max-width: 90vw; }
+        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <div class="utility-bar">选购男士精品 | CN v | ZH v | $USD v | 免费国际快递 · 轻松退货</div>
+
     <header>
         <div class="logo">general store</div>
         <nav id="top-nav"></nav>
-        <div class="promo-banner">畅享特惠！精选单品现享低至 7 折优惠。</div>
+        <div class="promo-banner">畅享特惠！精选单品现享低至 7 折优惠。 <span style="text-decoration: underline; cursor: pointer;">即刻选购</span></div>
     </header>
 
     <section class="hero-section">
-        <img src="images/product36.jpg" class="hero-img" alt="Main Poster">
+        <img src="images/product36.jpg" class="hero-img" alt="Main Banner">
         <div class="hero-overlay">
-            <span style="font-size:10px; color:#888;">NEW ARRIVAL</span>
-            <h2>TIMLESS CHIC</h2>
-            <div style="background: #e85a2a; color: #fff; padding: 6px 15px; font-size: 10px; display: inline-block; margin-top: 5px; cursor: pointer;">立即选购</div>
+            <span style="font-size:10px; color:#888;">NEW COLLECTION</span>
+            <h2>TIMELESS STYLE</h2>
+            <p>探索极简美学，打造质感日常衣橱。</p>
+            <div class="sb-btn" onclick="document.getElementById('product-area').scrollIntoView({behavior:'smooth'})">立即选购</div>
         </div>
     </section>
 
     <main class="container product-section" id="product-area">
         <div class="section-header">
             <h3 id="current-title">全新上线</h3>
-            <div style="position: absolute; right: 0; bottom: 4px; font-size: 10px; color: #e85a2a; font-weight: bold; cursor: pointer;" onclick="location.reload()">查看全部</div>
+            <div style="position: absolute; right: 0; bottom: 6px; font-size: 10px; color: #e85a2a; font-weight: bold; cursor: pointer; text-decoration: underline;" onclick="location.reload()">查看全部</div>
         </div>
+        
         <div class="product-grid" id="productGrid"></div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'">
+        <span class="close-btn">&times;</span>
         <img class="lightbox-img" id="lightboxImg">
     </div>
 
@@ -106,7 +99,7 @@
             { name: "羽绒服", id: 3, items: [16, 17, 18, 19, 20] },
             { name: "外套", id: 4, items: [21, 22, 23, 24, 25] },
             { name: "打底", id: 5, items: [26, 27, 28] },
-            { name: "裙子", id: 6, items: [31, 32, 33, 34, 35] }
+            { name: "裙子", id: 6, items: [33, 34, 35] }
         ];
 
         const grid = document.getElementById('productGrid');
@@ -126,9 +119,10 @@
                 const card = document.createElement('div');
                 card.className = 'p-card';
                 const path = `images/${name}/product${id}.jpg`;
-                card.innerHTML = `<img src="${path}" class="zoomable" onerror="this.src='https://via.placeholder.com/800x1000?text=MISSING'"><p>NO.${id}</p>`;
+                card.innerHTML = `<img src="${path}" class="zoomable" onerror="this.src='https://via.placeholder.com/600x800?text=MISSING'"><p>STYLE NO.${id}</p>`;
                 grid.appendChild(card);
             });
+            window.scrollTo({ top: document.getElementById('product-area').offsetTop - 10, behavior: 'smooth' });
         };
 
         function renderHome() {
