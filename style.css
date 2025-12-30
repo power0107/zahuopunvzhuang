@@ -1,73 +1,68 @@
-/* 全局样式 */
+/* 基础重置 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background-color: #fff; color: #000; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Montserrat', sans-serif; background: #fff; color: #111; }
 
-/* 顶部公告 */
-.announcement-bar {
-    background: #000; color: #fff; text-align: center;
-    padding: 10px; font-size: 11px; letter-spacing: 1.5px;
-}
-
-/* 导航 */
+/* 增强版版头设计 */
 header {
-    text-align: center; padding: 40px 0 20px;
-    border-bottom: 1px solid #eee; background: #fff;
-    position: sticky; top: 0; z-index: 1000;
+    background: #fff;
+    padding: 60px 0 30px;
+    border-bottom: 2px solid #000;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
+.header-top-line { font-size: 10px; letter-spacing: 4px; color: #888; margin-bottom: 10px; }
 .site-logo {
-    font-family: 'Playfair Display', serif; font-size: 38px;
-    letter-spacing: 6px; margin-bottom: 30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; /* 加大店名展示 */
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #000;
+    line-height: 1;
 }
+.header-tagline { font-size: 11px; letter-spacing: 5px; color: #444; margin-top: 15px; font-weight: 700; }
 
-.main-menu { list-style: none; display: flex; justify-content: center; gap: 50px; }
-.menu-item { position: relative; padding-bottom: 15px; }
-.menu-item > a { text-decoration: none; color: #000; font-size: 13px; font-weight: 600; letter-spacing: 1px; }
+/* 主图区域 */
+.hero { padding: 0 4%; margin: 30px 0; }
+.hero-container { position: relative; width: 100%; height: 75vh; background: #eee; overflow: hidden; }
+.hero-img { width: 100%; height: 100%; object-fit: cover; }
 
-/* 二级目录悬浮 */
-.dropdown {
-    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-    background: #fff; border: 1px solid #eee; min-width: 150px;
-    list-style: none; padding: 10px 0; display: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+/* 微信号码样式 - 置于大图之上 */
+.wechat-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    color: #fff;
+    padding: 25px 50px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
 }
-.dropdown li a { display: block; padding: 10px 20px; text-decoration: none; color: #666; font-size: 12px; text-align: left; }
-.dropdown li a:hover { color: #000; background: #f9f9f9; }
-.menu-item:hover .dropdown { display: block; }
+.wechat-title { display: block; font-size: 10px; letter-spacing: 4px; margin-bottom: 10px; color: #ccc; }
+.wechat-id { display: block; font-size: 28px; font-weight: 700; letter-spacing: 1px; }
 
-/* 主视觉区 */
-.hero-section { padding: 0 4%; margin: 20px 0; }
-.hero-wrapper { position: relative; height: 80vh; overflow: hidden; }
-.hero-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-.hero-text { position: absolute; bottom: 8%; left: 5%; color: #fff; }
-.hero-text .subtitle { font-size: 12px; letter-spacing: 2px; margin-bottom: 10px; }
-.hero-text .title { font-family: 'Playfair Display', serif; font-size: 52px; margin-bottom: 20px; }
-.cta-btn { 
-    display: inline-block; background: #fff; color: #000; 
-    padding: 12px 35px; text-decoration: none; font-size: 12px; font-weight: 600;
+.hero-label { position: absolute; bottom: 20px; right: 20px; font-size: 12px; letter-spacing: 3px; font-weight: 700; }
+
+/* 三张一行紧凑网格 */
+.gallery { padding: 0 4% 60px; }
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px; /* 更加紧凑的间距，模仿 Shopbop 设计感 */
 }
-
-/* 三列紧凑网格 */
-.collection-grid { padding: 40px 4%; }
-.grid-container { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); /* 核心：三列 */
-    gap: 15px; /* 紧凑间距 */
+.product-card { margin-bottom: 15px; }
+.img-wrap {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f7f7f7;
 }
-.product-item { cursor: pointer; margin-bottom: 30px; }
-.img-holder { 
-    aspect-ratio: 3 / 4; /* 时尚比例 */
-    overflow: hidden; background: #f7f7f7;
-}
-.img-holder img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
-.product-item:hover img { opacity: 0.85; }
+.img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
-.product-meta { padding: 15px 0; }
-.brand { font-size: 11px; font-weight: 600; color: #888; letter-spacing: 1px; }
-.name { font-size: 14px; margin: 4px 0; }
-.price { font-size: 14px; font-weight: 600; }
-
-/* 响应式 */
-@media (max-width: 900px) {
-    .grid-container { grid-template-columns: repeat(2, 1fr); }
-    .site-logo { font-size: 28px; }
+/* 手机端适配 */
+@media (max-width: 800px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .site-logo { font-size: 32px; }
+    .wechat-box { width: 85%; padding: 20px; }
 }
