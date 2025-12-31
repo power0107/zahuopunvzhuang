@@ -2,24 +2,25 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
-    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+    
     <style>
         /* 缓慢优雅的淡入动画 */
         @keyframes fadeInElegant {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(3px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
 
-        /* 图片容器优化：保持 3:4 比例，防止页面闪烁 */
+        /* 极致图片容器：利用硬件加速 */
         .img-container {
             width: 100%;
             padding-top: 133.33%; 
-            background-color: #f7f7f7;
+            background-color: #f0f0f0;
             position: relative;
             overflow: hidden;
+            transform: translateZ(0); /* 开启 GPU 加速 */
         }
 
         .img-container img {
@@ -30,29 +31,19 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            /* 提升移动端渲染性能 */
-            image-rendering: auto;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
+            border: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease-out; /* 缩短淡入，增加爽快感 */
         }
 
-        /* 统一卡片间距 */
-        .grid-item {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+        /* 当图片加载完成后显示的类 */
+        .loaded { opacity: 1 !important; }
 
-        .product-no {
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-top: 6px;
-            color: #222;
-            letter-spacing: 0.5px;
-        }
+        .grid-item { text-align: center; margin-bottom: 8px; }
+        .product-no { font-size: 10px; font-weight: bold; text-transform: uppercase; margin-top: 5px; color: #333; letter-spacing: 0.3px; }
     </style>
 </head>
-<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
+<body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
 
     <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
         FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
@@ -77,17 +68,14 @@
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 30px 10px 20px; position: relative; display: flex; align-items: center; justify-content: center;">
-            
+        <div style="text-align: center; padding: 25px 10px 15px; position: relative; display: flex; align-items: center; justify-content: center;">
             <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; display: inline-block; color: #111; margin: 0;">
                 FEATURED CATEGORIES
             </h3>
-
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 11px; font-weight: bold; color: #000; cursor: pointer; letter-spacing: 1px; padding: 5px;">
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px;">
                 BACK →
             </div>
         </div>
-
         <div id="displayGrid" style="display: grid; gap: 4px; width: 100%;"></div>
     </main>
 
@@ -119,11 +107,10 @@
             categories.forEach(cat => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
-                card.style.cursor = "pointer";
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" decoding="sync" fetchpriority="high">
+                        <img src="${cat.homeImg}" onload="this.className='loaded'" decoding="sync">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -137,29 +124,27 @@
             const label = document.getElementById('current-label');
             label.innerText = category.name;
             label.className = "";
-            label.style.fontFamily = "serif";
             document.getElementById('back-btn').style.display = "block";
 
+            // 使用 DocumentFragment 提升渲染性能
+            const fragment = document.createDocumentFragment();
             category.items.forEach((id, index) => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
                 const imgPath = `images/${category.name}/product${id}.jpg`;
                 
-                // 优化：前 4 张图最高优先级，后续图片进入低功耗解码
-                const isPriority = index < 4;
-                
                 card.innerHTML = `
                     <div class="img-container">
                         <img src="${imgPath}" 
-                             loading="${isPriority ? 'eager' : 'lazy'}" 
-                             decoding="async"
-                             onclick="openLightbox('${imgPath}')"
-                             onerror="this.src='https://via.placeholder.com/300x400?text=LOAD+ERROR'">
+                             loading="${index < 6 ? 'eager' : 'lazy'}" 
+                             onload="this.className='loaded'"
+                             onclick="openLightbox('${imgPath}')">
                     </div>
                     <p class="product-no">STYLE NO.${id}</p>
                 `;
-                grid.appendChild(card);
+                fragment.appendChild(card);
             });
+            grid.appendChild(fragment);
             window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
         }
 
