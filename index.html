@@ -26,17 +26,17 @@
         }
         .music-btn {
             position: fixed; bottom: 30px; right: 20px; width: 36px; height: 36px;
-            background: rgba(0,0,0,0.4); border-radius: 50%; display: flex;
+            background: rgba(0,0,0,0.3); border-radius: 50%; display: flex;
             align-items: center; justify-content: center; z-index: 10000; cursor: pointer;
-            transition: all 0.3s; border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        .music-btn.playing { animation: rotateDisc 4s linear infinite; }
-        .music-icon { color: white; font-size: 16px; }
+        .music-btn.playing { animation: rotateDisc 5s linear infinite; }
+        .music-icon { color: white; font-size: 14px; }
     </style>
 </head>
-<body onclick="firstInteraction()" style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
 
-    <audio id="bgMusic"></audio>
+    <audio id="bgMusic" preload="auto" loop></audio>
     <div id="musicControl" class="music-btn" onclick="toggleMusic()">
         <span class="music-icon">♪</span>
     </div>
@@ -53,13 +53,13 @@
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 10px 0; text-align: center; position: relative; z-index: 10;">
+    <div style="background: #fff; padding: 15px 0 0 0; text-align: center; position: relative; z-index: 10;">
         <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
         <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
-        <div style="font-size: 11px; color: #999; margin-top: 5px; letter-spacing: 1px;">V：lanxiaoqi1981</div>
+        <div style="font-size: 11px; color: #999; margin: 4px 0 10px 0; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -20px; position: relative; z-index: 1;">
+    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px; position: relative; z-index: 1;">
         <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner">
     </section>
 
@@ -87,25 +87,41 @@
             { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
-        // 蓝调背景音乐列表
+        // 音乐配置：女声轻柔慢调蓝调/爵士
         const playlist = [
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
         ];
         let currentTrack = 0;
         const audio = document.getElementById('bgMusic');
         const musicCtrl = document.getElementById('musicControl');
-        let hasInteracted = false;
 
-        function playNext() {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            audio.src = playlist[currentTrack];
-            audio.play().catch(e => console.log("自动播放受限"));
+        audio.src = playlist[currentTrack];
+
+        function attemptPlay() {
+            audio.play().then(() => {
+                musicCtrl.classList.add('playing');
+            }).catch(() => {
+                console.log("等待用户交互后播放");
+            });
         }
 
-        audio.onended = playNext;
-        audio.src = playlist[currentTrack];
+        // 微信环境自动播放补丁
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            attemptPlay();
+        }, false);
+
+        // 任意点击触发播放（应对现代浏览器）
+        document.body.addEventListener('click', function() {
+            if (audio.paused) attemptPlay();
+        }, { once: true });
+
+        audio.onended = function() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            audio.src = playlist[currentTrack];
+            audio.play();
+        };
 
         function toggleMusic() {
             if (audio.paused) {
@@ -114,15 +130,6 @@
             } else {
                 audio.pause();
                 musicCtrl.classList.remove('playing');
-            }
-        }
-
-        // 监听用户首次点击，实现“伪自动播放”
-        function firstInteraction() {
-            if (!hasInteracted) {
-                audio.play();
-                musicCtrl.classList.add('playing');
-                hasInteracted = true;
             }
         }
 
