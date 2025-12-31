@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     
-    <link rel="dns-prefetch" href="//raw.githubusercontent.com">
-    <link rel="preconnect" href="https://raw.githubusercontent.com">
+    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+    <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
 
     <style>
         /* 缓慢优雅的淡入动画 (3.5s) */
@@ -16,22 +16,34 @@
         }
         .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
 
-        /* 图片容器优化：骨架屏效果 */
+        /* 极致渲染优化：锁定占位空间 */
         .img-container {
             width: 100%;
-            aspect-ratio: 3/4;
-            background-color: #f5f5f5; /* 占位色 */
-            overflow: hidden;
+            padding-top: 133.33%; /* 3:4 比例锁定 */
+            background-color: #f8f8f8;
             position: relative;
+            overflow: hidden;
         }
 
-        /* 极致加速：图片直接显示，不再等待完全下载后的 opacity 切换 */
         .img-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            image-rendering: -webkit-optimize-contrast; /* 提高渲染清晰度 */
+            border: 0;
+            /* 允许图片在下载过程中逐步显示（流式加载） */
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* 列表容器优化 */
+        #displayGrid {
+            display: grid;
+            gap: 4px;
+            width: 100%;
+            contain: content; /* 告诉浏览器这个区域是独立的，加速渲染 */
         }
     </style>
 </head>
@@ -56,7 +68,7 @@
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px; position: relative; z-index: 1;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" fetchpriority="high">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 5;">
@@ -68,7 +80,7 @@
                 FEATURED CATEGORIES
             </h3>
         </div>
-        <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);"></div>
+        <div id="displayGrid"></div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;">
@@ -85,14 +97,13 @@
             { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
+        const grid = document.getElementById('displayGrid');
+
         function renderLevel1() {
-            const grid = document.getElementById('displayGrid');
-            const label = document.getElementById('current-label');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            label.innerText = "FEATURED CATEGORIES";
-            label.style.fontFamily = "'Times New Roman', serif";
-            label.className = "fade-in-label";
+            document.getElementById('current-label').innerText = "FEATURED CATEGORIES";
+            document.getElementById('current-label').className = "fade-in-label";
             document.getElementById('back-btn').style.display = "none";
 
             categories.forEach(cat => {
@@ -102,7 +113,7 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" decoding="async">
+                        <img src="${cat.homeImg}" width="400" height="533" loading="eager" decoding="sync">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -111,23 +122,23 @@
         }
 
         function renderLevel2(category) {
-            const grid = document.getElementById('displayGrid');
-            const label = document.getElementById('current-label');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
-            label.innerText = category.name;
-            label.className = "";
-            label.style.fontFamily = "serif";
+            document.getElementById('current-label').innerText = category.name;
+            document.getElementById('current-label').className = "";
             document.getElementById('back-btn').style.display = "block";
 
-            // 极速加载：使用异步解码属性 decoding="async"
-            category.items.forEach(id => {
+            category.items.forEach((id, index) => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 const imgPath = `images/${category.name}/product${id}.jpg`;
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${imgPath}" decoding="async" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'">
+                        <img src="${imgPath}" width="400" height="533" 
+                             loading="${index < 4 ? 'eager' : 'lazy'}" 
+                             decoding="${index < 4 ? 'sync' : 'async'}" 
+                             onclick="openLightbox('${imgPath}')"
+                             onerror="this.src='https://via.placeholder.com/400x533?text=MISSING'">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
