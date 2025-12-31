@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     
-    <link rel="preload" as="image" href="images/product4.jpg">
-    <link rel="preload" as="image" href="images/product19.jpg">
-    <link rel="preload" as="image" href="images/product3.jpg">
-    <link rel="preload" as="image" href="images/product16.jpg">
-    <link rel="preload" as="image" href="images/product37.jpg">
-    <link rel="preload" as="image" href="images/product36.jpg">
+    <link rel="dns-prefetch" href="//raw.githubusercontent.com">
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
 
     <style>
-        /* 极致缓慢优雅的淡入动画 (3.5s) */
+        /* 缓慢优雅的淡入动画 (3.5s) */
         @keyframes fadeInElegant {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -24,22 +20,19 @@
         .img-container {
             width: 100%;
             aspect-ratio: 3/4;
-            background-color: #f2f2f2; /* 骨架屏占位色 */
+            background-color: #f5f5f5; /* 占位色 */
             overflow: hidden;
             position: relative;
         }
 
-        /* 初始隐藏图片，加载完后极速淡入 */
+        /* 极致加速：图片直接显示，不再等待完全下载后的 opacity 切换 */
         .img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            opacity: 0;
-            transition: opacity 0.2s ease-in; /* 缩短淡入时间，感觉更爽快 */
+            image-rendering: -webkit-optimize-contrast; /* 提高渲染清晰度 */
         }
-
-        .img-loaded { opacity: 1 !important; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
@@ -63,12 +56,12 @@
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px; position: relative; z-index: 1;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" onload="this.classList.add('img-loaded')">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 5;">
         <div style="text-align: center; padding: 30px 0 20px; position: relative; display: flex; align-items: center; justify-content: center;">
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
             <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; display: inline-block; color: #111;">
@@ -109,7 +102,7 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" onload="this.classList.add('img-loaded')">
+                        <img src="${cat.homeImg}" decoding="async">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -127,13 +120,14 @@
             label.style.fontFamily = "serif";
             document.getElementById('back-btn').style.display = "block";
 
+            // 极速加载：使用异步解码属性 decoding="async"
             category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 const imgPath = `images/${category.name}/product${id}.jpg`;
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${imgPath}" onload="this.classList.add('img-loaded')" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'">
+                        <img src="${imgPath}" decoding="async" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
@@ -152,7 +146,6 @@
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        // 启动！
         renderLevel1();
     </script>
 </body>
