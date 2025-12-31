@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
 </head>
-<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
 
     <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
         FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
@@ -30,11 +30,13 @@
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 15px 0; position: relative; display: flex; align-items: center; justify-content: center;">
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
+        <div style="text-align: center; padding: 20px 0; position: relative; display: flex; align-items: center; justify-content: center;">
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
-            <h3 id="current-label" style="font-size: 18px; font-family: serif; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block; padding-bottom: 2px;">FEATURED CATEGORIES</h3>
+            <h3 id="current-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid #000; display: inline-block; padding-bottom: 4px; color: #000;">
+                FEATURED CATEGORIES
+            </h3>
         </div>
         
         <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);">
@@ -62,7 +64,11 @@
         function renderLevel1() {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
+            // 首页标题：精巧风格
             label.innerText = "FEATURED CATEGORIES";
+            label.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
+            label.style.fontSize = "13px";
+            label.style.letterSpacing = "3px";
             backBtn.style.display = "none";
 
             categories.forEach(cat => {
@@ -81,7 +87,11 @@
         function renderLevel2(category) {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
+            // 子目录标题：改为和分类一致的中文名，但字体保持精细感
             label.innerText = category.name;
+            label.style.fontFamily = "serif"; // 子目录中文用衬线体更好看
+            label.style.fontSize = "18px";
+            label.style.letterSpacing = "2px";
             backBtn.style.display = "block";
 
             category.items.forEach(id => {
