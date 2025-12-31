@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store | Shopbop Style</title>
+    <title>General Store | Shopbop Style Official</title>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
 
     <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
-        FREE INTERNATIONAL DELIVERY | CN | $USD | **V: lanxiaoqi1981**
+        免费国际快递 | CN | $USD | OFFICIAL STORE
     </div>
 
     <header style="padding: 10px 0 0; text-align: center; border-bottom: 1px solid #eee;">
-        <div style="font-family: serif; font-size: 48px; font-weight: bold; text-transform: lowercase; margin-bottom: 5px; letter-spacing: 1px;">general store</div>
+        <div style="font-family: serif; font-size: 38px; font-weight: bold; text-transform: lowercase; margin-bottom: 5px;">general store</div>
         <nav style="display: flex; justify-content: center; gap: 25px; padding-bottom: 8px;">
-            <a onclick="renderLevel1()" style="text-decoration: none; color: #000; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">HOME</a>
-            <a onclick="enterSaleCategory()" style="text-decoration: none; color: #d0021b; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">SALE</a>
+            <a onclick="renderLevel1()" style="text-decoration: none; color: #000; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">首页 HOME</a>
+            <a onclick="enterSaleCategory()" style="text-decoration: none; color: #d0021b; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">打折 SALE</a>
         </nav>
     </header>
 
     <div style="background: #fff; padding: 15px 0 10px 0; text-align: center;">
         <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">NEW COLLECTION</span>
-        <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 5px 0 0 0;">TIMELESS CHIC</h2>
+        <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
+        <div style="font-size: 11px; color: #999; margin-top: 5px; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0;">
@@ -30,10 +31,10 @@
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
         <div style="text-align: center; padding: 15px 0; position: relative; display: flex; align-items: center; justify-content: center;">
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline; text-transform: uppercase;">
-                ← BACK
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
+                ← 返回
             </div>
-            <h3 id="current-label" style="font-size: 16px; font-family: serif; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block; padding-bottom: 2px;">FEATURED CATEGORIES</h3>
+            <h3 id="current-label" style="font-size: 18px; font-family: serif; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block; padding-bottom: 2px;">精选分类</h3>
         </div>
         
         <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);">
@@ -47,38 +48,32 @@
     <script>
         const categories = [
             { 
-                name: "OUTERWEAR", 
-                folder: "羽绒服",
+                name: "羽绒服", 
                 homeImg: "images/product4.jpg", 
                 items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] 
             },
             { 
-                name: "JACKETS",   
-                folder: "外套",
+                name: "外套",   
                 homeImg: "images/product19.jpg", 
                 items: [38, 39, 40, 50, 51, 52, 53, 77, 78] 
             },
             { 
-                name: "KNITWEAR",   
-                folder: "毛衫",
+                name: "毛衫",   
                 homeImg: "images/product3.jpg", 
                 items: [17, 20, 21, 57, 58, 59, 60, 61, 68] 
             },
             { 
-                name: "PANTS",   
-                folder: "长裤",
+                name: "长裤",   
                 homeImg: "images/product2.jpg", 
                 items: [16, 19, 2, 3, 36, 37, 4] 
             },
             { 
-                name: "SALE",   
-                folder: "打折",
+                name: "打折",   
                 homeImg: "images/product16.jpg", 
                 items: [5, 51, 52, 53, 56, 6, 7, 78] 
             },
             { 
-                name: "ACCESSORIES",   
-                folder: "配饰",
+                name: "配饰",   
                 homeImg: "images/product37.jpg", 
                 items: [41, 42, 43, 44, 62, 63, 66, 67] 
             }
@@ -91,7 +86,7 @@
         function renderLevel1() {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            label.innerText = "FEATURED CATEGORIES";
+            label.innerText = "精选分类";
             backBtn.style.display = "none";
 
             categories.forEach(cat => {
@@ -101,7 +96,7 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;">
-                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px; letter-spacing: 1px;">${cat.name}</p>
+                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
                 grid.appendChild(card);
             });
@@ -117,7 +112,7 @@
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 card.style.cursor = "pointer";
-                const imgPath = "images/" + category.folder + "/product" + id + ".jpg";
+                const imgPath = "images/" + category.name + "/product" + id + ".jpg";
                 card.innerHTML = `
                     <img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
                          onclick="event.stopPropagation(); openLightbox('${imgPath}')"
@@ -130,7 +125,7 @@
         }
 
         function enterSaleCategory() {
-            const saleData = categories.find(c => c.folder === "打折");
+            const saleData = categories.find(c => c.name === "打折");
             if(saleData) renderLevel2(saleData);
         }
 
