@@ -5,32 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 缓慢优雅隐现 */
+        /* 缓慢优雅隐现动画 */
         @keyframes fadeInElegant {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
 
+        /* 针对压缩后小图优化的容器 */
         .img-container {
             width: 100%;
             aspect-ratio: 3/4;
-            background-color: #f7f7f7;
+            background-color: #f8f8f8;
             overflow: hidden;
             position: relative;
         }
 
         .img-container img {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
             display: block;
-            /* 强制开启 GPU 硬件加速 */
+            /* 针对小尺寸图片强化清晰度渲染 */
             image-rendering: -webkit-optimize-contrast;
-            transform: translateZ(0);
+            image-rendering: crisp-edges;
         }
 
-        .grid-item { text-align: center; }
+        .grid-item { text-align: center; margin-bottom: 8px; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
@@ -54,7 +56,7 @@
     </div>
 
     <section style="width: 100%; line-height: 0; margin-top: -5px;">
-        <img src="images/product36.webp" onerror="this.src='images/product36.jpg'" style="width: 100%; height: auto; display: block;" fetchpriority="high">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" fetchpriority="high">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
@@ -62,7 +64,7 @@
             <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; display: inline-block; color: #111;">
                 FEATURED CATEGORIES
             </h3>
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 11px; font-weight: bold; color: #000; cursor: pointer;">
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 5px;">
                 BACK →
             </div>
         </div>
@@ -75,12 +77,12 @@
 
     <script>
         const categories = [
-            { name: "羽绒服", homeImg: "images/product4.webp", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
-            { name: "外套", homeImg: "images/product19.webp", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
-            { name: "毛衫", homeImg: "images/product3.webp", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
-            { name: "长裤", homeImg: "images/product4.webp", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
-            { name: "打折", homeImg: "images/product16.webp", items: [5, 6, 7, 51, 52, 53, 56, 78] },
-            { name: "配饰", homeImg: "images/product37.webp", items: [41, 42, 43, 44, 62, 63, 66, 67] }
+            { name: "羽绒服", homeImg: "images/product4.jpg", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
+            { name: "外套", homeImg: "images/product19.jpg", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
+            { name: "毛衫", homeImg: "images/product3.jpg", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
+            { name: "长裤", homeImg: "images/product4.jpg", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
+            { name: "打折", homeImg: "images/product16.jpg", items: [5, 6, 7, 51, 52, 53, 56, 78] },
+            { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
         const grid = document.getElementById('displayGrid');
@@ -96,10 +98,9 @@
                 const card = document.createElement('div');
                 card.className = 'grid-item';
                 card.onclick = () => renderLevel2(cat);
-                const jpgFallback = cat.homeImg.replace('.webp', '.jpg');
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" onerror="this.src='${jpgFallback}'" decoding="sync">
+                        <img src="${cat.homeImg}" decoding="sync" width="150" height="200">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -117,16 +118,15 @@
             category.items.forEach((id, index) => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
-                const webpPath = `images/${category.name}/product${id}.webp`;
-                const jpgPath = `images/${category.name}/product${id}.jpg`;
+                const imgPath = `images/${category.name}/product${id}.jpg`;
                 
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${webpPath}" 
-                             onerror="this.src='${jpgPath}'"
+                        <img src="${imgPath}" 
                              loading="${index < 4 ? 'eager' : 'lazy'}" 
-                             decoding="sync"
-                             onclick="openLightbox(this.src)">
+                             decoding="async" 
+                             width="300" height="400"
+                             onclick="openLightbox('${imgPath}')">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
