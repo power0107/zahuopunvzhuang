@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
+        /* 字母动画 */
         @keyframes letterSlideIn {
             0% { opacity: 0; transform: translateX(-100vw); }
             100% { opacity: 1; transform: translateX(0); }
@@ -17,9 +18,30 @@
         .animate-letter { display: inline-block; opacity: 0; white-space: pre; }
         .slide-style { animation: letterSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         .jump-style { animation: letterJumpIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        /* 音乐旋转动画 */
+        @keyframes rotateDisc {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .music-btn {
+            position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px;
+            background: rgba(0,0,0,0.6); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; z-index: 10000; cursor: pointer;
+        }
+        .music-btn.playing { animation: rotateDisc 3s linear infinite; }
+        .music-icon { color: white; font-size: 20px; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="musicControl" class="music-btn" onclick="toggleMusic()">
+        <span class="music-icon">♪</span>
+    </div>
 
     <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
         FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
@@ -33,13 +55,13 @@
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 5px 0; text-align: center;">
+    <div style="background: #fff; padding: 15px 0 0 0; text-align: center;">
         <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
         <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
         <div style="font-size: 11px; color: #999; margin-top: 5px; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -10px; position: relative; z-index: 1;">
+    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -30px; position: relative; z-index: 1;">
         <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner">
     </section>
 
@@ -73,13 +95,25 @@
         const grid = document.getElementById('displayGrid');
         const label = document.getElementById('current-label');
         const backBtn = document.getElementById('back-btn');
+        const music = document.getElementById('bgMusic');
+        const musicCtrl = document.getElementById('musicControl');
+
+        // 音乐开关
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicCtrl.classList.add('playing');
+            } else {
+                music.pause();
+                musicCtrl.classList.remove('playing');
+            }
+        }
 
         function runComplexAnimation() {
             const text = "FEATURED CATEGORIES";
             label.innerHTML = '';
             const jumpChars = ['C', 'A', 'G', 'O', 'R'];
             const delays = [0.0, 0.3, 0.3, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2];
-
             text.split('').forEach((char, i) => {
                 const span = document.createElement('span');
                 span.innerText = char === ' ' ? '\u00A0' : char;
