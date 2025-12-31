@@ -2,140 +2,35 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store | 女装精品店</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>General Store | Est. 2008</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Playfair+Display:italic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 网站头部 -->
-    <header class="header">
-        <div class="top-bar">
-            <span class="since">S I N C E  2 0 0 8</span>
-            <div class="wechat-info">
-                <i class="fab fa-weixin"></i>
-                <span>V: lanxiaogi1981</span>
-            </div>
-        </div>
-        
-        <div class="logo-section">
-            <h1 class="logo">G e n e r a l   S t o r e</h1>
-            <div class="chinical-store">
-                <span>CHINICAL STORE</span>
-                <span>CHINICAL STORE</span>
-            </div>
+
+    <header class="main-header">
+        <div class="header-inner">
+            <p class="since-tag">SINCE 2008</p>
+            <h1 class="brand-logo">General Store</h1>
+            <p class="contact-text">V: lanxiaoqi1981</p>
         </div>
     </header>
 
-    <!-- 一级分类展示区 - 6个分类 -->
-    <section class="category-section" id="categorySection">
-        <h2 class="section-title">商品分类</h2>
-        <div class="categories-grid">
-            <!-- 分类1：羽绒服 -->
-            <div class="category-card" data-category="down-coat">
-                <div class="category-image">
-                    < img src="images/product1.jpg" alt="羽绒服" onerror="this.src='https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
-                    <div class="image-overlay">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-                <h3 class="category-title">羽绒服</h3>
-            </div>
-            
-            <!-- 分类2：外套 -->
-            <div class="category-card" data-category="coat">
-                <div class="category-image">
-                    < img src="images/product10.jpg" alt="外套" onerror="this.src='https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
-                    <div class="image-overlay">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-                <h3 class="category-title">外套</h3>
-            </div>
-            
-            <!-- 分类3：毛衫 -->
-            <div class="category-card" data-category="sweater">
-                <div class="category-image">
-                    < img src="images/product20.jpg" alt="毛衫" onerror="this.src='https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
-                    <div class="image-overlay">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-                <h3 class="category-title">毛衫</h3>
-            </div>
-            
-            <!-- 分类4：长裤 -->
-            <div class="category-card" data-category="pants">
-                <div class="category-image">
-                    < img src="images/product30.jpg" alt="长裤" onerror="this.src='https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
-                    <div class="image-overlay">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-                <h3 class="category-title">长裤</h3>
-            </div>
-            
-            <!-- 分类5：连衣裙 -->
-            <div class="category-card" data-category="dress">
-                <div class="category-image">
-                    < img src="images/product45.jpg" alt="连衣裙" onerror="this.src='https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
-                    <div class="image-overlay">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-                <h3 class="category-title">连衣裙</h3>
-            </div>
-            
-            <!-- 分类6：配饰 -->
-            <div class="category-card" data-category="accessories">
-                <div class="category-image">
-                    < img src="images/product60.jpg" alt="配饰" onerror="this.src='https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
-                    <div class="image-overlay">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-                <h3 class="category-title">配饰</h3>
-            </div>
+    <section class="banner-hero">
+        <div class="banner-wrapper">
+            <img src="images/product36.jpg" alt="Featured" class="hero-image zoom-trigger">
         </div>
     </section>
 
-    <!-- 二级目录页面（初始隐藏） -->
-    <section class="subcategory-section" id="subcategorySection">
-        <div class="subcategory-header">
-            <button class="back-btn" id="backBtn">
-                <i class="fas fa-arrow-left"></i> 返回首页
-            </button>
-            <h2 class="subcategory-title" id="subcategoryTitle">羽绒服系列</h2>
-        </div>
-        
-        <div class="subcategory-content">
-            <div class="subcategory-grid" id="subcategoryGrid">
-                <!-- 二级目录图片会通过JavaScript动态加载 -->
-            </div>
-        </div>
-    </section>
+    <main class="main-content">
+        <div class="product-grid" id="mainGrid"></div>
+    </main>
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <h3>G e n e r a l   S t o r e</h3>
-                <p class="chinical">CHINICAL STORE</p >
-                <p class="since-footer">S I N C E  2 0 0 8</p >
-            </div>
-            
-            <div class="footer-contact">
-                <h4>联系我们</h4>
-                <p><i class="fab fa-weixin"></i> 微信: lanxiaogi1981</p >
-                <p><i class="fas fa-phone"></i> 电话: 138-0000-0000</p >
-                <p><i class="fas fa-map-marker-alt"></i> 地址: 上海市时尚大道123号</p >
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>© 2024 General Store. CHINICAL STORE 保留所有权利。</p >
-        </div>
-    </footer>
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="lightboxImg">
+    </div>
 
     <script src="script.js"></script>
 </body>
