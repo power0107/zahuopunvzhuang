@@ -5,34 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 缓慢优雅隐现动画 */
+        /* 1. Featured 文字缓慢隐现动画 (3.5秒) */
         @keyframes fadeInElegant {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
 
-        /* 针对压缩后小图优化的容器 */
+        /* 2. 图片容器：锁定比例，防止加载时页面抖动 */
         .img-container {
             width: 100%;
             aspect-ratio: 3/4;
-            background-color: #f8f8f8;
+            background-color: #f8f8f8; /* 灰色占位背景 */
             overflow: hidden;
             position: relative;
         }
 
         .img-container img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
-            /* 针对小尺寸图片强化清晰度渲染 */
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            opacity: 0;
+            transition: opacity 0.3s ease; /* 图片加载完后顺滑浮现 */
         }
 
+        /* 加载完成后的显示状态 */
+        .loaded { opacity: 1 !important; }
+
         .grid-item { text-align: center; margin-bottom: 8px; }
+        
+        /* BACK 键样式 */
+        #back-btn {
+            position: absolute; right: 10px; 
+            font-size: 12px; font-weight: 900; 
+            color: #000; cursor: pointer; padding: 5px;
+        }
     </style>
 </head>
 <body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
@@ -49,24 +57,22 @@
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 0 0; text-align: center; position: relative;">
+    <div style="background: #fff; padding: 15px 0 0 0; text-align: center;">
         <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
         <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
         <div style="font-size: 11px; color: #999; margin: 4px 0 10px 0; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
     <section style="width: 100%; line-height: 0; margin-top: -5px;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" fetchpriority="high">
+        <img src="images/product36.webp" style="width: 100%; height: auto; display: block;" fetchpriority="high">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
         <div style="text-align: center; padding: 30px 0 20px; position: relative; display: flex; align-items: center; justify-content: center;">
-            <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; display: inline-block; color: #111;">
+            <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; margin: 0;">
                 FEATURED CATEGORIES
             </h3>
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 5px;">
-                BACK →
-            </div>
+            <div id="back-btn" onclick="renderLevel1()" style="display: none;">BACK →</div>
         </div>
         <div id="displayGrid" style="display: grid; gap: 4px; width: 100%;"></div>
     </main>
@@ -77,12 +83,12 @@
 
     <script>
         const categories = [
-            { name: "羽绒服", homeImg: "images/product4.jpg", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
-            { name: "外套", homeImg: "images/product19.jpg", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
-            { name: "毛衫", homeImg: "images/product3.jpg", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
-            { name: "长裤", homeImg: "images/product4.jpg", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
-            { name: "打折", homeImg: "images/product16.jpg", items: [5, 6, 7, 51, 52, 53, 56, 78] },
-            { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
+            { name: "羽绒服", homeImg: "images/product4.webp", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
+            { name: "外套", homeImg: "images/product19.webp", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
+            { name: "毛衫", homeImg: "images/product3.webp", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
+            { name: "长裤", homeImg: "images/product4.webp", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
+            { name: "打折", homeImg: "images/product16.webp", items: [5, 6, 7, 51, 52, 53, 56, 78] },
+            { name: "配饰", homeImg: "images/product37.webp", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
         const grid = document.getElementById('displayGrid');
@@ -100,7 +106,7 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" decoding="sync" width="150" height="200">
+                        <img src="${cat.homeImg}" loading="lazy" onload="this.className='loaded'">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -115,18 +121,18 @@
             document.getElementById('current-label').className = "";
             document.getElementById('back-btn').style.display = "block";
 
-            category.items.forEach((id, index) => {
+            category.items.forEach((id) => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
-                const imgPath = `images/${category.name}/product${id}.jpg`;
+                const imgPath = `images/${category.name}/product${id}.webp`;
                 
                 card.innerHTML = `
                     <div class="img-container">
                         <img src="${imgPath}" 
-                             loading="${index < 4 ? 'eager' : 'lazy'}" 
-                             decoding="async" 
-                             width="300" height="400"
-                             onclick="openLightbox('${imgPath}')">
+                             loading="lazy" 
+                             onload="this.className='loaded'"
+                             onclick="openLightbox('${imgPath}')"
+                             onerror="this.src='https://via.placeholder.com/300x400?text=LOAD+ERROR'">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
