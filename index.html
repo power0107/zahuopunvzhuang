@@ -47,36 +47,12 @@
 
     <script>
         const categories = [
-            { 
-                name: "羽绒服", 
-                homeImg: "images/product4.jpg", 
-                items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] 
-            },
-            { 
-                name: "外套",   
-                homeImg: "images/product19.jpg", 
-                items: [38, 39, 40, 50, 51, 52, 53, 77, 78] 
-            },
-            { 
-                name: "毛衫",   
-                homeImg: "images/product3.jpg", 
-                items: [17, 20, 21, 57, 58, 59, 60, 61, 68] 
-            },
-            { 
-                name: "长裤",   
-                homeImg: "images/product2.jpg", 
-                items: [16, 19, 2, 3, 36, 37, 4] 
-            },
-            { 
-                name: "打折",   
-                homeImg: "images/product16.jpg", 
-                items: [5, 51, 52, 53, 56, 6, 7, 78] 
-            },
-            { 
-                name: "配饰",   
-                homeImg: "images/product37.jpg", 
-                items: [41, 42, 43, 44, 62, 63, 66, 67] 
-            }
+            { name: "羽绒服", homeImg: "images/product4.jpg", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
+            { name: "外套", homeImg: "images/product19.jpg", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
+            { name: "毛衫", homeImg: "images/product3.jpg", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
+            { name: "长裤", homeImg: "images/product2.jpg", items: [16, 19, 2, 3, 36, 37, 4] },
+            { name: "打折", homeImg: "images/product16.jpg", items: [5, 51, 52, 53, 56, 6, 7, 78] },
+            { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
         const grid = document.getElementById('displayGrid');
@@ -86,7 +62,7 @@
         function renderLevel1() {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            label.innerText = "FEATURED CATEGORIES"; // 标题保持英文
+            label.innerText = "FEATURED CATEGORIES";
             backBtn.style.display = "none";
 
             categories.forEach(cat => {
@@ -96,15 +72,16 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;">
-                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p> 
-                `; // 分类名使用中文
+                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
+                `;
+                grid.appendChild(card);
             });
         }
 
         function renderLevel2(category) {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
-            label.innerText = category.name; // 子目录标题同步为分类中文名
+            label.innerText = category.name;
             backBtn.style.display = "block";
 
             category.items.forEach(id => {
