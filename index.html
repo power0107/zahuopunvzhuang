@@ -5,49 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 1. 基础滑行动画 */
         @keyframes letterSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-100vw); /* 从屏幕左侧外进入 */
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            0% { opacity: 0; transform: translateX(-100vw); }
+            100% { opacity: 1; transform: translateX(0); }
         }
-
-        /* 2. 特定字母的高跳动画 (C, A, G, O, R) */
         @keyframes letterJumpIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-100vw) translateY(0);
-            }
-            60% {
-                opacity: 1;
-                transform: translateX(0) translateY(-50px); /* 跑到位的同时向上跳起 */
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) translateY(0); /* 落地 */
-            }
+            0% { opacity: 0; transform: translateX(-100vw) translateY(0); }
+            60% { opacity: 1; transform: translateX(0) translateY(-50px); }
+            100% { opacity: 1; transform: translateX(0) translateY(0); }
         }
-
-        .animate-letter {
-            display: inline-block;
-            opacity: 0;
-            white-space: pre; /* 保留空格渲染 */
-        }
-
-        /* 普通滑行类 */
-        .slide-style {
-            animation: letterSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-
-        /* 跳跃类 */
-        .jump-style {
-            animation: letterJumpIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .animate-letter { display: inline-block; opacity: 0; white-space: pre; }
+        .slide-style { animation: letterSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .jump-style { animation: letterJumpIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
@@ -64,18 +33,18 @@
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 10px 0; text-align: center;">
-        <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">NEW COLLECTION</span>
+    <div style="background: #fff; padding: 15px 0 5px 0; text-align: center;">
+        <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
         <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
         <div style="font-size: 11px; color: #999; margin-top: 5px; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0;">
+    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -10px; position: relative; z-index: 1;">
         <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner">
     </section>
 
-    <main id="main-area" style="background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 30px 0 20px; position: relative; display: flex; align-items: center; justify-content: center;">
+    <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 2;">
+        <div style="text-align: center; padding: 25px 0 15px; position: relative; display: flex; align-items: center; justify-content: center;">
             <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
@@ -105,51 +74,18 @@
         const label = document.getElementById('current-label');
         const backBtn = document.getElementById('back-btn');
 
-        // 复杂节奏动画函数
         function runComplexAnimation() {
             const text = "FEATURED CATEGORIES";
             label.innerHTML = '';
-            
-            // 需跳跃的字母
             const jumpChars = ['C', 'A', 'G', 'O', 'R'];
-            
-            // 分组逻辑：定义每个索引位置的字母延迟时间(秒)
-            // 索引: F(0), E(1), A(2), T(3), U(4), R(5), E(6), D(7), 空(8), C(9)...
-            const delays = [
-                0.0,  // F 先跑
-                0.3,  // E (和A一块)
-                0.3,  // A
-                0.6,  // T
-                0.7,  // U
-                0.8,  // R
-                0.9,  // E
-                1.0,  // D
-                1.1,  // 空格
-                1.3,  // C (跳)
-                1.4,  // A (跳)
-                1.5,  // T
-                1.6,  // E
-                1.7,  // G (跳)
-                1.8,  // O (跳)
-                1.9,  // R (跳)
-                2.0,  // I
-                2.1,  // E
-                2.2   // S
-            ];
+            const delays = [0.0, 0.3, 0.3, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2];
 
             text.split('').forEach((char, i) => {
                 const span = document.createElement('span');
-                span.innerText = char === ' ' ? '\u00A0' : char; // 处理空格
+                span.innerText = char === ' ' ? '\u00A0' : char;
                 span.className = 'animate-letter';
-                
-                // 判断是否属于跳跃字母
-                if (jumpChars.includes(char)) {
-                    span.classList.add('jump-style');
-                } else {
-                    span.classList.add('slide-style');
-                }
-
-                // 应用预设的延迟
+                if (jumpChars.includes(char)) span.classList.add('jump-style');
+                else span.classList.add('slide-style');
                 span.style.animationDelay = `${delays[i] || (i * 0.1)}s`;
                 label.appendChild(span);
             });
@@ -160,16 +96,12 @@
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             runComplexAnimation();
             backBtn.style.display = "none";
-
             categories.forEach(cat => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 card.style.cursor = "pointer";
                 card.onclick = () => renderLevel2(cat);
-                card.innerHTML = `
-                    <img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;">
-                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
-                `;
+                card.innerHTML = `<img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;"><p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>`;
                 grid.appendChild(card);
             });
         }
@@ -182,18 +114,12 @@
             label.style.fontSize = "18px";
             label.style.letterSpacing = "2px";
             backBtn.style.display = "block";
-
             category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 card.style.cursor = "pointer";
                 const imgPath = "images/" + category.name + "/product" + id + ".jpg";
-                card.innerHTML = `
-                    <img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
-                         onclick="event.stopPropagation(); openLightbox('${imgPath}')"
-                         onerror="this.src='https://via.placeholder.com/800x1066?text=IMAGE+MISSING'">
-                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
-                `;
+                card.innerHTML = `<img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" onclick="event.stopPropagation(); openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=IMAGE+MISSING'"><p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>`;
                 grid.appendChild(card);
             });
             window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
