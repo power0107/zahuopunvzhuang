@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 字母动画 */
+        /* 字母进场动画 */
         @keyframes letterSlideIn {
             0% { opacity: 0; transform: translateX(-100vw); }
             100% { opacity: 1; transform: translateX(0); }
@@ -19,26 +19,24 @@
         .slide-style { animation: letterSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         .jump-style { animation: letterJumpIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
-        /* 音乐旋转动画 */
+        /* 音乐旋转按钮 */
         @keyframes rotateDisc {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
         .music-btn {
-            position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px;
-            background: rgba(0,0,0,0.6); border-radius: 50%; display: flex;
+            position: fixed; bottom: 30px; right: 20px; width: 36px; height: 36px;
+            background: rgba(0,0,0,0.4); border-radius: 50%; display: flex;
             align-items: center; justify-content: center; z-index: 10000; cursor: pointer;
+            transition: all 0.3s; border: 1px solid rgba(255,255,255,0.2);
         }
-        .music-btn.playing { animation: rotateDisc 3s linear infinite; }
-        .music-icon { color: white; font-size: 20px; }
+        .music-btn.playing { animation: rotateDisc 4s linear infinite; }
+        .music-icon { color: white; font-size: 16px; }
     </style>
 </head>
-<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
+<body onclick="firstInteraction()" style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
 
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
+    <audio id="bgMusic"></audio>
     <div id="musicControl" class="music-btn" onclick="toggleMusic()">
         <span class="music-icon">♪</span>
     </div>
@@ -55,27 +53,24 @@
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 0 0; text-align: center;">
+    <div style="background: #fff; padding: 15px 0 10px 0; text-align: center; position: relative; z-index: 10;">
         <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
         <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
         <div style="font-size: 11px; color: #999; margin-top: 5px; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -30px; position: relative; z-index: 1;">
+    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -20px; position: relative; z-index: 1;">
         <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner">
     </section>
 
-    <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 2;">
-        <div style="text-align: center; padding: 25px 0 15px; position: relative; display: flex; align-items: center; justify-content: center;">
+    <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 5;">
+        <div style="text-align: center; padding: 30px 0 20px; position: relative; display: flex; align-items: center; justify-content: center;">
             <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
-            <h3 id="current-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 4px; display: inline-block; color: #000; min-height: 20px; overflow: visible;">
-            </h3>
+            <h3 id="current-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 4px; display: inline-block; color: #000; min-height: 20px;"></h3>
         </div>
-        
-        <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);">
-        </div>
+        <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);"></div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;">
@@ -92,24 +87,47 @@
             { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
-        const grid = document.getElementById('displayGrid');
-        const label = document.getElementById('current-label');
-        const backBtn = document.getElementById('back-btn');
-        const music = document.getElementById('bgMusic');
+        // 蓝调背景音乐列表
+        const playlist = [
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+        ];
+        let currentTrack = 0;
+        const audio = document.getElementById('bgMusic');
         const musicCtrl = document.getElementById('musicControl');
+        let hasInteracted = false;
 
-        // 音乐开关
+        function playNext() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            audio.src = playlist[currentTrack];
+            audio.play().catch(e => console.log("自动播放受限"));
+        }
+
+        audio.onended = playNext;
+        audio.src = playlist[currentTrack];
+
         function toggleMusic() {
-            if (music.paused) {
-                music.play();
+            if (audio.paused) {
+                audio.play();
                 musicCtrl.classList.add('playing');
             } else {
-                music.pause();
+                audio.pause();
                 musicCtrl.classList.remove('playing');
             }
         }
 
+        // 监听用户首次点击，实现“伪自动播放”
+        function firstInteraction() {
+            if (!hasInteracted) {
+                audio.play();
+                musicCtrl.classList.add('playing');
+                hasInteracted = true;
+            }
+        }
+
         function runComplexAnimation() {
+            const label = document.getElementById('current-label');
             const text = "FEATURED CATEGORIES";
             label.innerHTML = '';
             const jumpChars = ['C', 'A', 'G', 'O', 'R'];
@@ -117,15 +135,15 @@
             text.split('').forEach((char, i) => {
                 const span = document.createElement('span');
                 span.innerText = char === ' ' ? '\u00A0' : char;
-                span.className = 'animate-letter';
-                if (jumpChars.includes(char)) span.classList.add('jump-style');
-                else span.classList.add('slide-style');
+                span.className = 'animate-letter ' + (jumpChars.includes(char) ? 'jump-style' : 'slide-style');
                 span.style.animationDelay = `${delays[i] || (i * 0.1)}s`;
                 label.appendChild(span);
             });
         }
 
         function renderLevel1() {
+            const grid = document.getElementById('displayGrid');
+            const backBtn = document.getElementById('back-btn');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             runComplexAnimation();
@@ -135,25 +153,26 @@
                 card.style.textAlign = "center";
                 card.style.cursor = "pointer";
                 card.onclick = () => renderLevel2(cat);
-                card.innerHTML = `<img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;"><p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>`;
+                card.innerHTML = `<img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;"><p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>`;
                 grid.appendChild(card);
             });
         }
 
         function renderLevel2(category) {
+            const grid = document.getElementById('displayGrid');
+            const label = document.getElementById('current-label');
+            const backBtn = document.getElementById('back-btn');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
             label.innerHTML = category.name;
             label.style.fontFamily = "serif";
             label.style.fontSize = "18px";
-            label.style.letterSpacing = "2px";
             backBtn.style.display = "block";
             category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
-                card.style.cursor = "pointer";
-                const imgPath = "images/" + category.name + "/product" + id + ".jpg";
-                card.innerHTML = `<img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" onclick="event.stopPropagation(); openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=IMAGE+MISSING'"><p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>`;
+                const imgPath = `images/${category.name}/product${id}.jpg`;
+                card.innerHTML = `<img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'"><p style="font-size: 11px; font-weight: bold; margin-top: 6px;">STYLE NO.${id}</p>`;
                 grid.appendChild(card);
             });
             window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
