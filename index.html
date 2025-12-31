@@ -5,43 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 字母进场动画 - 调整为更优雅的节奏 */
-        @keyframes letterSlideIn {
-            0% { opacity: 0; transform: translateX(-50px); filter: blur(10px); }
-            100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+        /* 纯粹的淡入动画 */
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        @keyframes letterJumpIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            60% { opacity: 1; transform: translateY(-10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-letter { display: inline-block; opacity: 0; white-space: pre; }
-        .slide-style { animation: letterSlideIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-        .jump-style { animation: letterJumpIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
 
-        /* 音乐旋转按钮 */
-        @keyframes rotateDisc {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .fade-in-label {
+            animation: fadeInText 1.5s ease-in-out forwards;
         }
-        .music-btn {
-            position: fixed; bottom: 30px; right: 20px; width: 38px; height: 38px;
-            background: rgba(0,0,0,0.2); border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; z-index: 10000; cursor: pointer;
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3);
-        }
-        .music-btn.playing { animation: rotateDisc 8s linear infinite; }
-        .music-icon { color: white; font-size: 14px; opacity: 0.8; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
-
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
-    </audio>
-    <div id="musicControl" class="music-btn" onclick="toggleMusic()">
-        <span class="music-icon">♪</span>
-    </div>
 
     <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
         FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
@@ -70,9 +45,13 @@
             <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
-            <h3 id="current-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 4px; display: inline-block; color: #000; min-height: 20px;"></h3>
+            <h3 id="current-label" class="fade-in-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 3px; display: inline-block; color: #000;">
+                FEATURED CATEGORIES
+            </h3>
         </div>
-        <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);"></div>
+        
+        <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);">
+            </div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;">
@@ -89,78 +68,53 @@
             { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
-        const audio = document.getElementById('bgMusic');
-        const musicCtrl = document.getElementById('musicControl');
-        let hasStarted = false;
-
-        // 核心功能：音乐启动的同时开启文字动画
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
-                musicCtrl.classList.add('playing');
-                if (!hasStarted) {
-                    runComplexAnimation(); // 仅在第一次启动音乐时触发动画
-                    hasStarted = true;
-                }
-            } else {
-                audio.pause();
-                musicCtrl.classList.remove('playing');
-            }
-        }
-
-        // 绑定全局点击，实现“一键双启”
-        document.body.addEventListener('click', function() {
-            if (!hasStarted) toggleMusic();
-        }, { once: true });
-
-        function runComplexAnimation() {
-            const label = document.getElementById('current-label');
-            const text = "FEATURED CATEGORIES";
-            label.innerHTML = '';
-            const jumpChars = ['C', 'A', 'G', 'O', 'R'];
-            const delays = [0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5, 1.7, 1.9, 2.1, 2.3, 2.5, 2.7, 2.9, 3.1, 3.3, 3.5, 3.7];
-            
-            text.split('').forEach((char, i) => {
-                const span = document.createElement('span');
-                span.innerText = char === ' ' ? '\u00A0' : char;
-                span.className = 'animate-letter ' + (jumpChars.includes(char) ? 'jump-style' : 'slide-style');
-                span.style.animationDelay = `${delays[i]}s`;
-                label.appendChild(span);
-            });
-        }
+        const grid = document.getElementById('displayGrid');
+        const label = document.getElementById('current-label');
+        const backBtn = document.getElementById('back-btn');
 
         function renderLevel1() {
-            const grid = document.getElementById('displayGrid');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            document.getElementById('back-btn').style.display = "none";
-            // 如果音乐已在播，切回首页重刷动画
-            if(hasStarted) runComplexAnimation(); 
+            label.innerText = "FEATURED CATEGORIES";
+            label.className = "fade-in-label";
+            label.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
+            label.style.fontSize = "13px";
+            label.style.letterSpacing = "3px";
+            backBtn.style.display = "none";
 
             categories.forEach(cat => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 card.style.cursor = "pointer";
                 card.onclick = () => renderLevel2(cat);
-                card.innerHTML = `<img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;"><p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>`;
+                card.innerHTML = `
+                    <img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;">
+                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
+                `;
                 grid.appendChild(card);
             });
         }
 
         function renderLevel2(category) {
-            const grid = document.getElementById('displayGrid');
-            const label = document.getElementById('current-label');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
-            label.innerHTML = category.name;
+            label.innerText = category.name;
+            label.className = ""; // 二级标题不使用淡入
             label.style.fontFamily = "serif";
             label.style.fontSize = "18px";
-            document.getElementById('back-btn').style.display = "block";
+            label.style.letterSpacing = "2px";
+            backBtn.style.display = "block";
+
             category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 const imgPath = `images/${category.name}/product${id}.jpg`;
-                card.innerHTML = `<img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'"><p style="font-size: 11px; font-weight: bold; margin-top: 6px;">STYLE NO.${id}</p>`;
+                card.innerHTML = `
+                    <img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
+                         onclick="openLightbox('${imgPath}')"
+                         onerror="this.src='https://via.placeholder.com/800x1066?text=IMAGE+MISSING'">
+                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
+                `;
                 grid.appendChild(card);
             });
             window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
