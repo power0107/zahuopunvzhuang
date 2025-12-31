@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style</title>
 </head>
-<body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
 
     <header style="padding: 10px 0 0; text-align: center; border-bottom: 1px solid #eee;">
         <div style="font-family: serif; font-size: 38px; font-weight: bold; text-transform: lowercase; margin-bottom: 5px;">general store</div>
@@ -20,12 +20,15 @@
         <h2 style="font-family: serif; font-size: 28px; font-weight: normal; letter-spacing: 4px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: 0;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" onerror="this.src='https://via.placeholder.com/1200x600?text=Check+images/product36.jpg'">
+    <section style="width: 100%; line-height: 0; font-size: 0;">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner">
     </section>
 
-    <main id="main-area" style="margin-top: 0; background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 15px 0;">
+    <main id="main-area" style="background: #fff; padding: 0 4px;">
+        <div style="text-align: center; padding: 15px 0; position: relative; display: flex; align-items: center; justify-content: center;">
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline; text-transform: uppercase;">
+                ← 返回
+            </div>
             <h3 id="current-label" style="font-size: 18px; font-family: serif; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block; padding-bottom: 2px;">精选分类</h3>
         </div>
         
@@ -38,48 +41,50 @@
     </div>
 
     <script>
-        // 根据你的截图精准匹配数据
+        // 根据你 GitHub 截图更新的数据
         const categories = [
             { 
                 name: "羽绒服", 
-                homeImg: "images/product4.jpg", // 对应截图 images 目录下的图
-                items: [35, 54, 55]            // 对应截图 images/羽绒服 目录下的图
+                homeImg: "images/product4.jpg", 
+                items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] 
             },
             { 
                 name: "外套",   
                 homeImg: "images/product19.jpg", 
-                items: [38, 39, 40]            // 对应截图 images/外套 目录下的图
+                items: [38, 39, 40, 50, 51, 52, 53, 77, 78] 
             },
             { 
                 name: "毛衫",   
                 homeImg: "images/product3.jpg", 
-                items: [17, 20, 21]            // 对应截图 images/毛衫 目录下的图
+                items: [17, 20, 21, 57, 58, 59, 60, 61, 68] 
             },
             { 
                 name: "长裤",   
                 homeImg: "images/product2.jpg", 
-                items: [1, 64, 65]             // 对应截图 images/长裤 目录下的图
+                items: [16, 19, 2, 3, 36, 37, 4] 
             },
             { 
                 name: "打折",   
                 homeImg: "images/product16.jpg", 
-                items: [35, 54, 55] 
+                items: [5, 51, 52, 53, 56, 6, 7, 78] 
             },
             { 
                 name: "配饰",   
                 homeImg: "images/product37.jpg", 
-                items: [38, 39, 40] 
+                items: [41, 42, 43, 44, 62, 63, 66, 67] 
             }
         ];
 
         const grid = document.getElementById('displayGrid');
         const label = document.getElementById('current-label');
+        const backBtn = document.getElementById('back-btn');
 
         // 首页渲染
         function renderLevel1() {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             label.innerText = "精选分类";
+            backBtn.style.display = "none"; // 首页隐藏返回按钮
 
             categories.forEach(cat => {
                 const card = document.createElement('div');
@@ -88,42 +93,45 @@
                 card.onclick = () => renderLevel2(cat);
                 
                 card.innerHTML = `
-                    <img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f0f0f0;" 
-                         onerror="this.src='https://via.placeholder.com/400x533?text=MISSING+${cat.homeImg}'">
-                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
+                    <img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
+                         onerror="this.src='https://via.placeholder.com/400x533?text=MISSING'">
+                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">${cat.name}</p>
                 `;
                 grid.appendChild(card);
             });
+            window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
         }
 
-        // 二级页面渲染 (1行2张)
-        function renderLevel2(cat) {
+        // 二级页面渲染
+        function renderLevel2(category) {
             grid.innerHTML = '';
-            grid.style.gridTemplateColumns = "repeat(2, 1fr)";
-            label.innerText = cat.name;
+            grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
+            label.innerText = category.name;
+            backBtn.style.display = "block"; // 子页显示返回按钮
 
-            cat.items.forEach(id => {
+            category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
-                card.style.marginBottom = "10px";
+                card.style.cursor = "pointer";
                 
-                // 路径拼接：images/分类名/product编号.jpg
-                const prodImg = "images/" + cat.name + "/product" + id + ".jpg";
+                const imgPath = "images/" + category.name + "/product" + id + ".jpg";
                 
                 card.innerHTML = `
-                    <img src="${prodImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f0f0f0;" 
-                         onclick="openLightbox('${prodImg}')"
-                         onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING+${prodImg}'">
-                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">STYLE NO.${id}</p>
+                    <img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
+                         onclick="event.stopPropagation(); openLightbox('${imgPath}')"
+                         onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING+NO.${id}'">
+                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
                 grid.appendChild(card);
             });
-            window.scrollTo({ top: document.getElementById('main-area').offsetTop, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
         }
 
         function openLightbox(src) {
-            document.getElementById('lightbox').style.display = 'flex';
-            document.getElementById('lightboxImg').src = src;
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            lb.style.display = 'flex';
+            img.src = src;
         }
 
         renderLevel1();
