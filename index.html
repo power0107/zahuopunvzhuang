@@ -4,40 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
-    <link rel="preconnect" href="https://raw.githubusercontent.com">
+    
+    <link rel="preload" as="image" href="images/product4.jpg">
+    <link rel="preload" as="image" href="images/product19.jpg">
+    <link rel="preload" as="image" href="images/product3.jpg">
+    <link rel="preload" as="image" href="images/product16.jpg">
+    <link rel="preload" as="image" href="images/product37.jpg">
+    <link rel="preload" as="image" href="images/product36.jpg">
+
     <style>
-        /* 缓慢优雅的淡入 */
+        /* 极致缓慢优雅的淡入动画 (3.5s) */
         @keyframes fadeInElegant {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
 
-        .fade-in-label {
-            animation: fadeInElegant 3.5s ease-in-out forwards;
-        }
-
-        /* 极致提速：锁定占位符颜色，防止图片加载前的白屏感 */
+        /* 图片容器优化：骨架屏效果 */
         .img-container {
             width: 100%;
             aspect-ratio: 3/4;
-            background: #f7f7f7; /* 图片未出时的底色 */
+            background-color: #f2f2f2; /* 骨架屏占位色 */
             overflow: hidden;
             position: relative;
         }
 
+        /* 初始隐藏图片，加载完后极速淡入 */
         .img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             opacity: 0;
-            transition: opacity 0.3s ease-in; /* 加载完后顺滑浮现 */
+            transition: opacity 0.2s ease-in; /* 缩短淡入时间，感觉更爽快 */
         }
 
-        /* 图片加载完后的显示类 */
-        .img-loaded {
-            opacity: 1 !important;
-        }
+        .img-loaded { opacity: 1 !important; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
@@ -61,7 +63,7 @@
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px; position: relative; z-index: 1;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" onload="this.classList.add('img-loaded')" class="img-loaded">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" onload="this.classList.add('img-loaded')">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 5;">
@@ -150,6 +152,7 @@
             document.getElementById('lightbox').style.display = 'flex';
         }
 
+        // 启动！
         renderLevel1();
     </script>
 </body>
