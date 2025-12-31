@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store | Shopbop Style Official</title>
+    <title>General Store | Shopbop Style</title>
 </head>
-<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
+<body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
 
     <header style="padding: 10px 0 0; text-align: center; border-bottom: 1px solid #eee;">
         <div style="font-family: serif; font-size: 38px; font-weight: bold; text-transform: lowercase; margin-bottom: 5px;">general store</div>
@@ -15,17 +15,18 @@
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 8px 0; text-align: center; margin-bottom: 0;">
+    <div style="background: #fff; padding: 15px 0 10px 0; text-align: center; margin-bottom: 0;">
         <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">NEW COLLECTION</span>
         <h2 style="font-family: serif; font-size: 28px; font-weight: normal; letter-spacing: 4px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: 0; padding: 0; background: #fff;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Main Banner">
+    <section style="width: 100%; line-height: 0; font-size: 0; margin: 0; padding: 0; background: #fff;">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" 
+             onerror="console.error('海报图丢失: images/product36.jpg')">
     </section>
 
-    <main id="main-area" style="margin-top: 0; position: relative; z-index: 10; background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 8px 0;">
+    <main id="main-area" style="margin-top: 0; background: #fff; padding: 0 4px;">
+        <div style="text-align: center; padding: 12px 0;">
             <h3 id="current-label" style="font-size: 18px; font-family: serif; text-transform: uppercase; border-bottom: 1px solid #333; display: inline-block; padding-bottom: 2px;">精选分类</h3>
         </div>
         
@@ -33,29 +34,21 @@
             </div>
     </main>
 
-    <div id="lightbox" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;">
-        <img id="lightboxImg" style="max-height: 90vh; max-width: 92vw;">
-    </div>
-
     <script>
-        /**
-         * 🚨 请检查您的 images 文件夹：
-         * 首页图：images/羽绒服.jpg, images/外套.jpg ... (必须是分类名命名)
-         * 二级图：images/外套/product21.jpg ...
-         */
+        // 【核心数据】请确保你的文件名对应这些名字
         const categories = [
             { name: "羽绒服", items: [16, 17, 18, 19, 20] },
-            { name: "外套", items: [21, 22, 23, 24, 25] },
-            { name: "毛衫", items: [29, 30, 31, 32] },
-            { name: "长裤", items: [12, 13, 14, 15] },
-            { name: "打折", items: [33, 34, 35] },
-            { name: "配饰", items: [26, 27, 28] }
+            { name: "外套",   items: [21, 22, 23, 24, 25] },
+            { name: "毛衫",   items: [29, 30, 31, 32] },
+            { name: "长裤",   items: [12, 13, 14, 15] },
+            { name: "打折",   items: [33, 34, 35] },
+            { name: "配饰",   items: [26, 27, 28] }
         ];
 
         const grid = document.getElementById('displayGrid');
         const label = document.getElementById('current-label');
 
-        // 渲染首页（1行6张）
+        // 首页：渲染 6 个分类入口
         function renderLevel1() {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
@@ -67,47 +60,43 @@
                 card.style.cursor = "pointer";
                 card.onclick = () => renderLevel2(cat);
                 
-                // 首页图路径：images/分类名.jpg (例如 images/羽绒服.jpg)
-                const homeImgPath = "images/" + cat.name + ".jpg";
+                // 首页图路径示例：images/羽绒服.jpg
+                const homeImg = "images/" + cat.name + ".jpg";
                 
                 card.innerHTML = `
-                    <img src="${homeImgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
-                         onerror="this.src='https://via.placeholder.com/400x533?text=${encodeURIComponent(cat.name)}'">
-                    <p style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">${cat.name}</p>
+                    <img src="${homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f0f0f0;" 
+                         onerror="this.parentNode.style.opacity='0.5'; console.warn('找不到图: ${homeImg}')">
+                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // 渲染二级（1行2张）
-        function renderLevel2(category) {
+        // 二级页面：渲染 1 行 2 张
+        function renderLevel2(cat) {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)";
-            label.innerText = category.name;
+            label.innerText = cat.name;
 
-            category.items.forEach(id => {
+            cat.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
+                card.style.marginBottom = "10px";
                 
-                // 二级图路径：images/分类名/product编号.jpg
-                const productPath = "images/" + category.name + "/product" + id + ".jpg";
+                // 二级图路径示例：images/羽绒服/product16.jpg
+                const prodImg = "images/" + cat.name + "/product" + id + ".jpg";
                 
                 card.innerHTML = `
-                    <img src="${productPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
-                         onclick="openLightbox('${productPath}')"
-                         onerror="this.src='https://via.placeholder.com/800x1066?text=Missing+${id}'">
-                    <p style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
+                    <img src="${prodImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f0f0f0;" 
+                         onerror="this.src='https://via.placeholder.com/400?text=Error+Path+Check'">
+                    <p style="font-size: 12px; font-weight: bold; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
                 grid.appendChild(card);
             });
-            window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('main-area').offsetTop, behavior: 'smooth' });
         }
 
-        function openLightbox(src) {
-            document.getElementById('lightbox').style.display = 'flex';
-            document.getElementById('lightboxImg').src = src;
-        }
-
+        // 启动
         renderLevel1();
     </script>
 </body>
