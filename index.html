@@ -50,13 +50,39 @@
     </div>
 
     <script>
+        // 🚨 已经根据你的 GitHub 最新截图更新了所有编号
         const categories = [
-            { name: "羽绒服", homeImg: "images/product4.jpg", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
-            { name: "外套", homeImg: "images/product19.jpg", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
-            { name: "毛衫", homeImg: "images/product3.jpg", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
-            { name: "长裤", homeImg: "images/product2.jpg", items: [16, 19, 2, 3, 36, 37, 4] },
-            { name: "打折", homeImg: "images/product16.jpg", items: [5, 51, 52, 53, 56, 6, 7, 78] },
-            { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
+            { 
+                name: "羽绒服", 
+                homeImg: "images/product4.jpg", 
+                items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] 
+            },
+            { 
+                name: "外套", 
+                homeImg: "images/product19.jpg", 
+                items: [38, 39, 40, 50, 51, 52, 53, 77, 78] 
+            },
+            { 
+                name: "毛衫", 
+                homeImg: "images/product3.jpg", 
+                items: [17, 20, 21, 57, 58, 59, 60, 61, 68] 
+            },
+            { 
+                name: "长裤", 
+                homeImg: "images/product4.jpg", 
+                // 更新为截图 68 中的最新编号
+                items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] 
+            },
+            { 
+                name: "打折", 
+                homeImg: "images/product16.jpg", 
+                items: [5, 6, 7, 51, 52, 53, 56, 78] 
+            },
+            { 
+                name: "配饰", 
+                homeImg: "images/product37.jpg", 
+                items: [41, 42, 43, 44, 62, 63, 66, 67] 
+            }
         ];
 
         function renderLevel1() {
@@ -97,14 +123,13 @@
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 
-                // 兼容逻辑：先尝试加载 product+数字，如果失败则尝试纯数字
+                // 自动寻找 product+数字.jpg
                 const imgPath = `images/${category.name}/product${id}.jpg`;
-                const altPath = `images/${category.name}/${id}.jpg`;
                 
                 card.innerHTML = `
                     <img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
                          onclick="openLightbox('${imgPath}')"
-                         onerror="this.onerror=null; this.src='${altPath}'; this.onclick=function(){openLightbox('${altPath}')};">
+                         onerror="this.src='https://via.placeholder.com/800x1066?text=IMAGE+MISSING+${id}'">
                     <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
                 grid.appendChild(card);
