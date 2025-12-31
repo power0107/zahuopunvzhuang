@@ -5,18 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 极致缓慢的淡入动画：3.5秒 */
-        @keyframes fadeInText {
-            from { opacity: 0; filter: blur(2px); }
-            to { opacity: 1; filter: blur(0); }
+        /* 缓慢优雅的淡入 */
+        @keyframes fadeInElegant {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in-label {
-            animation: fadeInText 3.5s ease-in-out forwards;
+            animation: fadeInElegant 3.5s ease-out forwards;
+        }
+
+        /* 优化图片容器，防止加载时页面跳动 */
+        .img-container {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #fdfdfd;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.5s;
         }
     </style>
 </head>
-<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
 
     <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
         FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
@@ -37,7 +53,7 @@
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px; position: relative; z-index: 1;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner" loading="eager">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 5;">
@@ -45,7 +61,7 @@
             <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
-            <h3 id="current-label" class="fade-in-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 3px; display: inline-block; color: #000;">
+            <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; display: inline-block; color: #111;">
                 FEATURED CATEGORIES
             </h3>
         </div>
@@ -69,21 +85,25 @@
         function renderLevel1() {
             const grid = document.getElementById('displayGrid');
             const label = document.getElementById('current-label');
-            const backBtn = document.getElementById('back-btn');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             label.innerText = "FEATURED CATEGORIES";
-            label.className = "fade-in-label"; // 首页重新应用动画
-            label.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
-            label.style.fontSize = "13px";
-            backBtn.style.display = "none";
+            label.style.fontFamily = "'Times New Roman', serif";
+            label.style.letterSpacing = "6px";
+            label.className = "fade-in-label";
+            document.getElementById('back-btn').style.display = "none";
 
             categories.forEach(cat => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 card.style.cursor = "pointer";
                 card.onclick = () => renderLevel2(cat);
-                card.innerHTML = `<img src="${cat.homeImg}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;"><p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>`;
+                card.innerHTML = `
+                    <div class="img-container">
+                        <img src="${cat.homeImg}" loading="lazy">
+                    </div>
+                    <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
+                `;
                 grid.appendChild(card);
             });
         }
@@ -91,20 +111,24 @@
         function renderLevel2(category) {
             const grid = document.getElementById('displayGrid');
             const label = document.getElementById('current-label');
-            const backBtn = document.getElementById('back-btn');
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
             label.innerText = category.name;
-            label.className = ""; // 二级分类不使用动画
+            label.className = "";
             label.style.fontFamily = "serif";
-            label.style.fontSize = "18px";
-            backBtn.style.display = "block";
+            label.style.letterSpacing = "2px";
+            document.getElementById('back-btn').style.display = "block";
 
             category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
                 const imgPath = `images/${category.name}/product${id}.jpg`;
-                card.innerHTML = `<img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'"><p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>`;
+                card.innerHTML = `
+                    <div class="img-container">
+                        <img src="${imgPath}" loading="lazy" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'">
+                    </div>
+                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
+                `;
                 grid.appendChild(card);
             });
             window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
