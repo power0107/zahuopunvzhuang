@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
     <style>
         /* 缓慢优雅的淡入 */
         @keyframes fadeInElegant {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .fade-in-label {
-            animation: fadeInElegant 3.5s ease-out forwards;
+            animation: fadeInElegant 3.5s ease-in-out forwards;
         }
 
-        /* 优化图片容器，防止加载时页面跳动 */
+        /* 极致提速：锁定占位符颜色，防止图片加载前的白屏感 */
         .img-container {
             width: 100%;
             aspect-ratio: 3/4;
-            background: #fdfdfd;
+            background: #f7f7f7; /* 图片未出时的底色 */
             overflow: hidden;
+            position: relative;
         }
 
         .img-container img {
@@ -28,7 +30,13 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: opacity 0.5s;
+            opacity: 0;
+            transition: opacity 0.3s ease-in; /* 加载完后顺滑浮现 */
+        }
+
+        /* 图片加载完后的显示类 */
+        .img-loaded {
+            opacity: 1 !important;
         }
     </style>
 </head>
@@ -53,7 +61,7 @@
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px; position: relative; z-index: 1;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" alt="Banner" loading="eager">
+        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" onload="this.classList.add('img-loaded')" class="img-loaded">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px; position: relative; z-index: 5;">
@@ -89,7 +97,6 @@
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             label.innerText = "FEATURED CATEGORIES";
             label.style.fontFamily = "'Times New Roman', serif";
-            label.style.letterSpacing = "6px";
             label.className = "fade-in-label";
             document.getElementById('back-btn').style.display = "none";
 
@@ -100,7 +107,7 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" loading="lazy">
+                        <img src="${cat.homeImg}" onload="this.classList.add('img-loaded')">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -116,7 +123,6 @@
             label.innerText = category.name;
             label.className = "";
             label.style.fontFamily = "serif";
-            label.style.letterSpacing = "2px";
             document.getElementById('back-btn').style.display = "block";
 
             category.items.forEach(id => {
@@ -125,7 +131,7 @@
                 const imgPath = `images/${category.name}/product${id}.jpg`;
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${imgPath}" loading="lazy" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'">
+                        <img src="${imgPath}" onload="this.classList.add('img-loaded')" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
                 `;
