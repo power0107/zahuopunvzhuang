@@ -5,30 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 字母动画核心样式 */
-        @keyframes letterRun {
+        /* 1. 基础滑行动画 */
+        @keyframes letterSlideIn {
             0% {
                 opacity: 0;
-                transform: translateX(-20px);
-                filter: blur(5px);
+                transform: translateX(-100vw); /* 从屏幕左侧外进入 */
             }
             100% {
                 opacity: 1;
                 transform: translateX(0);
-                filter: blur(0);
+            }
+        }
+
+        /* 2. 特定字母的高跳动画 (C, A, G, O, R) */
+        @keyframes letterJumpIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) translateY(0);
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(0) translateY(-50px); /* 跑到位的同时向上跳起 */
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) translateY(0); /* 落地 */
             }
         }
 
         .animate-letter {
             display: inline-block;
-            opacity: 0; /* 初始隐藏 */
-            animation: letterRun 0.6s ease-out forwards;
+            opacity: 0;
+            white-space: pre; /* 保留空格渲染 */
         }
 
-        /* 保证空格也有宽度 */
-        .letter-space {
-            display: inline-block;
-            width: 0.3em;
+        /* 普通滑行类 */
+        .slide-style {
+            animation: letterSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* 跳跃类 */
+        .jump-style {
+            animation: letterJumpIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
     </style>
 </head>
@@ -57,16 +75,16 @@
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 20px 0; position: relative; display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center; padding: 30px 0 20px; position: relative; display: flex; align-items: center; justify-content: center;">
             <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; left: 10px; font-size: 11px; font-weight: bold; color: #666; cursor: pointer; text-decoration: underline;">
                 ← BACK
             </div>
-            <h3 id="current-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid #000; display: inline-block; padding-bottom: 4px; color: #000; min-height: 20px;">
-                </h3>
+            <h3 id="current-label" style="font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: 4px; display: inline-block; color: #000; min-height: 20px; overflow: visible;">
+            </h3>
         </div>
         
         <div id="displayGrid" style="display: grid; gap: 4px; width: 100%; grid-template-columns: repeat(6, 1fr);">
-            </div>
+        </div>
     </main>
 
     <div id="lightbox" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;">
@@ -87,20 +105,52 @@
         const label = document.getElementById('current-label');
         const backBtn = document.getElementById('back-btn');
 
-        // 字母动画生成函数
-        function animateText(text) {
-            label.innerHTML = ''; // 清空
-            const letters = text.split('');
-            letters.forEach((char, index) => {
+        // 复杂节奏动画函数
+        function runComplexAnimation() {
+            const text = "FEATURED CATEGORIES";
+            label.innerHTML = '';
+            
+            // 需跳跃的字母
+            const jumpChars = ['C', 'A', 'G', 'O', 'R'];
+            
+            // 分组逻辑：定义每个索引位置的字母延迟时间(秒)
+            // 索引: F(0), E(1), A(2), T(3), U(4), R(5), E(6), D(7), 空(8), C(9)...
+            const delays = [
+                0.0,  // F 先跑
+                0.3,  // E (和A一块)
+                0.3,  // A
+                0.6,  // T
+                0.7,  // U
+                0.8,  // R
+                0.9,  // E
+                1.0,  // D
+                1.1,  // 空格
+                1.3,  // C (跳)
+                1.4,  // A (跳)
+                1.5,  // T
+                1.6,  // E
+                1.7,  // G (跳)
+                1.8,  // O (跳)
+                1.9,  // R (跳)
+                2.0,  // I
+                2.1,  // E
+                2.2   // S
+            ];
+
+            text.split('').forEach((char, i) => {
                 const span = document.createElement('span');
-                if (char === ' ') {
-                    span.className = 'letter-space';
+                span.innerText = char === ' ' ? '\u00A0' : char; // 处理空格
+                span.className = 'animate-letter';
+                
+                // 判断是否属于跳跃字母
+                if (jumpChars.includes(char)) {
+                    span.classList.add('jump-style');
                 } else {
-                    span.className = 'animate-letter';
-                    span.innerText = char;
-                    // 每个字母延迟 0.05秒
-                    span.style.animationDelay = `${index * 0.05}s`;
+                    span.classList.add('slide-style');
                 }
+
+                // 应用预设的延迟
+                span.style.animationDelay = `${delays[i] || (i * 0.1)}s`;
                 label.appendChild(span);
             });
         }
@@ -108,13 +158,7 @@
         function renderLevel1() {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            
-            // 执行英文标题动画
-            animateText("FEATURED CATEGORIES");
-            
-            label.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
-            label.style.fontSize = "13px";
-            label.style.letterSpacing = "3px";
+            runComplexAnimation();
             backBtn.style.display = "none";
 
             categories.forEach(cat => {
@@ -133,8 +177,6 @@
         function renderLevel2(category) {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
-            
-            // 子目录不需要字母跑动动画，直接显示中文名
             label.innerHTML = category.name;
             label.style.fontFamily = "serif";
             label.style.fontSize = "18px";
@@ -167,7 +209,6 @@
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        // 页面首次加载
         renderLevel1();
     </script>
 </body>
