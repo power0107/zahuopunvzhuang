@@ -3,155 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>General Store | Shopbop Style Official</title>
+    <title>General Store</title>
     <style>
-        /* 1. Featured 文字缓慢隐现动画 (3.5秒) */
-        @keyframes fadeInElegant {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
+        /* 1. 字体隐现：3.5秒 RARE 风格 */
+        @keyframes fadeInElegant { from { opacity: 0; } to { opacity: 1; } }
+        .rare-fade { animation: fadeInElegant 3.5s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 6px; text-transform: uppercase; font-size: 14px; }
 
-        /* 2. 图片容器：锁定比例，防止加载时页面抖动 */
-        .img-container {
-            width: 100%;
-            aspect-ratio: 3/4;
-            background-color: #f8f8f8; /* 灰色占位背景 */
-            overflow: hidden;
-            position: relative;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            opacity: 0;
-            transition: opacity 0.3s ease; /* 图片加载完后顺滑浮现 */
-        }
-
-        /* 加载完成后的显示状态 */
+        /* 2. 极致容器：固定比例，背景灰，不跳闪 */
+        body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        .img-box { width: 100%; aspect-ratio: 3/4; background: #f5f5f5; overflow: hidden; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.2s; }
         .loaded { opacity: 1 !important; }
 
-        .grid-item { text-align: center; margin-bottom: 8px; }
-        
-        /* BACK 键样式 */
-        #back-btn {
-            position: absolute; right: 10px; 
-            font-size: 12px; font-weight: 900; 
-            color: #000; cursor: pointer; padding: 5px;
-        }
+        /* 3. 布局微调 */
+        .grid { display: grid; gap: 4px; padding: 0 4px; }
+        #back-btn { position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 99; }
     </style>
 </head>
-<body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
+<body>
 
-    <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
-        FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
-    </div>
+    <div style="background:#f9f9f9; padding:6px 0; font-size:10px; color:#666; text-align:center; border-bottom:1px solid #eee;">FREE INTERNATIONAL DELIVERY | OFFICIAL</div>
 
-    <header style="padding: 10px 0 0; text-align: center; border-bottom: 1px solid #eee;">
-        <div style="font-family: serif; font-size: 38px; font-weight: bold; margin-bottom: 5px; letter-spacing: 4px;">General Store</div>
-        <nav style="display: flex; justify-content: center; gap: 25px; padding-bottom: 8px;">
-            <a onclick="renderLevel1()" style="text-decoration: none; color: #000; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">首页 HOME</a>
-            <a onclick="enterSaleCategory()" style="text-decoration: none; color: #d0021b; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">打折 SALE</a>
+    <header style="padding:15px 0 0; text-align:center; border-bottom:1px solid #eee;">
+        <div style="font-family:serif; font-size:38px; font-weight:bold; letter-spacing:4px;">General Store</div>
+        <nav style="display:flex; justify-content:center; gap:25px; padding:10px 0;">
+            <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">HOME</span>
+            <span onclick="goSale()" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
         </nav>
     </header>
 
-    <div style="background: #fff; padding: 15px 0 0 0; text-align: center;">
-        <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
-        <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
-        <div style="font-size: 11px; color: #999; margin: 4px 0 10px 0; letter-spacing: 1px;">V：lanxiaoqi1981</div>
+    <div style="text-align:center; padding:15px 0 0;">
+        <span style="font-size:9px; color:#888; letter-spacing:2px;">SINCE 2008</span>
+        <h2 style="font-family:serif; font-size:22px; font-weight:normal; letter-spacing:5px; margin:2px 0;">TIMELESS CHIC</h2>
     </div>
 
-    <section style="width: 100%; line-height: 0; margin-top: -5px;">
-        <img src="images/product36.webp" style="width: 100%; height: auto; display: block;" fetchpriority="high">
-    </section>
+    <img src="images/product36.jpg" style="width:100%; height:auto; display:block; margin-top:5px;">
 
-    <main id="main-area" style="background: #fff; padding: 0 4px;">
-        <div style="text-align: center; padding: 30px 0 20px; position: relative; display: flex; align-items: center; justify-content: center;">
-            <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; margin: 0;">
-                FEATURED CATEGORIES
-            </h3>
-            <div id="back-btn" onclick="renderLevel1()" style="display: none;">BACK →</div>
-        </div>
-        <div id="displayGrid" style="display: grid; gap: 4px; width: 100%;"></div>
-    </main>
-
-    <div id="lightbox" onclick="this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 9999; justify-content: center; align-items: center;">
-        <img id="lightboxImg" style="max-height: 90vh; max-width: 92vw;">
+    <div style="position:relative; text-align:center; padding:30px 0 20px;">
+        <h3 id="label" class="rare-fade">FEATURED CATEGORIES</h3>
+        <div id="back-btn" style="display:none" onclick="goHome()">BACK →</div>
     </div>
+
+    <div id="grid" class="grid"></div>
 
     <script>
-        const categories = [
-            { name: "羽绒服", homeImg: "images/product4.webp", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
-            { name: "外套", homeImg: "images/product19.webp", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
-            { name: "毛衫", homeImg: "images/product3.webp", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
-            { name: "长裤", homeImg: "images/product4.webp", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
-            { name: "打折", homeImg: "images/product16.webp", items: [5, 6, 7, 51, 52, 53, 56, 78] },
-            { name: "配饰", homeImg: "images/product37.webp", items: [41, 42, 43, 44, 62, 63, 66, 67] }
+        const data = [
+            { n: "羽绒服", img: "product4", ids: [23,24,25,26,27,28,29,30,31,32,33,34,35,41,54,55,59,60,61,62] },
+            { n: "外套", img: "product19", ids: [38,39,40,50,51,52,53,77,78] },
+            { n: "毛衫", img: "product3", ids: [17,20,21,57,58,59,60,61,68] },
+            { n: "长裤", img: "product4", ids: [1,8,9,10,11,12,13,14,15,18,22,64,65] },
+            { n: "打折", img: "product16", ids: [5,6,7,51,52,53,56,78] },
+            { n: "配饰", img: "images/product37", ids: [41,42,43,44,62,63,66,67] }
         ];
 
-        const grid = document.getElementById('displayGrid');
+        const container = document.getElementById('grid');
+        const label = document.getElementById('label');
+        const btn = document.getElementById('back-btn');
 
-        function renderLevel1() {
-            grid.innerHTML = '';
-            grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            document.getElementById('current-label').innerText = "FEATURED CATEGORIES";
-            document.getElementById('current-label').className = "fade-in-label";
-            document.getElementById('back-btn').style.display = "none";
-
-            categories.forEach(cat => {
-                const card = document.createElement('div');
-                card.className = 'grid-item';
-                card.onclick = () => renderLevel2(cat);
-                card.innerHTML = `
-                    <div class="img-container">
-                        <img src="${cat.homeImg}" loading="lazy" onload="this.className='loaded'">
-                    </div>
-                    <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
-                `;
-                grid.appendChild(card);
-            });
+        // 核心渲染：极致精简
+        function render(type, content) {
+            container.innerHTML = '';
+            container.style.gridTemplateColumns = type === 1 ? "repeat(6, 1fr)" : "repeat(2, 1fr)";
+            container.insertAdjacentHTML('beforeend', content);
         }
 
-        function renderLevel2(category) {
-            grid.innerHTML = '';
-            grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
-            document.getElementById('current-label').innerText = category.name;
-            document.getElementById('current-label').className = "";
-            document.getElementById('back-btn').style.display = "block";
-
-            category.items.forEach((id) => {
-                const card = document.createElement('div');
-                card.className = 'grid-item';
-                const imgPath = `images/${category.name}/product${id}.webp`;
-                
-                card.innerHTML = `
-                    <div class="img-container">
-                        <img src="${imgPath}" 
-                             loading="lazy" 
-                             onload="this.className='loaded'"
-                             onclick="openLightbox('${imgPath}')"
-                             onerror="this.src='https://via.placeholder.com/300x400?text=LOAD+ERROR'">
-                    </div>
-                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
-                `;
-                grid.appendChild(card);
-            });
-            window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
+        function goHome() {
+            let html = data.map(c => `
+                <div onclick="goSub('${c.n}')">
+                    <div class="img-box"><img src="images/${c.img}.webp" loading="lazy" onload="this.className='loaded'" onerror="this.src='images/${c.img}.jpg'"></div>
+                    <p style="font-size:10px; font-weight:bold; margin:5px 0;">${c.n}</p>
+                </div>
+            `).join('');
+            render(1, html);
+            label.innerText = "FEATURED CATEGORIES";
+            label.className = "rare-fade";
+            btn.style.display = "none";
         }
 
-        function enterSaleCategory() {
-            const saleData = categories.find(c => c.name === "打折");
-            if(saleData) renderLevel2(saleData);
+        function goSub(name) {
+            const cat = data.find(c => c.n === name);
+            let html = cat.ids.map(id => {
+                const p = `images/${cat.n}/product${id}`;
+                return `
+                <div>
+                    <div class="img-box"><img src="${p}.webp" loading="lazy" onload="this.className='loaded'" onerror="this.src='${p}.jpg'"></div>
+                    <p style="font-size:10px; font-weight:bold; margin:5px 0;">STYLE NO.${id}</p>
+                </div>`;
+            }).join('');
+            render(2, html);
+            label.innerText = name;
+            label.className = "";
+            btn.style.display = "block";
+            window.scrollTo(0, document.getElementById('label').offsetTop - 20);
         }
 
-        function openLightbox(src) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
+        function goSale() { goSub("打折"); }
 
-        renderLevel1();
+        goHome();
     </script>
 </body>
 </html>
