@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        @keyframes fadeInText { from { opacity: 0; } to { opacity: 1; } }
-        .fade-in-label { animation: fadeInText 1.5s ease-in-out forwards; }
+        /* 极致缓慢的淡入动画：3.5秒 */
+        @keyframes fadeInText {
+            from { opacity: 0; filter: blur(2px); }
+            to { opacity: 1; filter: blur(0); }
+        }
+
+        .fade-in-label {
+            animation: fadeInText 3.5s ease-in-out forwards;
+        }
     </style>
 </head>
 <body style="margin: 0; padding: 0; box-sizing: border-box; background: #fff; color: #333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;">
@@ -50,39 +57,13 @@
     </div>
 
     <script>
-        // 🚨 已经根据你的 GitHub 最新截图更新了所有编号
         const categories = [
-            { 
-                name: "羽绒服", 
-                homeImg: "images/product4.jpg", 
-                items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] 
-            },
-            { 
-                name: "外套", 
-                homeImg: "images/product19.jpg", 
-                items: [38, 39, 40, 50, 51, 52, 53, 77, 78] 
-            },
-            { 
-                name: "毛衫", 
-                homeImg: "images/product3.jpg", 
-                items: [17, 20, 21, 57, 58, 59, 60, 61, 68] 
-            },
-            { 
-                name: "长裤", 
-                homeImg: "images/product4.jpg", 
-                // 更新为截图 68 中的最新编号
-                items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] 
-            },
-            { 
-                name: "打折", 
-                homeImg: "images/product16.jpg", 
-                items: [5, 6, 7, 51, 52, 53, 56, 78] 
-            },
-            { 
-                name: "配饰", 
-                homeImg: "images/product37.jpg", 
-                items: [41, 42, 43, 44, 62, 63, 66, 67] 
-            }
+            { name: "羽绒服", homeImg: "images/product4.jpg", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
+            { name: "外套", homeImg: "images/product19.jpg", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
+            { name: "毛衫", homeImg: "images/product3.jpg", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
+            { name: "长裤", homeImg: "images/product4.jpg", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
+            { name: "打折", homeImg: "images/product16.jpg", items: [5, 6, 7, 51, 52, 53, 56, 78] },
+            { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
 
         function renderLevel1() {
@@ -92,7 +73,7 @@
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             label.innerText = "FEATURED CATEGORIES";
-            label.className = "fade-in-label";
+            label.className = "fade-in-label"; // 首页重新应用动画
             label.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
             label.style.fontSize = "13px";
             backBtn.style.display = "none";
@@ -114,7 +95,7 @@
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
             label.innerText = category.name;
-            label.className = "";
+            label.className = ""; // 二级分类不使用动画
             label.style.fontFamily = "serif";
             label.style.fontSize = "18px";
             backBtn.style.display = "block";
@@ -122,16 +103,8 @@
             category.items.forEach(id => {
                 const card = document.createElement('div');
                 card.style.textAlign = "center";
-                
-                // 自动寻找 product+数字.jpg
                 const imgPath = `images/${category.name}/product${id}.jpg`;
-                
-                card.innerHTML = `
-                    <img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" 
-                         onclick="openLightbox('${imgPath}')"
-                         onerror="this.src='https://via.placeholder.com/800x1066?text=IMAGE+MISSING+${id}'">
-                    <p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>
-                `;
+                card.innerHTML = `<img src="${imgPath}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; background: #f9f9f9;" onclick="openLightbox('${imgPath}')" onerror="this.src='https://via.placeholder.com/800x1066?text=MISSING'"><p style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 6px;">STYLE NO.${id}</p>`;
                 grid.appendChild(card);
             });
             window.scrollTo({ top: document.getElementById('main-area').offsetTop - 10, behavior: 'smooth' });
