@@ -5,17 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store</title>
     <style>
-        /* 1. 字体隐现：3.5秒 RARE 风格 */
         @keyframes fadeInElegant { from { opacity: 0; } to { opacity: 1; } }
         .rare-fade { animation: fadeInElegant 3.5s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 6px; text-transform: uppercase; font-size: 14px; }
 
-        /* 2. 极致容器：固定比例，背景灰，不跳闪 */
         body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
         .img-box { width: 100%; aspect-ratio: 3/4; background: #f5f5f5; overflow: hidden; position: relative; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.2s; }
         .loaded { opacity: 1 !important; }
 
-        /* 3. 布局微调 */
         .grid { display: grid; gap: 4px; padding: 0 4px; }
         #back-btn { position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 99; }
     </style>
@@ -37,7 +34,7 @@
         <h2 style="font-family:serif; font-size:22px; font-weight:normal; letter-spacing:5px; margin:2px 0;">TIMELESS CHIC</h2>
     </div>
 
-    <img src="images/product36.jpg" style="width:100%; height:auto; display:block; margin-top:5px;">
+    <img src="https://generalstore.oss-cn-beijing.aliyuncs.com/zahuopunvzhuang-main/images/product36.jpg" style="width:100%; height:auto; display:block; margin-top:5px;">
 
     <div style="position:relative; text-align:center; padding:30px 0 20px;">
         <h3 id="label" class="rare-fade">FEATURED CATEGORIES</h3>
@@ -47,20 +44,21 @@
     <div id="grid" class="grid"></div>
 
     <script>
+        const OSS_BASE = "https://generalstore.oss-cn-beijing.aliyuncs.com/zahuopunvzhuang-main/";
+        
         const data = [
             { n: "羽绒服", img: "product4", ids: [23,24,25,26,27,28,29,30,31,32,33,34,35,41,54,55,59,60,61,62] },
             { n: "外套", img: "product19", ids: [38,39,40,50,51,52,53,77,78] },
             { n: "毛衫", img: "product3", ids: [17,20,21,57,58,59,60,61,68] },
             { n: "长裤", img: "product4", ids: [1,8,9,10,11,12,13,14,15,18,22,64,65] },
             { n: "打折", img: "product16", ids: [5,6,7,51,52,53,56,78] },
-            { n: "配饰", img: "images/product37", ids: [41,42,43,44,62,63,66,67] }
+            { n: "配饰", img: "product37", ids: [41,42,43,44,62,63,66,67] }
         ];
 
         const container = document.getElementById('grid');
         const label = document.getElementById('label');
         const btn = document.getElementById('back-btn');
 
-        // 核心渲染：极致精简
         function render(type, content) {
             container.innerHTML = '';
             container.style.gridTemplateColumns = type === 1 ? "repeat(6, 1fr)" : "repeat(2, 1fr)";
@@ -70,7 +68,9 @@
         function goHome() {
             let html = data.map(c => `
                 <div onclick="goSub('${c.n}')">
-                    <div class="img-box"><img src="images/${c.img}.webp" loading="lazy" onload="this.className='loaded'" onerror="this.src='images/${c.img}.jpg'"></div>
+                    <div class="img-box">
+                        <img src="${OSS_BASE}images/${c.img}.webp" loading="lazy" onload="this.className='loaded'" onerror="this.src='${OSS_BASE}images/${c.img}.jpg'">
+                    </div>
                     <p style="font-size:10px; font-weight:bold; margin:5px 0;">${c.n}</p>
                 </div>
             `).join('');
@@ -83,10 +83,12 @@
         function goSub(name) {
             const cat = data.find(c => c.n === name);
             let html = cat.ids.map(id => {
-                const p = `images/${cat.n}/product${id}`;
+                const p = `${OSS_BASE}images/${cat.n}/product${id}`;
                 return `
                 <div>
-                    <div class="img-box"><img src="${p}.webp" loading="lazy" onload="this.className='loaded'" onerror="this.src='${p}.jpg'"></div>
+                    <div class="img-box">
+                        <img src="${p}.webp" loading="lazy" onload="this.className='loaded'" onerror="this.src='${p}.jpg'">
+                    </div>
                     <p style="font-size:10px; font-weight:bold; margin:5px 0;">STYLE NO.${id}</p>
                 </div>`;
             }).join('');
