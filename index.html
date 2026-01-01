@@ -7,12 +7,12 @@
     <style>
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         .img-container { width: 100%; aspect-ratio: 3/4; background: #fafafa; overflow: hidden; position: relative; cursor: pointer; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease; }
         .on { opacity: 1 !important; }
         
         /* 首页文字分类导航 */
         .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px 5px; border-bottom: 1px solid #f0f0f0; }
-        .category-item { font-size: 13px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 15px; border: 1px solid #eee; background: #fff; border-radius: 2px; }
+        .category-item { font-size: 13px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 15px; border: 1px solid #eee; background: #fff; }
         
         .grid { display: grid; gap: 3px; padding: 0 3px; grid-template-columns: repeat(2, 1fr); }
         #back-btn { position: absolute; right: 15px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
@@ -27,7 +27,7 @@
         <div style="font-family:serif; font-size:36px; font-weight:bold; letter-spacing:4px;">General Store</div>
         <nav style="display:flex; justify-content:center; gap:30px; padding:12px 0;">
             <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">HOME</span>
-            <span onclick="triggerSub('可外穿小衫')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
+            <span onclick="triggerSub('可外穿小衫')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">NEW ARRIVALS</span>
         </nav>
     </header>
 
@@ -46,10 +46,10 @@
 
         <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
         <div style="padding: 0 4px 50px;">
-            <div class="img-container" style="aspect-ratio: 16/9; cursor: default;">
-                <img src="tp/p02.webp?v=1.1" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
+            <div class="img-container" style="aspect-ratio: 16/9; cursor: default; background: none;">
+                <img id="p02" src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
             </div>
-            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:12px; color:#888; letter-spacing:1px;">SEASON COLLECTION</p>
+            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:12px; color:#888;">2026 SEASON COLLECTION</p>
         </div>
     </div>
 
@@ -57,7 +57,6 @@
         <div id="sub-header" style="display:none; position:relative; text-align:center; padding:20px 0 10px;">
             <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px; text-transform:uppercase;"></h3>
             <div id="back-btn" onclick="goHome()">BACK →</div>
-            
             <div id="third-level-nav" class="sub-nav" style="display:none;">
                 <div style="font-size:11px; border:1px solid #ccc; padding:4px 12px; cursor:pointer; background:#fff;" onclick="triggerSub('马甲', true)">马甲系列 VEST</div>
             </div>
@@ -68,7 +67,7 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
-        // 核心配置：所有 ws 图片都收在“可外穿小衫”中
+        // 只有点击文字导航，才会显示这些图片
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
@@ -82,11 +81,13 @@
 
         function initNav() {
             const nav = document.getElementById('cat-nav');
-            // 首页仅显示一级分类文字
             const mainCats = config.filter(c => !c.parent);
             nav.innerHTML = mainCats.map(c => 
                 `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
             ).join('');
+            
+            // 强行给 p02 加上时间戳，解决上传了但网页不更新的问题
+            document.getElementById('p02').src = "tp/p02.webp?t=" + new Date().getTime();
         }
 
         function goHome() {
@@ -108,14 +109,11 @@
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
             
-            // 仅在毛衣及马甲详情下显示马甲切换按钮
             document.getElementById('third-level-nav').style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
 
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
-                
-                // 路径适配逻辑
                 let path = isThirdLevel ? `tp/${cat.parent}/${cat.n}/${fileName}.webp` : `tp/${cat.n}/${fileName}.webp`;
 
                 const div = document.createElement('div');
