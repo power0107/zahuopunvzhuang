@@ -6,29 +6,34 @@
     <title>General Store | Official</title>
     <style>
         @keyframes rareFade { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
-        body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; }
+        body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         .img-container { width: 100%; aspect-ratio: 3/4; background: #fafafa; overflow: hidden; position: relative; cursor: pointer; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease; }
         .on { opacity: 1 !important; }
-        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 15px 5px; border-bottom: 1px solid #f0f0f0; }
-        .category-item { font-size: 12px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 12px; border: 1px solid #eee; background: #fff; }
-        .grid { display: grid; gap: 3px; padding: 0 3px; }
-        #back-btn { position: absolute; right: 10px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 12px; z-index: 100; }
+        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px 5px; border-bottom: 1px solid #f0f0f0; }
+        .category-item { font-size: 13px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 15px; border: 1px solid #eee; background: #fff; letter-spacing: 1px; }
+        .grid { display: grid; gap: 3px; padding: 0 3px; grid-template-columns: repeat(2, 1fr); }
+        #back-btn { position: absolute; right: 15px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
         #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; }
         .sub-nav { display: flex; justify-content: center; gap: 10px; padding: 10px 0; background: #fdfdfd; border-bottom: 1px solid #eee; }
-        .sub-item { font-size: 11px; border: 1px solid #ccc; padding: 4px 10px; cursor: pointer; background: #fff; border-radius: 2px; }
     </style>
 </head>
 <body>
 
     <header style="padding:15px 0 0; text-align:center; border-bottom: 1px solid #eee;">
         <div style="font-family:serif; font-size:36px; font-weight:bold; letter-spacing:4px;">General Store</div>
-        <nav style="display:flex; justify-content:center; gap:20px; padding:12px 0;">
+        <nav style="display:flex; justify-content:center; gap:30px; padding:12px 0;">
             <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">HOME</span>
             <span onclick="triggerSub('新款')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">NEW ARRIVALS</span>
         </nav>
     </header>
+
+    <div id="brand-text" style="text-align:center; padding:20px 0 10px;">
+        <span style="font-size:9px; color:#aaa; letter-spacing:2px; display:block;">SINCE 2008</span>
+        <h2 style="font-family:serif; font-size:20px; font-weight:normal; letter-spacing:5px; margin:2px 0;">TIMELESS CHIC</h2>
+        <div style="font-size:11px; color:#999; margin:4px 0 10px 0;">V：lanxiaoqi1981</div>
+    </div>
 
     <div id="home-content">
         <section style="width:100%; line-height:0; margin-top:-5px;">
@@ -38,22 +43,21 @@
         <div class="category-nav" id="cat-nav"></div>
 
         <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
-        <div style="padding: 0 4px 15px;">
+        <div style="padding: 0 4px 50px;" onclick="triggerSub('新款')">
             <div class="img-container" style="aspect-ratio: 16/9;">
-                <img src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'" onclick="openLightbox(this.src)">
+                <img src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
             </div>
+            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:12px;">查看 2026 新款上线系列</p>
         </div>
-
-        <div id="new-arrivals-grid" class="grid" style="grid-template-columns: repeat(2, 1fr);"></div>
-        <div style="height:40px;"></div>
     </div>
 
     <main id="main-area">
         <div id="sub-header" style="display:none; position:relative; text-align:center; padding:20px 0 10px;">
-            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:15px;"></h3>
+            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px; text-transform:uppercase;"></h3>
             <div id="back-btn" onclick="goHome()">BACK →</div>
+            
             <div id="third-level-nav" class="sub-nav" style="display:none;">
-                <div class="sub-item" onclick="triggerSub('马甲', true)">马甲系列 VEST</div>
+                <div style="font-size:11px; border:1px solid #ccc; padding:4px 12px; cursor:pointer; background:#fff;" onclick="triggerSub('马甲', true)">马甲系列 VEST</div>
             </div>
         </div>
         <div id="grid" class="grid"></div>
@@ -62,64 +66,32 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
-        // 【关键路径对照】
-        // 这里的文件夹名字必须和你的截图 100% 一致
+        // 配置对照表：确保 folder 名字和您的 GitHub 文件夹名字完全一致
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
             { n: "马甲", prefix: "mj", count: 2, parent: "毛衣" },
             { n: "冲锋衣", prefix: "cfy", count: 4 },
             { n: "国风", prefix: "g", count: 16 },
-            { n: "长裤", prefix: "k", count: 7 },
+            { n: "长裤", prefix: "k", count: 13 },
             { n: "秋冬外套", prefix: "q", count: 4 },
-            { n: "新款", prefix: "ws", count: 24, folder: "可外穿小衫" }, // 你的截图显示新款图在“可外穿小衫”里
-            { n: "可外穿小衫", prefix: "ws", count: 24 }
+            { n: "可外穿小衫", prefix: "ws", count: 24 },
+            { n: "新款", prefix: "ws", count: 24, folder: "可外穿小衫" }
         ];
 
-        const grid = document.getElementById('grid');
-        const homeContent = document.getElementById('home-content');
-        const subHeader = document.getElementById('sub-header');
-        const ttl = document.getElementById('ttl');
-        const thirdNav = document.getElementById('third-level-nav');
-        const newGrid = document.getElementById('new-arrivals-grid');
-
-        function init() {
-            // 初始化导航
+        function initNav() {
             const nav = document.getElementById('cat-nav');
+            // 首页只显示这些一级分类文字
             const mainCats = config.filter(c => c.n !== '新款' && !c.parent);
             nav.innerHTML = mainCats.map(c => 
                 `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
             ).join('');
-
-            // 初始化首页新款列表 (ws01 - ws24)
-            const newItem = config.find(c => c.n === '新款');
-            newGrid.innerHTML = '';
-            for (let i = 1; i <= newItem.count; i++) {
-                const num = i.toString().padStart(2, '0');
-                // 路径修正为：tp/可外穿小衫/ws01.webp
-                const path = `tp/${newItem.folder}/${newItem.prefix}${num}.webp`;
-                const div = document.createElement('div');
-                div.innerHTML = `
-                    <div class="img-container">
-                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="handleError(this)" onclick="openLightbox(this.src)">
-                    </div>
-                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${newItem.prefix.toUpperCase()}${num}</p>
-                `;
-                newGrid.appendChild(div);
-            }
-        }
-
-        function handleError(img) {
-            if (!img.dataset.tried) {
-                img.src = img.src.replace('.webp', '.jpg');
-                img.dataset.tried = "true";
-            }
         }
 
         function goHome() {
-            grid.innerHTML = '';
-            homeContent.style.display = 'block';
-            subHeader.style.display = 'none';
+            document.getElementById('grid').innerHTML = '';
+            document.getElementById('home-content').style.display = 'block';
+            document.getElementById('sub-header').style.display = 'none';
             window.scrollTo(0, 0);
         }
 
@@ -127,37 +99,49 @@
             const cat = config.find(c => c.n === name);
             if (!cat) return;
 
-            homeContent.style.display = 'none';
+            document.getElementById('home-content').style.display = 'none';
+            const subHeader = document.getElementById('sub-header');
             subHeader.style.display = 'block';
-            ttl.innerText = cat.n;
-            grid.innerHTML = '';
-            grid.style.gridTemplateColumns = "repeat(2, 1fr)";
+            document.getElementById('ttl').innerText = cat.n;
             
-            // 三级目录判断
-            thirdNav.style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            
+            // 处理马甲层级
+            document.getElementById('third-level-nav').style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
 
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
                 
-                // 路径逻辑根据你的截图重新精准定位：
+                // 路径动态生成
                 let path;
                 if (isThirdLevel) {
-                    path = `tp/${cat.parent}/${cat.n}/${fileName}.webp`; // tp/毛衣/马甲/mj01.webp
+                    path = `tp/${cat.parent}/${cat.n}/${fileName}.webp`;
                 } else {
-                    path = `tp/${cat.n}/${fileName}.webp`; // tp/毛衣/m01.webp
+                    // 如果有专门的子文件夹（如新款对应可外穿小衫），则优先使用 folder
+                    const folderName = cat.folder || cat.n;
+                    path = `tp/${folderName}/${fileName}.webp`;
                 }
 
                 const div = document.createElement('div');
+                div.style.textAlign = 'center';
                 div.innerHTML = `
                     <div class="img-container">
-                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="handleError(this)" onclick="openLightbox(this.src)">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="handleErr(this)" onclick="openLightbox(this.src)">
                     </div>
-                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${fileName.toUpperCase()}</p>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888;">${fileName.toUpperCase()}</p>
                 `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
+        }
+
+        function handleErr(img) {
+            if (!img.dataset.tried) {
+                img.src = img.src.replace('.webp', '.jpg');
+                img.dataset.tried = "true";
+            }
         }
 
         function openLightbox(src) {
@@ -166,7 +150,7 @@
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        init();
+        initNav();
         goHome();
     </script>
 </body>
