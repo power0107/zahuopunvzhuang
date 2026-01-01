@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 缓慢优雅的淡入动画 */
         @keyframes fadeInElegant {
             from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
@@ -31,7 +30,7 @@
         }
 
         .loaded { opacity: 1 !important; }
-        .grid-item { text-align: center; cursor: pointer; margin-bottom: 10px; }
+        .grid-item { text-align: center; cursor: pointer; margin-bottom: 12px; }
     </style>
 </head>
 <body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
@@ -54,7 +53,7 @@
         <div style="font-size: 11px; color: #999; margin: 4px 0 10px 0; letter-spacing: 1px;">V：lanxiaoqi1981</div>
     </div>
 
-    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px;">
+    <section style="width: 100%; line-height: 0; margin-top: -5px;">
         <img src="images/product36.webp" style="width: 100%; height: auto; display: block;" onload="this.className='loaded'">
     </section>
 
@@ -75,7 +74,7 @@
     </div>
 
     <script>
-        // 根据您的实拍文件夹内容，精准匹配文件名
+        // 根据您的截图，我重新精确对齐了文件名和文件夹名
         const categories = [
             { name: "羽绒服", homeImg: "images/product4.webp", items: ["product55_1", "product59", "product60", "product61", "product78_1"] },
             { name: "外套", homeImg: "images/product19.webp", items: ["product2", "product38", "product39", "product40", "product41", "product50", "product53_1", "product54", "product55"] },
@@ -100,9 +99,9 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" onload="this.classList.add('loaded')">
+                        <img src="${cat.homeImg}" onload="this.className='loaded'" onerror="this.src='${cat.homeImg.replace('.webp', '.jpg')}'">
                     </div>
-                    <p style="font-size: 10px; font-weight: bold; margin-top: 5px;">${cat.name}</p>
+                    <p style="font-size: 10px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
                 grid.appendChild(card);
             });
@@ -118,14 +117,14 @@
             category.items.forEach((fileName) => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
-                // 拼接完整路径：images/分类名/文件名.webp
+                // 拼接完整路径
                 const fullPath = `images/${category.name}/${fileName}.webp`;
                 
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${fullPath}" loading="lazy" onload="this.classList.add('loaded')" onclick="openLightbox('${fullPath}')">
+                        <img src="${fullPath}" loading="lazy" onload="this.className='loaded'" onclick="openLightbox('${fullPath}')" onerror="this.src='${fullPath.replace('.webp', '.jpg')}'">
                     </div>
-                    <p style="font-size: 10px; font-weight: bold; margin-top: 5px;">${fileName.replace('product','')}</p>
+                    <p style="font-size: 10px; font-weight: bold; margin-top: 6px;">STYLE NO.${fileName.replace('product','')}</p>
                 `;
                 grid.appendChild(card);
             });
