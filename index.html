@@ -15,7 +15,6 @@
         #back-btn { position: absolute; right: 15px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
         #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; cursor: zoom-out; }
-        .sub-nav { display: flex; justify-content: center; gap: 10px; padding: 10px 0; background: #fdfdfd; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -38,19 +37,18 @@
         <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
         <div style="padding: 0 4px 50px;">
             <div class="img-container" style="aspect-ratio: 16/9; cursor: default;">
-                <img src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
+                <script>
+                    const p02_url = "tp/p02.webp?v=" + new Date().getTime();
+                    document.write('<img src="' + p02_url + '" onload="this.classList.add(\'on\')" onerror="this.src=\'tp/p02.jpg\'">');
+                </script>
             </div>
         </div>
     </div>
 
     <main id="main-area">
         <div id="sub-header" style="display:none; position:relative; text-align:center; padding:20px 0 10px;">
-            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px; text-transform:uppercase;"></h3>
+            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px;"></h3>
             <div id="back-btn" onclick="goHome()">BACK →</div>
-            
-            <div id="third-level-nav" class="sub-nav" style="display:none;">
-                <div style="font-size:11px; border:1px solid #ccc; padding:4px 12px; cursor:pointer; background:#fff;" onclick="triggerSub('马甲', true)">马甲系列 VEST</div>
-            </div>
         </div>
         <div id="grid" class="grid"></div>
     </main>
@@ -58,24 +56,19 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
-        // 配置对照：严格匹配照片中的文件夹和前缀
         const config = [
-            { n: "衬衫", prefix: "cs", count: 6 },
-            { n: "毛衣", prefix: "m", count: 20 },
-            { n: "马甲", prefix: "mj", count: 2, parent: "毛衣" },
-            { n: "冲锋衣", prefix: "cfy", count: 4 },
-            { n: "国风", prefix: "g", count: 16 },
-            { n: "长裤", prefix: "k", count: 13 },
-            { n: "秋冬外套", prefix: "q", count: 4 },
-            { n: "可外穿小衫", prefix: "ws", count: 24 }
+            { n: "衬衫", pre: "cs", c: 6 },
+            { n: "毛衣", pre: "m", c: 20 },
+            { n: "冲锋衣", pre: "cfy", c: 4 },
+            { n: "国风", pre: "g", c: 16 },
+            { n: "长裤", pre: "k", c: 13 },
+            { n: "秋冬外套", pre: "q", c: 4 },
+            { n: "可外穿小衫", pre: "ws", c: 24 }
         ];
 
-        function initNav() {
+        function init() {
             const nav = document.getElementById('cat-nav');
-            const mainCats = config.filter(c => !c.parent);
-            nav.innerHTML = mainCats.map(c => 
-                `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
-            ).join('');
+            nav.innerHTML = config.map(i => `<div class="category-item" onclick="triggerSub('${i.n}')">${i.n}</div>`).join('');
         }
 
         function goHome() {
@@ -85,53 +78,41 @@
             window.scrollTo(0, 0);
         }
 
-        function triggerSub(name, isThirdLevel = false) {
-            const cat = config.find(c => c.n === name);
-            if (!cat) return;
-
+        function triggerSub(name) {
+            const cat = config.find(i => i.n === name);
             document.getElementById('home-content').style.display = 'none';
-            const subHeader = document.getElementById('sub-header');
-            subHeader.style.display = 'block';
+            document.getElementById('sub-header').style.display = 'block';
             document.getElementById('ttl').innerText = cat.n;
             
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            
-            // 马甲切换按钮逻辑
-            document.getElementById('third-level-nav').style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
 
-            for (let i = 1; i <= cat.count; i++) {
+            for (let i = 1; i <= cat.c; i++) {
                 const num = i.toString().padStart(2, '0');
-                const fileName = `${cat.prefix}${num}.webp`;
-                
-                // 【最核心修改】：强制对中文文件夹名进行网络编码
-                let path;
-                if (isThirdLevel) {
-                    path = `tp/${encodeURIComponent(cat.parent)}/${encodeURIComponent(cat.n)}/${fileName}`;
-                } else {
-                    path = `tp/${encodeURIComponent(cat.n)}/${fileName}`;
-                }
+                const file = `${cat.pre}${num}.webp`;
+                // 同样对子目录路径进行编码处理
+                const path = encodeURI(`tp/${cat.n}/${file}`);
 
                 const div = document.createElement('div');
-                div.style.textAlign = 'center';
                 div.innerHTML = `
                     <div class="img-container">
-                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" 
+                             onerror="this.src='${path.replace('.webp', '.jpg')}'" 
+                             onclick="openLightbox(this.src)">
                     </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888;">${cat.prefix.toUpperCase()}${num}</p>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#999; text-align:center;">${cat.pre.toUpperCase()}${num}</p>
                 `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
         }
 
-        function openLightbox(src) {
-            if(!src || src.includes('undefined')) return;
-            document.getElementById('lightboxImg').src = src;
+        function openLightbox(s) {
+            document.getElementById('lightboxImg').src = s;
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        initNav();
+        init();
         goHome();
     </script>
 </body>
