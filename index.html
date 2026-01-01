@@ -6,10 +6,11 @@
     <title>General Store Official</title>
     <style>
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        /* 清晰度优化：锐化渲染 */
         img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease-in; image-rendering: -webkit-optimize-contrast; }
         .on { opacity: 1 !important; }
 
-        /* 顶部排版 */
+        /* 顶部品牌区 */
         header { padding: 15px 0 5px; text-align: center; }
         .main-logo { font-family: serif; font-size: 30px; font-weight: bold; letter-spacing: 4px; }
         .brand-info { text-align: center; padding: 10px 0 15px; }
@@ -17,16 +18,17 @@
         .brand-info .timeless { font-family: serif; font-size: 16px; letter-spacing: 4px; margin: 3px 0; color: #222; }
         .brand-info .wechat { font-size: 10px; color: #999; }
 
-        /* 匀速无缝滚动容器 */
+        /* 匀速无缝滚动：速度加快 1 倍 (10s) */
         .marquee-wrapper { width: 100%; overflow: hidden; margin: 15px 0; background: #fff; }
-        .marquee-track { display: flex; width: max-content; animation: scroll-left 20s linear infinite; }
-        .marquee-track:hover { animation-play-state: paused; } /* 触摸或悬停时暂停 */
+        .marquee-track { display: flex; width: max-content; animation: scroll-left 10s linear infinite; } /* 这里从20s改成了10s */
+        .marquee-track:hover { animation-play-state: paused; } 
         
+        /* 五张一行布局 */
         .slide-item { width: calc(100vw / 5); aspect-ratio: 3/4; flex-shrink: 0; padding: 0 2px; box-sizing: border-box; cursor: pointer; }
 
         @keyframes scroll-left {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* 滚动一半的长度实现无缝 */
+            100% { transform: translateX(-50%); }
         }
 
         /* 导航与按钮 */
@@ -37,12 +39,13 @@
         
         .more-btn { display: inline-block; margin: 20px 0; padding: 10px 35px; border: 1px solid #000; font-size: 11px; font-weight: bold; letter-spacing: 2px; cursor: pointer; }
 
-        /* 二级页面 */
+        /* 二级页面网格 */
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; padding: 0 5px; }
         .grid .img-container { aspect-ratio: 3/4; background: #fff; position: relative; overflow: hidden; }
 
+        /* 灯箱最大化 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
-        #lightbox img { max-height: 100vh; max-width: 100vw; object-fit: contain; }
+        #lightbox img { max-height: 100vh; max-width: 100vw; object-fit: contain; cursor: zoom-out; }
     </style>
 </head>
 <body>
@@ -73,8 +76,7 @@
         </div>
 
         <div class="marquee-wrapper">
-            <div id="marquee-inner" class="marquee-track">
-                </div>
+            <div id="marquee-inner" class="marquee-track"></div>
         </div>
 
         <div style="text-align:center;">
@@ -105,19 +107,18 @@
             { n: "更多新品", pre: "p", c: 10, start: 8 }
         ];
 
-        // 初始化匀速跑马灯
         function initMarquee() {
             const inner = document.getElementById('marquee-inner');
             let itemsHtml = '';
             for (let i = 2; i <= 7; i++) {
                 const num = i.toString().padStart(2, '0');
+                // 绑定点击事件 openLightbox
                 itemsHtml += `
                     <div class="slide-item">
                         <img src="tp/p${num}.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)">
                     </div>`;
             }
-            // 复制一遍内容实现无缝衔接
-            inner.innerHTML = itemsHtml + itemsHtml;
+            inner.innerHTML = itemsHtml + itemsHtml; // 无缝复制
         }
 
         function initNav() {
