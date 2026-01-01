@@ -5,38 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
     <style>
-        /* 缓慢优雅的淡入动画 */
         @keyframes fadeInElegant {
             from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in-label { animation: fadeInElegant 3.5s ease-in-out forwards; }
 
-        /* 极致图片容器：利用硬件加速 */
         .img-container {
             width: 100%;
             padding-top: 133.33%; 
-            background-color: #f0f0f0;
+            background-color: #f5f5f5; /* 灰色占位 */
             position: relative;
             overflow: hidden;
-            transform: translateZ(0); /* 开启 GPU 加速 */
+            transform: translateZ(0); 
         }
 
         .img-container img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
             display: block;
-            border: 0;
             opacity: 0;
-            transition: opacity 0.4s ease-out; /* 缩短淡入，增加爽快感 */
+            transition: opacity 0.4s ease-out;
         }
 
-        /* 当图片加载完成后显示的类 */
         .loaded { opacity: 1 !important; }
 
         .grid-item { text-align: center; margin-bottom: 8px; }
@@ -64,7 +60,7 @@
     </div>
 
     <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px;">
-        <img src="images/product36.jpg" style="width: 100%; height: auto; display: block;" fetchpriority="high">
+        <img id="banner" src="" style="width: 100%; height: auto; display: block;" fetchpriority="high">
     </section>
 
     <main id="main-area" style="background: #fff; padding: 0 4px;">
@@ -84,14 +80,25 @@
     </div>
 
     <script>
+        /** * 配置区：请务必修改以下两个变量
+         */
+        const GITHUB_USER = "lanxiaoqi1981"; // 你的 GitHub 用户名
+        const GITHUB_REPO = "zahuopunvzhuang"; // 你的仓库名
+        
+        // jsDelivr CDN 加速前缀
+        const CDN_BASE = `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}/`;
+
         const categories = [
-            { name: "羽绒服", homeImg: "images/product4.jpg", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
-            { name: "外套", homeImg: "images/product19.jpg", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
-            { name: "毛衫", homeImg: "images/product3.jpg", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
-            { name: "长裤", homeImg: "images/product4.jpg", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
-            { name: "打折", homeImg: "images/product16.jpg", items: [5, 6, 7, 51, 52, 53, 56, 78] },
-            { name: "配饰", homeImg: "images/product37.jpg", items: [41, 42, 43, 44, 62, 63, 66, 67] }
+            { name: "羽绒服", homeImg: "images/product4.webp", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
+            { name: "外套", homeImg: "images/product19.webp", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
+            { name: "毛衫", homeImg: "images/product3.webp", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
+            { name: "长裤", homeImg: "images/product4.webp", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
+            { name: "打折", homeImg: "images/product16.webp", items: [5, 6, 7, 51, 52, 53, 56, 78] },
+            { name: "配饰", homeImg: "images/product37.webp", items: [41, 42, 43, 44, 62, 63, 66, 67] }
         ];
+
+        // 设置 Banner 地址
+        document.getElementById('banner').src = CDN_BASE + "images/product36.webp";
 
         const grid = document.getElementById('displayGrid');
 
@@ -100,7 +107,6 @@
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             const label = document.getElementById('current-label');
             label.innerText = "FEATURED CATEGORIES";
-            label.style.fontFamily = "'Times New Roman', serif";
             label.className = "fade-in-label";
             document.getElementById('back-btn').style.display = "none";
 
@@ -108,9 +114,10 @@
                 const card = document.createElement('div');
                 card.className = 'grid-item';
                 card.onclick = () => renderLevel2(cat);
+                const fullSrc = CDN_BASE + cat.homeImg;
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" onload="this.className='loaded'" decoding="sync">
+                        <img src="${fullSrc}" onload="this.className='loaded'" decoding="sync">
                     </div>
                     <p style="font-size: 11px; font-weight: bold; margin-top: 6px;">${cat.name}</p>
                 `;
@@ -121,24 +128,24 @@
         function renderLevel2(category) {
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
-            const label = document.getElementById('current-label');
-            label.innerText = category.name;
-            label.className = "";
+            document.getElementById('current-label').innerText = category.name;
+            document.getElementById('current-label').className = "";
             document.getElementById('back-btn').style.display = "block";
 
-            // 使用 DocumentFragment 提升渲染性能
             const fragment = document.createDocumentFragment();
             category.items.forEach((id, index) => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
-                const imgPath = `images/${category.name}/product${id}.jpg`;
+                const imgPath = `images/${category.name}/product${id}.webp`; // 默认使用 webp
+                const fullSrc = CDN_BASE + imgPath;
                 
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${imgPath}" 
+                        <img src="${fullSrc}" 
                              loading="${index < 6 ? 'eager' : 'lazy'}" 
                              onload="this.className='loaded'"
-                             onclick="openLightbox('${imgPath}')">
+                             onclick="openLightbox('${fullSrc}')"
+                             onerror="this.src='${fullSrc.replace('.webp', '.jpg')}'">
                     </div>
                     <p class="product-no">STYLE NO.${id}</p>
                 `;
