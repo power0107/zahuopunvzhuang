@@ -5,63 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 品牌文字淡入 */
-        @keyframes rareFade {
-            from { opacity: 0; transform: translateY(2px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes rareFade { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
         .text-fade { animation: rareFade 3s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; }
-
-        body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; }
         
-        /* 图片容器锁定比例 3:4 */
-        .img-container { width: 100%; aspect-ratio: 3/4; background: #f8f8f8; overflow: hidden; position: relative; cursor: pointer; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease; }
+        body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        
+        /* 极致缩减：占位图颜色更浅，减少视觉负担 */
+        .img-container { width: 100%; aspect-ratio: 3/4; background: #fcfcfc; overflow: hidden; position: relative; cursor: pointer; border: 1px solid #f9f9f9; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.5s ease-in; }
         .on { opacity: 1 !important; }
 
-        /* 分类文字并列排版 */
-        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px 10px; border-bottom: 1px solid #f0f0f0; }
-        .category-item { font-size: 13px; font-weight: bold; color: #333; cursor: pointer; padding: 6px 12px; border: 1px solid #eee; background: #fafafa; }
+        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 12px 4px; border-bottom: 1px solid #f0f0f0; background: #fff; }
+        .category-item { font-size: 12px; font-weight: 600; color: #222; cursor: pointer; padding: 6px 12px; border: 1px solid #eee; background: #fff; border-radius: 1px; }
 
-        .grid { display: grid; gap: 4px; padding: 0 4px; }
-        #back-btn { position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
+        .grid { display: grid; gap: 2px; padding: 0 2px; } /* 进一步收窄间距，更有高级感 */
         
-        /* 灯箱放大层 */
+        #back-btn { position: absolute; right: 10px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 12px; z-index: 100; letter-spacing: 1px; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
-        #lightbox img { max-height: 95vh; max-width: 95vw; object-fit: contain; }
+        #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; }
     </style>
 </head>
 <body>
 
-    <div style="background:#f9f9f9; padding:6px 0; font-size:10px; color:#666; text-align:center; border-bottom:1px solid #eee; letter-spacing: 0.5px;">FREE INTERNATIONAL DELIVERY | CN | OFFICIAL STORE</div>
+    <div style="background:#000; padding:4px 0; font-size:9px; color:#fff; text-align:center; letter-spacing: 1px;">OFFICIAL STORE | GLOBAL DELIVERY</div>
 
     <header style="padding:15px 0 0; text-align:center; border-bottom: 1px solid #eee;">
-        <div style="font-family:serif; font-size:38px; font-weight:bold; letter-spacing:4px;">General Store</div>
-        <nav style="display:flex; justify-content:center; gap:25px; padding:10px 0;">
-            <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">首页 HOME</span>
-            <span onclick="triggerSale()" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
+        <div style="font-family:serif; font-size:34px; font-weight:bold; letter-spacing:6px;">General Store</div>
+        <nav style="display:flex; justify-content:center; gap:30px; padding:12px 0;">
+            <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer; letter-spacing:1px;">HOME</span>
+            <span onclick="triggerSub('打折')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer; letter-spacing:1px;">SALE</span>
         </nav>
     </header>
 
-    <div id="brand-text" style="text-align:center; padding:15px 0 0;">
-        <span style="font-size:9px; color:#888; letter-spacing:2px; display:block;">SINCE 2008</span>
-        <h2 style="font-family:serif; font-size:22px; font-weight:normal; letter-spacing:5px; margin:2px 0;">TIMELESS CHIC</h2>
-        <div style="font-size:11px; color:#999; margin:4px 0 10px 0;">V：lanxiaoqi1981</div>
+    <div id="brand-text" style="text-align:center; padding:20px 0 10px;">
+        <span style="font-size:9px; color:#aaa; letter-spacing:3px; display:block;">SINCE 2008</span>
+        <h2 style="font-family:serif; font-size:20px; font-weight:normal; letter-spacing:6px; margin:4px 0;">TIMELESS CHIC</h2>
+        <div style="font-size:10px; color:#ccc; margin-top:5px;">V：lanxiaoqi1981</div>
     </div>
 
     <div id="home-content">
-        <section style="width:100%; line-height:0; margin-top:-5px;">
-            <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.classList.add('on')" onclick="openLightbox(this.src)">
+        <section style="width:100%; line-height:0; margin-top:-5px; position:relative;">
+            <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.classList.add('on')" onerror="this.src='images/p01.jpg'">
         </section>
 
         <div class="category-nav" id="cat-nav"></div>
 
-        <div style="text-align:center; padding:20px 0 10px; font-family:serif; font-size:16px; letter-spacing:3px;">NEW ARRIVALS</div>
-        <div style="padding: 0 10px 30px;" onclick="triggerNew()">
+        <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:15px; letter-spacing:4px; color:#000;">NEW ARRIVALS</div>
+        <div style="padding: 0 4px 40px;" onclick="triggerSub('新款')">
             <div class="img-container" style="aspect-ratio: 16/9;">
-                <img src="images/p02.webp" onload="this.classList.add('on')">
+                <img src="images/p02.webp" onload="this.classList.add('on')" onerror="this.src='images/p02.jpg'">
             </div>
-            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:10px; letter-spacing:1px;">2026 新款上线系列</p>
+            <p style="text-align:center; font-size:11px; font-weight:bold; margin-top:12px; letter-spacing:2px; color:#333;">2026 WINTER COLLECTION</p>
         </div>
     </div>
 
@@ -73,17 +67,16 @@
         <div id="grid" class="grid"></div>
     </main>
 
-    <div id="lightbox" onclick="this.style.display='none'">
-        <img id="lightboxImg" src="">
-    </div>
+    <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
+        // 精准索引：请确保 GitHub 上的文件夹名字与这些中文字完全一致
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
             { n: "冲锋衣", prefix: "cfy", count: 4 },
             { n: "国风", prefix: "g", count: 16 },
-            { n: "长裤", prefix: "k", count: 7 },
+            { n: "长裤", prefix: "k", count: 13 },
             { n: "新款", prefix: "ws", count: 24 },
             { n: "打折", prefix: "z", count: 8 },
             { n: "配饰", prefix: "ps", count: 7 },
@@ -96,12 +89,11 @@
         const subHeader = document.getElementById('sub-header');
         const ttl = document.getElementById('ttl');
 
-        // 初始化导航
         function initNav() {
             const nav = document.getElementById('cat-nav');
-            const navItems = config.filter(c => c.n !== '新款');
-            nav.innerHTML = navItems.map(c => 
-                `<div class="category-item" onclick='renderSub(${JSON.stringify(c)})'>${c.n}</div>`
+            // 过滤掉新款，因为新款在下面有大图展示
+            nav.innerHTML = config.filter(c => c.n !== '新款').map(c => 
+                `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
             ).join('');
         }
 
@@ -112,7 +104,9 @@
             window.scrollTo(0, 0);
         }
 
-        function renderSub(cat) {
+        function triggerSub(name) {
+            const cat = config.find(c => c.n === name);
+            if (!cat) return;
             homeContent.style.display = 'none';
             subHeader.style.display = 'block';
             ttl.innerText = cat.n;
@@ -122,30 +116,42 @@
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
+                // 重点：尝试加载 webp
                 const path = `images/${cat.n}/${fileName}.webp`;
 
                 const div = document.createElement('div');
                 div.style.textAlign = 'center';
                 div.innerHTML = `
                     <div class="img-container">
-                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onclick="openLightbox('${path}')">
+                        <img src="${path}" 
+                             loading="lazy" 
+                             onload="this.classList.add('on')" 
+                             onerror="handleError(this, '${fileName}')"
+                             onclick="openLightbox(this.src)">
                     </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#555;">STYLE ${fileName.toUpperCase()}</p>
+                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888; letter-spacing:1px;">${fileName.toUpperCase()}</p>
                 `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
         }
 
-        function openLightbox(src) {
-            const lb = document.getElementById('lightbox');
-            const img = document.getElementById('lightboxImg');
-            img.src = src;
-            lb.style.display = 'flex';
+        // 自动降级处理：webp不显示就换jpg
+        function handleError(img, fileName) {
+            if (!img.dataset.triedJpg) {
+                const currentPath = img.src;
+                img.src = currentPath.replace('.webp', '.jpg');
+                img.dataset.triedJpg = true;
+            } else {
+                img.style.display = 'none'; // 依然不行就隐藏，不显示裂图
+            }
         }
 
-        function triggerSale() { renderSub(config.find(c => c.n === '打折')); }
-        function triggerNew() { renderSub(config.find(c => c.n === '新款')); }
+        function openLightbox(src) {
+            if(!src || src.includes('undefined')) return;
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
 
         initNav();
         goHome();
