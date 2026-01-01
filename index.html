@@ -6,36 +6,38 @@
     <title>General Store Official</title>
     <style>
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        /* 提升清晰度：优化 WebP 渲染 */
         img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease-in; image-rendering: -webkit-optimize-contrast; }
         .on { opacity: 1 !important; }
 
-        /* 顶部标题区 */
+        /* 顶部排版 */
         header { padding: 15px 0 5px; text-align: center; }
-        .main-logo { font-family: serif; font-size: 32px; font-weight: bold; letter-spacing: 4px; margin-bottom: 5px; }
+        .main-logo { font-family: serif; font-size: 30px; font-weight: bold; letter-spacing: 4px; }
+        .brand-info { text-align: center; padding: 10px 0 15px; }
+        .brand-info .since { font-size: 9px; color: #bbb; letter-spacing: 2px; }
+        .brand-info .timeless { font-family: serif; font-size: 16px; letter-spacing: 4px; margin: 3px 0; color: #222; }
+        .brand-info .wechat { font-size: 10px; color: #999; }
 
-        /* 品牌文字区：位于标题与图片之间 */
-        .brand-info { text-align: center; padding: 10px 0 15px; background: #fff; }
-        .brand-info .since { font-size: 9px; color: #bbb; letter-spacing: 2px; text-transform: uppercase; }
-        .brand-info .timeless { font-family: serif; font-size: 18px; letter-spacing: 5px; margin: 3px 0; font-weight: normal; color: #222; }
-        .brand-info .wechat { font-size: 10px; color: #999; letter-spacing: 1px; }
+        /* 匀速无缝滚动容器 */
+        .marquee-wrapper { width: 100%; overflow: hidden; margin: 15px 0; background: #fff; }
+        .marquee-track { display: flex; width: max-content; animation: scroll-left 20s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; } /* 触摸或悬停时暂停 */
+        
+        .slide-item { width: calc(100vw / 5); aspect-ratio: 3/4; flex-shrink: 0; padding: 0 2px; box-sizing: border-box; cursor: pointer; }
 
-        /* 导航菜单 */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* 滚动一半的长度实现无缝 */
+        }
+
+        /* 导航与按钮 */
         nav { display: flex; justify-content: center; gap: 25px; padding: 12px 0; border-top: 1px solid #eee; border-bottom: 1px solid #f2f2f2; }
         .nav-link { font-size: 11px; font-weight: bold; cursor: pointer; }
-        
         .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 15px 5px; }
-        .category-item { font-size: 12px; font-weight: bold; padding: 6px 14px; border: 1px solid #eee; background: #fff; cursor: pointer; }
+        .category-item { font-size: 11px; font-weight: bold; padding: 5px 10px; border: 1px solid #eee; background: #fff; }
+        
+        .more-btn { display: inline-block; margin: 20px 0; padding: 10px 35px; border: 1px solid #000; font-size: 11px; font-weight: bold; letter-spacing: 2px; cursor: pointer; }
 
-        /* 无缝循环轮播 */
-        .slider-wrapper { width: 100%; overflow: hidden; margin: 15px 0; position: relative; }
-        .slider-track { display: flex; transition: transform 0.6s cubic-bezier(0.45, 0, 0.55, 1); }
-        .slide-group { min-width: 100%; display: flex; gap: 5px; padding: 0 5px; box-sizing: border-box; flex-shrink: 0; }
-        .slide-item { flex: 1; aspect-ratio: 3/4; background: #fff; overflow: hidden; cursor: pointer; }
-
-        .more-btn { display: inline-block; margin: 25px 0; padding: 12px 45px; border: 1px solid #000; font-size: 12px; font-weight: bold; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; }
-
-        /* 二级页面布局 */
+        /* 二级页面 */
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; padding: 0 5px; }
         .grid .img-container { aspect-ratio: 3/4; background: #fff; position: relative; overflow: hidden; }
 
@@ -47,13 +49,11 @@
 
     <header>
         <div class="main-logo">General Store</div>
-        
         <div class="brand-info">
             <div class="since">SINCE 2008</div>
             <div class="timeless">TIMELESS CHIC</div>
             <div class="wechat">V: lanxiaoqi1981</div>
         </div>
-
         <nav>
             <span onclick="goHome()" class="nav-link">HOME</span>
             <span onclick="triggerSub('更多新品')" class="nav-link" style="color:#d0021b;">NEW ARRIVALS</span>
@@ -67,24 +67,14 @@
 
         <div class="category-nav" id="cat-nav"></div>
 
-        <div style="text-align:center; padding:35px 0 10px;">
-            <div style="font-family:serif; font-size:18px; letter-spacing:5px; font-weight:bold;">NEW ARRIVALS</div>
-            <div style="font-size:13px; color:#666; margin-top:5px; letter-spacing:2px;">新款上线</div>
+        <div style="text-align:center; padding:25px 0 5px;">
+            <div style="font-family:serif; font-size:16px; letter-spacing:4px; font-weight:bold;">NEW ARRIVALS</div>
+            <div style="font-size:12px; color:#666; margin-top:3px;">新款上线</div>
         </div>
 
-        <div class="slider-wrapper">
-            <div id="slider-track" class="slider-track">
-                <div class="slide-group">
-                    <div class="slide-item"><img src="tp/p02.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)"></div>
-                    <div class="slide-item"><img src="tp/p03.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)"></div>
-                    <div class="slide-item"><img src="tp/p04.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)"></div>
+        <div class="marquee-wrapper">
+            <div id="marquee-inner" class="marquee-track">
                 </div>
-                <div class="slide-group">
-                    <div class="slide-item"><img src="tp/p05.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)"></div>
-                    <div class="slide-item"><img src="tp/p06.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)"></div>
-                    <div class="slide-item"><img src="tp/p07.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)"></div>
-                </div>
-            </div>
         </div>
 
         <div style="text-align:center;">
@@ -115,26 +105,19 @@
             { n: "更多新品", pre: "p", c: 10, start: 8 }
         ];
 
-        function initSeamlessSlider() {
-            const track = document.getElementById('slider-track');
-            const groups = document.querySelectorAll('.slide-group');
-            const firstClone = groups[0].cloneNode(true);
-            track.appendChild(firstClone);
-
-            let index = 0;
-            setInterval(() => {
-                index++;
-                track.style.transition = "transform 0.6s cubic-bezier(0.45, 0, 0.55, 1)";
-                track.style.transform = `translateX(-${index * 100}%)`;
-
-                if (index === 2) {
-                    setTimeout(() => {
-                        track.style.transition = "none";
-                        track.style.transform = "translateX(0)";
-                        index = 0;
-                    }, 600);
-                }
-            }, 4000);
+        // 初始化匀速跑马灯
+        function initMarquee() {
+            const inner = document.getElementById('marquee-inner');
+            let itemsHtml = '';
+            for (let i = 2; i <= 7; i++) {
+                const num = i.toString().padStart(2, '0');
+                itemsHtml += `
+                    <div class="slide-item">
+                        <img src="tp/p${num}.webp" onload="this.classList.add('on')" onclick="openLightbox(this.src)">
+                    </div>`;
+            }
+            // 复制一遍内容实现无缝衔接
+            inner.innerHTML = itemsHtml + itemsHtml;
         }
 
         function initNav() {
@@ -180,7 +163,7 @@
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        initSeamlessSlider();
+        initMarquee();
         initNav();
     </script>
 </body>
