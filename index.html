@@ -6,11 +6,19 @@
     <title>General Store Official</title>
     <style>
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s; image-rendering: -webkit-optimize-contrast; pointer-events: none; }
+        
+        /* 图片高清渲染 */
+        img { 
+            width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; 
+            transition: opacity 0.3s ease-in; 
+            image-rendering: -webkit-optimize-contrast; 
+        }
         .on { opacity: 1 !important; }
 
         header { padding: 15px 0 5px; text-align: center; }
         .main-logo { font-family: serif; font-size: 32px; font-weight: bold; letter-spacing: 4px; margin: 0; }
+        
+        /* 导航菜单 */
         nav { display: flex; justify-content: center; gap: 35px; padding: 8px 0; }
         .nav-link { font-size: 11px; font-weight: bold; cursor: pointer; letter-spacing: 1px; color: #333; }
 
@@ -19,18 +27,22 @@
         .brand-info .timeless { font-family: serif; font-size: 16px; letter-spacing: 4px; margin: 2px 0; color: #222; }
         .brand-info .wechat { font-size: 10px; color: #999; }
 
-        /* 跑马灯 */
+        /* 首页跑马灯 */
         .marquee-wrapper { width: 100%; overflow: hidden; margin: 10px 0; background: #fff; position: relative; touch-action: pan-y; }
         .marquee-track { display: flex; width: max-content; will-change: transform; }
-        /* 图片更大：一行显示两张出头 */
-        .slide-item { width: calc(100vw / 2.2); aspect-ratio: 3/4; flex-shrink: 0; padding: 0 4px; box-sizing: border-box; }
+        .slide-item { width: calc(100vw / 2.2); aspect-ratio: 3/4; flex-shrink: 0; padding: 0 4px; box-sizing: border-box; cursor: pointer; }
 
         .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 15px 5px; }
-        .category-item { font-size: 11px; font-weight: bold; padding: 6px 12px; border: 1px solid #eee; background: #fff; }
+        .category-item { font-size: 11px; font-weight: bold; padding: 6px 12px; border: 1px solid #eee; background: #fff; cursor: pointer; }
+        
         .more-btn { display: inline-block; margin: 25px 0; padding: 12px 40px; border: 1px solid #000; font-size: 11px; font-weight: bold; cursor: pointer; }
 
+        /* 子目录网格布局 */
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; padding: 0 5px; }
-        .grid .img-container { aspect-ratio: 3/4; background: #fff; overflow: hidden; }
+        .grid-item { cursor: pointer; }
+        .grid .img-container { aspect-ratio: 3/4; background: #fff; position: relative; overflow: hidden; }
+        /* 子目录里的图片允许点击 */
+        .grid .img-container img { pointer-events: auto; }
 
         /* 灯箱最大化 */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000000; justify-content: center; align-items: center; }
@@ -40,7 +52,7 @@
 <body>
 
     <header>
-        <h1 class="main-logo">General Store</h1>
+        <h1 class="main-logo" onclick="goHome()" style="cursor:pointer;">General Store</h1>
         <nav>
             <span onclick="goHome()" class="nav-link">HOME</span>
             <span onclick="triggerSub('更多新品')" class="nav-link" style="color:#d0021b;">NEW ARRIVALS</span>
@@ -49,7 +61,9 @@
 
     <div id="home-content">
         <section style="line-height:0;"><img src="tp/p01.webp" style="width:100%; height:auto;" onload="this.classList.add('on')"></section>
+        
         <div class="category-nav" id="cat-nav"></div>
+        
         <div style="text-align:center; padding:30px 0 10px;">
             <div style="font-family:serif; font-size:18px; letter-spacing:5px; font-weight:bold;">NEW ARRIVALS</div>
             <div style="font-size:13px; color:#666; margin-top:5px;">新款上线</div>
@@ -75,9 +89,10 @@
             <div onclick="goHome()" style="position:absolute; right:15px; top:20px; font-size:11px; font-weight:bold; cursor:pointer;">BACK →</div>
         </div>
         <div id="grid" class="grid"></div>
+        <div style="height:50px;"></div>
     </main>
 
-    <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg"></div>
+    <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
         const config = [
@@ -87,6 +102,7 @@
             { n: "可外穿小衫", pre: "ws", c: 24 }, { n: "更多新品", pre: "p", c: 16, start: 2 }
         ];
 
+        // 初始化首页滚动
         function initMarquee() {
             const wrap = document.getElementById('marquee-wrap');
             const inner = document.getElementById('marquee-inner');
@@ -94,7 +110,6 @@
             for (let i = 2; i <= 17; i++) {
                 const num = i.toString().padStart(2, '0');
                 const src = `tp/p${num}.webp`;
-                // 这里存放图片地址
                 baseHtml += `<div class="slide-item" data-img="${src}"><img src="${src}" onload="this.classList.add('on')"></div>`;
             }
             inner.innerHTML = baseHtml + baseHtml + baseHtml + baseHtml + baseHtml;
@@ -103,20 +118,18 @@
             let isDragging = false;
             let startTouchX = 0;
             let startTouchY = 0;
-            let startPosX = 0;
+            let startTime = 0;
             let velocity = -2.5; 
             let lastX = 0;
-            let lastTime = 0;
+            let lastMoveTime = 0;
 
             function update() {
                 const unitWidth = inner.scrollWidth / 5;
                 if (!isDragging) {
                     currentX += velocity;
-                    // 匀速衰减回自动滚动速度
                     if (Math.abs(velocity) > 2.5) velocity *= 0.96; 
-                    else velocity = -2.5;
+                    else velocity = -2.2;
                 }
-                // 无缝跳转
                 if (currentX <= -unitWidth * 3) currentX += unitWidth;
                 if (currentX >= 0) currentX -= unitWidth;
                 inner.style.transform = `translate3d(${currentX}px, 0, 0)`;
@@ -127,8 +140,9 @@
                 isDragging = true;
                 startTouchX = e.touches[0].pageX;
                 startTouchY = e.touches[0].pageY;
+                startTime = Date.now();
                 lastX = startTouchX;
-                lastTime = Date.now();
+                lastMoveTime = Date.now();
                 velocity = 0;
             }, {passive: true});
 
@@ -137,26 +151,25 @@
                 const delta = x - lastX;
                 currentX += delta;
                 const now = Date.now();
-                const dt = now - lastTime;
+                const dt = now - lastMoveTime;
                 if (dt > 0) velocity = delta / dt * 15;
                 lastX = x;
-                lastTime = now;
+                lastMoveTime = now;
             }, {passive: true});
 
             wrap.addEventListener('touchend', (e) => {
                 isDragging = false;
                 const endX = e.changedTouches[0].pageX;
                 const endY = e.changedTouches[0].pageY;
-                
-                // 【核心修复】点击判定：如果手指位移极小，判定为点击
-                if (Math.abs(endX - startTouchX) < 8 && Math.abs(endY - startTouchY) < 8) {
+                const endTime = Date.now();
+
+                // 首页滚动图点击判定
+                const dist = Math.sqrt(Math.pow(endX - startTouchX, 2) + Math.pow(endY - startTouchY, 2));
+                if (dist < 10 && (endTime - startTime) < 300) {
                     const item = e.target.closest('.slide-item');
-                    if (item) {
-                        openLightbox(item.getAttribute('data-img'));
-                    }
+                    if (item) openLightbox(item.getAttribute('data-img'));
                 }
             });
-
             requestAnimationFrame(update);
         }
 
@@ -171,6 +184,7 @@
             window.scrollTo(0, 0);
         }
 
+        // 分类/新品目录生成逻辑
         function triggerSub(name) {
             const cat = config.find(i => i.n === name);
             document.getElementById('home-content').style.display = 'none';
@@ -178,13 +192,23 @@
             document.getElementById('ttl').innerText = cat.n;
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            for (let i = cat.start || 1; i <= (cat.start ? cat.start + cat.c - 1 : cat.c); i++) {
+            
+            let start = cat.start || 1;
+            for (let i = start; i <= (cat.start ? start + cat.c - 1 : cat.c); i++) {
                 const num = i.toString().padStart(2, '0');
                 const path = cat.n === '更多新品' ? `tp/p${num}.webp` : encodeURI(`tp/${cat.n}/${cat.pre}${num}.webp`);
+                
                 const div = document.createElement('div');
-                div.onclick = () => openLightbox(path);
-                div.innerHTML = `<div class="img-container"><img src="${path}" loading="lazy" onload="this.classList.add('on')"></div>
-                    <p style="font-size:10px; font-weight:bold; margin:8px 0 18px; color:#aaa; text-align:center;">${cat.pre.toUpperCase()}${num}</p>`;
+                div.className = 'grid-item';
+                // 核心修复：为子目录每一项绑定点击放大
+                div.onclick = () => openLightbox(path); 
+                
+                div.innerHTML = `
+                    <div class="img-container">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'">
+                    </div>
+                    <p style="font-size:10px; font-weight:bold; margin:8px 0 18px; color:#aaa; text-align:center;">${cat.pre.toUpperCase()}${num}</p>
+                `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
@@ -192,7 +216,8 @@
 
         function openLightbox(s) {
             if(!s) return;
-            document.getElementById('lightboxImg').src = s;
+            const lbImg = document.getElementById('lightboxImg');
+            lbImg.src = s;
             document.getElementById('lightbox').style.display = 'flex';
         }
 
