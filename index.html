@@ -7,20 +7,14 @@
     <style>
         @keyframes rareFade { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
         .text-fade { animation: rareFade 3s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; }
-        
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        
-        /* 极致缩减：占位图颜色更浅，减少视觉负担 */
         .img-container { width: 100%; aspect-ratio: 3/4; background: #fcfcfc; overflow: hidden; position: relative; cursor: pointer; border: 1px solid #f9f9f9; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.5s ease-in; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease-in; }
         .on { opacity: 1 !important; }
-
-        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 12px 4px; border-bottom: 1px solid #f0f0f0; background: #fff; }
-        .category-item { font-size: 12px; font-weight: 600; color: #222; cursor: pointer; padding: 6px 12px; border: 1px solid #eee; background: #fff; border-radius: 1px; }
-
-        .grid { display: grid; gap: 2px; padding: 0 2px; } /* 进一步收窄间距，更有高级感 */
-        
-        #back-btn { position: absolute; right: 10px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 12px; z-index: 100; letter-spacing: 1px; }
+        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 15px 5px; border-bottom: 1px solid #f0f0f0; background: #fff; }
+        .category-item { font-size: 12px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 12px; border: 1px solid #eee; background: #fff; letter-spacing: 1px; }
+        .grid { display: grid; gap: 3px; padding: 0 3px; }
+        #back-btn { position: absolute; right: 10px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 12px; z-index: 100; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
         #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; }
     </style>
@@ -30,10 +24,10 @@
     <div style="background:#000; padding:4px 0; font-size:9px; color:#fff; text-align:center; letter-spacing: 1px;">OFFICIAL STORE | GLOBAL DELIVERY</div>
 
     <header style="padding:15px 0 0; text-align:center; border-bottom: 1px solid #eee;">
-        <div style="font-family:serif; font-size:34px; font-weight:bold; letter-spacing:6px;">General Store</div>
+        <div style="font-family:serif; font-size:36px; font-weight:bold; letter-spacing:5px;">General Store</div>
         <nav style="display:flex; justify-content:center; gap:30px; padding:12px 0;">
-            <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer; letter-spacing:1px;">HOME</span>
-            <span onclick="triggerSub('打折')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer; letter-spacing:1px;">SALE</span>
+            <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">HOME</span>
+            <span onclick="goHome()" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
         </nav>
     </header>
 
@@ -44,18 +38,18 @@
     </div>
 
     <div id="home-content">
-        <section style="width:100%; line-height:0; margin-top:-5px; position:relative;">
-            <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.classList.add('on')" onerror="this.src='images/p01.jpg'">
+        <section style="width:100%; line-height:0; margin-top:-5px;">
+            <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.classList.add('on')" onerror="this.src='images/p01.jpg'" onclick="openLightbox(this.src)">
         </section>
 
         <div class="category-nav" id="cat-nav"></div>
 
-        <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:15px; letter-spacing:4px; color:#000;">NEW ARRIVALS</div>
+        <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
         <div style="padding: 0 4px 40px;" onclick="triggerSub('新款')">
             <div class="img-container" style="aspect-ratio: 16/9;">
                 <img src="images/p02.webp" onload="this.classList.add('on')" onerror="this.src='images/p02.jpg'">
             </div>
-            <p style="text-align:center; font-size:11px; font-weight:bold; margin-top:12px; letter-spacing:2px; color:#333;">2026 WINTER COLLECTION</p>
+            <p style="text-align:center; font-size:11px; font-weight:bold; margin-top:12px; letter-spacing:2px;">2026 新款上线系列</p>
         </div>
     </div>
 
@@ -70,18 +64,16 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
-        // 精准索引：请确保 GitHub 上的文件夹名字与这些中文字完全一致
+        // 严格匹配您的实际文件夹，去掉了打折和配饰
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
             { n: "冲锋衣", prefix: "cfy", count: 4 },
             { n: "国风", prefix: "g", count: 16 },
             { n: "长裤", prefix: "k", count: 13 },
-            { n: "新款", prefix: "ws", count: 24 },
-            { n: "打折", prefix: "z", count: 8 },
-            { n: "配饰", prefix: "ps", count: 7 },
             { n: "秋冬外套", prefix: "q", count: 4 },
-            { n: "可外穿小衫", prefix: "wsd", count: 24 }
+            { n: "可外穿小衫", prefix: "wsd", count: 24 },
+            { n: "新款", prefix: "ws", count: 24 }
         ];
 
         const grid = document.getElementById('grid');
@@ -91,7 +83,7 @@
 
         function initNav() {
             const nav = document.getElementById('cat-nav');
-            // 过滤掉新款，因为新款在下面有大图展示
+            // 首页只显示一级目录文字
             nav.innerHTML = config.filter(c => c.n !== '新款').map(c => 
                 `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
             ).join('');
@@ -116,39 +108,31 @@
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
-                // 重点：尝试加载 webp
                 const path = `images/${cat.n}/${fileName}.webp`;
 
                 const div = document.createElement('div');
                 div.style.textAlign = 'center';
                 div.innerHTML = `
                     <div class="img-container">
-                        <img src="${path}" 
-                             loading="lazy" 
-                             onload="this.classList.add('on')" 
-                             onerror="handleError(this, '${fileName}')"
-                             onclick="openLightbox(this.src)">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" 
+                             onerror="handleError(this, '${fileName}')" onclick="openLightbox(this.src)">
                     </div>
-                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888; letter-spacing:1px;">${fileName.toUpperCase()}</p>
+                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888;">${fileName.toUpperCase()}</p>
                 `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
         }
 
-        // 自动降级处理：webp不显示就换jpg
         function handleError(img, fileName) {
             if (!img.dataset.triedJpg) {
-                const currentPath = img.src;
-                img.src = currentPath.replace('.webp', '.jpg');
+                img.src = img.src.replace('.webp', '.jpg');
                 img.dataset.triedJpg = true;
-            } else {
-                img.style.display = 'none'; // 依然不行就隐藏，不显示裂图
             }
         }
 
         function openLightbox(src) {
-            if(!src || src.includes('undefined')) return;
+            if(!src) return;
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
