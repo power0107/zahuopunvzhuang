@@ -6,7 +6,7 @@
     <title>General Store | Official</title>
     <style>
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        .img-container { width: 100%; aspect-ratio: 3/4; background: #fafafa; overflow: hidden; position: relative; cursor: pointer; }
+        .img-container { width: 100%; aspect-ratio: 3/4; background: #fafafa; overflow: hidden; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease; }
         .on { opacity: 1 !important; }
         .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px 5px; border-bottom: 1px solid #f0f0f0; }
@@ -15,6 +15,7 @@
         #back-btn { position: absolute; right: 15px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
         #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; }
+        .err-label { position: absolute; font-size: 10px; color: #ddd; z-index: 1; }
     </style>
 </head>
 <body>
@@ -38,16 +39,16 @@
         <div style="padding: 0 4px 50px;">
             <div class="img-container" style="aspect-ratio: 16/9; cursor: default;">
                 <script>
-                    document.write('<img id="p02-img" src="tp/p02.webp?v=' + new Date().getTime() + '" onload="this.classList.add(\'on\')" onerror="this.src=\'tp/p02.jpg\'">');
+                    const p02Path = encodeURI('tp/p02.webp') + '?v=' + Date.now();
+                    document.write('<img src="' + p02Path + '" onload="this.classList.add(\'on\')" onerror="this.src=\'tp/p02.jpg\'">');
                 </script>
             </div>
-            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:12px; color:#888;">SEASON COLLECTION</p>
         </div>
     </div>
 
     <main id="main-area">
         <div id="sub-header" style="display:none; position:relative; text-align:center; padding:20px 0 10px;">
-            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px; text-transform:uppercase;"></h3>
+            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px;"></h3>
             <div id="back-btn" onclick="goHome()">BACK →</div>
         </div>
         <div id="grid" class="grid"></div>
@@ -59,7 +60,6 @@
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
-            { n: "马甲", prefix: "mj", count: 2, parent: "毛衣" },
             { n: "冲锋衣", prefix: "cfy", count: 4 },
             { n: "国风", prefix: "g", count: 16 },
             { n: "长裤", prefix: "k", count: 13 },
@@ -69,9 +69,7 @@
 
         function initNav() {
             const nav = document.getElementById('cat-nav');
-            nav.innerHTML = config.filter(c => !c.parent).map(c => 
-                `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
-            ).join('');
+            nav.innerHTML = config.map(c => `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`).join('');
         }
 
         function goHome() {
@@ -81,7 +79,7 @@
             window.scrollTo(0, 0);
         }
 
-        function triggerSub(name, isThirdLevel = false) {
+        function triggerSub(name) {
             const cat = config.find(c => c.n === name);
             document.getElementById('home-content').style.display = 'none';
             document.getElementById('sub-header').style.display = 'block';
@@ -91,10 +89,18 @@
 
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
-                const fileName = `${cat.prefix}${num}`;
-                let path = isThirdLevel ? `tp/${cat.parent}/${cat.n}/${fileName}.webp` : `tp/${cat.n}/${fileName}.webp`;
+                // 重点：对中文文件夹进行 encodeURI 编码，防止 GitHub 路径解析错误
+                const rawPath = `tp/${cat.n}/${cat.prefix}${num}.webp`;
+                const safePath = encodeURI(rawPath);
+
                 const div = document.createElement('div');
-                div.innerHTML = `<div class="img-container"><img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)"></div><p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${fileName.toUpperCase()}</p>`;
+                div.innerHTML = `
+                    <div class="img-container">
+                        <span class="err-label">Loading...</span>
+                        <img src="${safePath}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${safePath.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
+                    </div>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${cat.prefix.toUpperCase()}${num}</p>
+                `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
