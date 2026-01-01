@@ -13,23 +13,54 @@
         .text-fade { animation: rareFade 3s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; }
 
         body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; overflow-x: hidden; }
+        
+        /* 图片容器锁定比例 */
         .img-container { width: 100%; aspect-ratio: 3/4; background: #f8f8f8; overflow: hidden; position: relative; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease; }
         .on { opacity: 1 !important; }
 
+        /* 分类文字并列排版 */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .category-item {
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            background: #fafafa;
+        }
+
         .grid { display: grid; gap: 4px; padding: 0 4px; }
         #back-btn { position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
+        
+        .section-title {
+            text-align: center;
+            padding: 20px 0 10px;
+            font-family: serif;
+            font-size: 16px;
+            letter-spacing: 3px;
+            color: #111;
+        }
     </style>
 </head>
 <body>
 
-    <div style="background:#f9f9f9; padding:6px 0; font-size:10px; color:#666; text-align:center; border-bottom:1px solid #eee;">FREE INTERNATIONAL DELIVERY | CN | OFFICIAL STORE</div>
+    <div style="background:#f9f9f9; padding:6px 0; font-size:10px; color:#666; text-align:center; border-bottom:1px solid #eee; letter-spacing: 0.5px;">FREE INTERNATIONAL DELIVERY | CN | OFFICIAL STORE</div>
 
-    <header style="padding:15px 0 0; text-align:center; border-bottom:1px solid #eee;">
+    <header style="padding:15px 0 0; text-align:center; border-bottom: 1px solid #eee;">
         <div style="font-family:serif; font-size:38px; font-weight:bold; letter-spacing:4px;">General Store</div>
         <nav style="display:flex; justify-content:center; gap:25px; padding:10px 0;">
             <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">首页 HOME</span>
-            <span onclick="goSale()" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">打折 SALE</span>
+            <span onclick="renderSub(config.find(c=>c.n==='打折'))" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
         </nav>
     </header>
 
@@ -39,74 +70,89 @@
         <div style="font-size:11px; color:#999; margin:4px 0 10px 0;">V：lanxiaoqi1981</div>
     </div>
 
-    <img src="images/p_banner.webp" style="width:100%; height:auto; display:block;" onload="this.className='on'">
+    <div id="home-header">
+        <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.className='on'">
+        
+        <div class="category-nav" id="cat-nav"></div>
+
+        <div class="section-title">NEW ARRIVALS</div>
+        <div style="padding: 0 10px 20px;" onclick="renderSub(config.find(c=>c.n==='新款'))">
+            <div class="img-container" style="aspect-ratio: 16/9;">
+                <img src="images/p02.webp" onload="this.className='on'">
+            </div>
+            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:8px;">2026 新款上线 COLLECTION</p>
+        </div>
+    </div>
 
     <main id="main-area">
-        <div style="position:relative; text-align:center; padding:30px 0 20px;">
-            <h3 id="ttl" class="text-fade">FEATURED CATEGORIES</h3>
-            <div id="back-btn" style="display:none" onclick="goHome()">BACK →</div>
+        <div id="sub-header" style="display:none; position:relative; text-align:center; padding:30px 0 20px;">
+            <h3 id="ttl" class="text-fade"></h3>
+            <div id="back-btn" onclick="goHome()">BACK →</div>
         </div>
         <div id="grid" class="grid"></div>
     </main>
 
     <script>
-        // 【核心操作说明】
-        // 1. 首页图片：存放在 images/ 文件夹下，分别改名为 p1.webp, p2.webp...
-        // 2. 子目录图：存放在 images/分类文件夹/ 下，改名为 p01.webp, p02.webp...
-        const data = [
-            { n: "羽绒服", home: "p1", items: ["p01", "p02", "p03", "p04", "p05"] },
-            { n: "外套", home: "p2", items: ["p01", "p02", "p03", "p04", "p05", "p06"] },
-            { n: "毛衣", home: "p3", items: ["p01", "p02", "p03", "p04", "p05"] },
-            { n: "长裤", home: "p4", items: ["p01", "p02", "p03"] },
-            { n: "打折", home: "p5", items: ["p01", "p02", "p03"] },
-            { n: "配饰", home: "p6", items: ["p01", "p02"] }
+        // 配置：prefix 是图片前缀，count 是文件夹内图片总数
+        const config = [
+            { n: "衬衫", prefix: "cs", count: 6 },
+            { n: "毛衣", prefix: "m", count: 20 },
+            { n: "冲锋衣", prefix: "cfy", count: 4 },
+            { n: "国风", prefix: "g", count: 16 },
+            { n: "长裤", prefix: "k", count: 7 },
+            { n: "新款", prefix: "ws", count: 24 },
+            { n: "打折", prefix: "z", count: 8 },
+            { n: "配饰", prefix: "ps", count: 7 }
         ];
 
         const grid = document.getElementById('grid');
+        const homeHeader = document.getElementById('home-header');
+        const subHeader = document.getElementById('sub-header');
         const ttl = document.getElementById('ttl');
-        const btn = document.getElementById('back-btn');
+        const catNav = document.getElementById('cat-nav');
+
+        // 初始化文字导航
+        function initNav() {
+            catNav.innerHTML = config.filter(c=>c.n!=='新款').map(c => 
+                `<div class="category-item" onclick="renderSub(${JSON.stringify(c).replace(/"/g, '&quot;')})">${c.n}</div>`
+            ).join('');
+        }
 
         function goHome() {
             grid.innerHTML = '';
-            grid.style.gridTemplateColumns = "repeat(6, 1fr)";
-            btn.style.display = "none";
-            ttl.innerText = "FEATURED CATEGORIES";
-            ttl.className = "text-fade";
-
-            data.forEach(c => {
-                const div = document.createElement('div');
-                div.onclick = () => goSub(c.n);
-                div.innerHTML = `
-                    <div class="img-container"><img src="images/${c.home}.webp" onload="this.className='on'"></div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:5px;">${c.n}</p>
-                `;
-                grid.appendChild(div);
-            });
-        }
-
-        function goSub(name) {
-            const cat = data.find(c => c.n === name);
-            grid.innerHTML = '';
-            grid.style.gridTemplateColumns = "repeat(2, 1fr)";
-            btn.style.display = "block";
-            ttl.innerText = name;
-            ttl.className = "";
-
-            cat.items.forEach((file, index) => {
-                const div = document.createElement('div');
-                const path = `images/${name}/${file}.webp`;
-                div.innerHTML = `
-                    <div class="img-container">
-                        <img src="${path}" loading="${index < 4 ? 'eager' : 'lazy'}" onload="this.className='on'">
-                    </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:5px;">STYLE ${file.toUpperCase()}</p>
-                `;
-                grid.appendChild(div);
-            });
+            homeHeader.style.display = 'block';
+            subHeader.style.display = 'none';
             window.scrollTo(0, 0);
         }
 
-        function goSale() { goSub("打折"); }
+        function renderSub(cat) {
+            homeHeader.style.display = 'none';
+            subHeader.style.display = 'block';
+            ttl.innerText = cat.n;
+            grid.innerHTML = '';
+            grid.style.gridTemplateColumns = "repeat(2, 1fr)";
+
+            for (let i = 1; i <= cat.count; i++) {
+                const num = i.toString().padStart(2, '0');
+                const fileName = `${cat.prefix}${num}`;
+                // 路径：images/文件夹名/文件名.webp
+                const path = `images/${cat.n}/${fileName}.webp`;
+
+                const div = document.createElement('div');
+                div.style.textAlign = 'center';
+                div.style.marginBottom = '10px';
+                div.innerHTML = `
+                    <div class="img-container">
+                        <img src="${path}" loading="${i <= 4 ? 'eager' : 'lazy'}" onload="this.className='on'" onerror="this.src='https://via.placeholder.com/300x400?text=Wait...'">
+                    </div>
+                    <p style="font-size:10px; font-weight:bold; margin-top:5px;">STYLE ${fileName.toUpperCase()}</p>
+                `;
+                grid.appendChild(div);
+            }
+            window.scrollTo(0, 0);
+        }
+
+        initNav();
         goHome();
     </script>
 </body>
