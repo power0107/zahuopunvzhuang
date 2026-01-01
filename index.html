@@ -29,7 +29,7 @@
         <div style="font-family:serif; font-size:36px; font-weight:bold; letter-spacing:4px;">General Store</div>
         <nav style="display:flex; justify-content:center; gap:30px; padding:12px 0;">
             <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">HOME</span>
-            <span onclick="triggerSub('新款')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
+            <span onclick="triggerSub('打折')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
         </nav>
     </header>
 
@@ -47,12 +47,13 @@
         <div class="category-nav" id="cat-nav"></div>
 
         <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
-        <div style="padding: 0 4px 40px;" onclick="triggerSub('新款')">
+        <div style="padding: 0 4px 15px;">
             <div class="img-container" style="aspect-ratio: 16/9;">
-                <img src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
+                <img src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'" onclick="openLightbox(this.src)">
             </div>
-            <p style="text-align:center; font-size:11px; font-weight:bold; margin-top:12px;">2026 新款上线系列</p>
         </div>
+        <div id="new-arrivals-list" class="grid" style="grid-template-columns: repeat(2, 1fr);"></div>
+        <div style="height:40px;"></div>
     </div>
 
     <main id="main-area">
@@ -69,7 +70,7 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
-        // 配置信息：所有分类均在 tp/ 目录下
+        // 核心配置
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
@@ -87,13 +88,31 @@
         const subHeader = document.getElementById('sub-header');
         const ttl = document.getElementById('ttl');
         const thirdNav = document.getElementById('third-level-nav');
+        const newList = document.getElementById('new-arrivals-list');
 
-        function initNav() {
+        function init() {
+            // 初始化导航栏
             const nav = document.getElementById('cat-nav');
             const mainCats = config.filter(c => c.n !== '新款' && !c.parent);
             nav.innerHTML = mainCats.map(c => 
                 `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
             ).join('');
+
+            // 初始化首页新款平铺列表
+            const newItem = config.find(c => c.n === '新款');
+            newList.innerHTML = '';
+            for (let i = 1; i <= newItem.count; i++) {
+                const num = i.toString().padStart(2, '0');
+                const path = `tp/${newItem.n}/${newItem.prefix}${num}.webp`;
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <div class="img-container">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
+                    </div>
+                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${newItem.prefix.toUpperCase()}${num}</p>
+                `;
+                newList.appendChild(div);
+            }
         }
 
         function goHome() {
@@ -112,15 +131,11 @@
             ttl.innerText = cat.n;
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)";
-
-            // 仅在毛衣及马甲页面显示子导航
             thirdNav.style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
 
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
-                
-                // 路径逻辑修正：tp/分类/ (二级) 或 tp/分类/子分类/ (三级)
                 let path = isThirdLevel 
                     ? `tp/${cat.parent}/${cat.n}/${fileName}.webp`
                     : `tp/${cat.n}/${fileName}.webp`;
@@ -128,11 +143,9 @@
                 const div = document.createElement('div');
                 div.innerHTML = `
                     <div class="img-container">
-                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" 
-                             onerror="this.src='${path.replace('.webp', '.jpg')}'" 
-                             onclick="openLightbox(this.src)">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
                     </div>
-                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888;">${fileName.toUpperCase()}</p>
+                    <p style="font-size:9px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${fileName.toUpperCase()}</p>
                 `;
                 grid.appendChild(div);
             }
@@ -140,12 +153,12 @@
         }
 
         function openLightbox(src) {
-            if(!src) return;
+            if(!src || src.includes('undefined')) return;
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        initNav();
+        init();
         goHome();
     </script>
 </body>
