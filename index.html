@@ -9,16 +9,12 @@
         .img-container { width: 100%; aspect-ratio: 3/4; background: #fafafa; overflow: hidden; position: relative; cursor: pointer; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease; }
         .on { opacity: 1 !important; }
-        
-        /* 首页文字分类导航 */
         .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px 5px; border-bottom: 1px solid #f0f0f0; }
         .category-item { font-size: 13px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 15px; border: 1px solid #eee; background: #fff; }
-        
         .grid { display: grid; gap: 3px; padding: 0 3px; grid-template-columns: repeat(2, 1fr); }
         #back-btn { position: absolute; right: 15px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
         #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; }
-        .sub-nav { display: flex; justify-content: center; gap: 10px; padding: 10px 0; background: #fdfdfd; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -31,12 +27,6 @@
         </nav>
     </header>
 
-    <div id="brand-text" style="text-align:center; padding:20px 0 10px;">
-        <span style="font-size:9px; color:#aaa; letter-spacing:2px; display:block;">SINCE 2008</span>
-        <h2 style="font-family:serif; font-size:20px; font-weight:normal; letter-spacing:5px; margin:2px 0;">TIMELESS CHIC</h2>
-        <div style="font-size:11px; color:#999; margin:4px 0 10px 0;">V：lanxiaoqi1981</div>
-    </div>
-
     <div id="home-content">
         <section style="width:100%; line-height:0; margin-top:-5px;">
             <img src="tp/p01.webp" style="width:100%; height:auto; display:block;" onload="this.classList.add('on')" onerror="this.src='tp/p01.jpg'">
@@ -46,10 +36,12 @@
 
         <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
         <div style="padding: 0 4px 50px;">
-            <div class="img-container" style="aspect-ratio: 16/9; cursor: default; background: none;">
-                <img id="p02" src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
+            <div class="img-container" style="aspect-ratio: 16/9; cursor: default;">
+                <script>
+                    document.write('<img id="p02-img" src="tp/p02.webp?v=' + new Date().getTime() + '" onload="this.classList.add(\'on\')" onerror="this.src=\'tp/p02.jpg\'">');
+                </script>
             </div>
-            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:12px; color:#888;">2026 SEASON COLLECTION</p>
+            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:12px; color:#888;">SEASON COLLECTION</p>
         </div>
     </div>
 
@@ -57,9 +49,6 @@
         <div id="sub-header" style="display:none; position:relative; text-align:center; padding:20px 0 10px;">
             <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px; text-transform:uppercase;"></h3>
             <div id="back-btn" onclick="goHome()">BACK →</div>
-            <div id="third-level-nav" class="sub-nav" style="display:none;">
-                <div style="font-size:11px; border:1px solid #ccc; padding:4px 12px; cursor:pointer; background:#fff;" onclick="triggerSub('马甲', true)">马甲系列 VEST</div>
-            </div>
         </div>
         <div id="grid" class="grid"></div>
     </main>
@@ -67,7 +56,6 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
-        // 只有点击文字导航，才会显示这些图片
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
@@ -81,13 +69,9 @@
 
         function initNav() {
             const nav = document.getElementById('cat-nav');
-            const mainCats = config.filter(c => !c.parent);
-            nav.innerHTML = mainCats.map(c => 
+            nav.innerHTML = config.filter(c => !c.parent).map(c => 
                 `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
             ).join('');
-            
-            // 强行给 p02 加上时间戳，解决上传了但网页不更新的问题
-            document.getElementById('p02').src = "tp/p02.webp?t=" + new Date().getTime();
         }
 
         function goHome() {
@@ -99,38 +83,24 @@
 
         function triggerSub(name, isThirdLevel = false) {
             const cat = config.find(c => c.n === name);
-            if (!cat) return;
-
             document.getElementById('home-content').style.display = 'none';
-            const subHeader = document.getElementById('sub-header');
-            subHeader.style.display = 'block';
+            document.getElementById('sub-header').style.display = 'block';
             document.getElementById('ttl').innerText = cat.n;
-            
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            
-            document.getElementById('third-level-nav').style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
 
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
                 let path = isThirdLevel ? `tp/${cat.parent}/${cat.n}/${fileName}.webp` : `tp/${cat.n}/${fileName}.webp`;
-
                 const div = document.createElement('div');
-                div.style.textAlign = 'center';
-                div.innerHTML = `
-                    <div class="img-container">
-                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
-                    </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888;">${fileName.toUpperCase()}</p>
-                `;
+                div.innerHTML = `<div class="img-container"><img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)"></div><p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${fileName.toUpperCase()}</p>`;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
         }
 
         function openLightbox(src) {
-            if(!src || src.includes('undefined')) return;
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
