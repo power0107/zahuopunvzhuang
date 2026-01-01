@@ -3,84 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>General Store</title>
+    <title>General Store | Shopbop Style</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <style>
-        body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; }
-        /* 比例锁定，防止跳闪 */
-        .img-wrap { width: 100%; aspect-ratio: 3/4; background: #eee; overflow: hidden; position: relative; }
-        .img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s; }
-        .on { opacity: 1 !important; }
-        .item { text-align: center; margin-bottom: 8px; }
-        #back { position: absolute; right: 10px; font-weight: 900; cursor: pointer; padding: 10px; z-index: 99; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        /* 比例锁定容器：防止图片加载时页面跳动 */
+        .img-wrap { 
+            width: 100%; 
+            aspect-ratio: 3/4; 
+            background: #f7f7f7; 
+            overflow: hidden; 
+            position: relative; 
+        }
+        .img-wrap img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            opacity: 0; 
+            transition: opacity 0.3s ease; 
+        }
+        .loaded { opacity: 1 !important; }
+
+        .item { text-align: center; margin-bottom: 12px; }
+        #grid { display: grid; gap: 4px; padding: 0 4px; }
+        #back-btn { position: absolute; right: 15px; font-weight: bold; cursor: pointer; padding: 10px; z-index: 100; font-size: 13px; }
+        
+        header { padding: 15px 0; text-align: center; border-bottom: 1px solid #eee; }
+        nav { margin-top: 10px; font-size: 11px; font-weight: bold; }
+        nav span { cursor: pointer; padding: 5px 10px; }
     </style>
 </head>
 <body>
 
-    <header style="padding:15px 0; text-align:center; border-bottom:1px solid #eee;">
+    <header>
         <div style="font-family:serif; font-size:32px; font-weight:bold; letter-spacing:4px;">General Store</div>
-        <div style="margin-top:10px; font-size:11px; font-weight:bold;">
-            <span onclick="home()" style="cursor:pointer">HOME</span> &nbsp;&nbsp; 
-            <span onclick="sub('打折')" style="color:#d0021b; cursor:pointer">SALE</span>
-        </div>
+        <nav>
+            <span onclick="goHome()">HOME</span>
+            <span onclick="goSub('打折')" style="color:#d0021b;">SALE</span>
+        </nav>
     </header>
 
-    <main style="padding:0 4px;">
+    <main>
         <div style="position:relative; text-align:center; padding:25px 0;">
-            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px;">FEATURED CATEGORIES</h3>
-            <div id="back" style="display:none" onclick="home()">BACK →</div>
+            <h3 id="label" style="font-family:serif; letter-spacing:4px; margin:0; font-size:15px; text-transform:uppercase;">Featured Categories</h3>
+            <div id="back-btn" style="display:none" onclick="goHome()">BACK →</div>
         </div>
-        <div id="grid" style="display:grid; gap:4px;"></div>
+        <div id="grid"></div>
     </main>
 
     <script>
-        // 配置你的信息
-        const USER = "lanxiaoqi1981"; 
-        const REPO = "zahuopunvzhuang";
-        const CDN = `https://cdn.jsdelivr.net/gh/${USER}/${REPO}/`;
+        // 1. 请核对你的 GitHub 用户名和仓库名
+        const CONFIG = {
+            user: "lanxiaoqi1981", 
+            repo: "zahuopunvzhuang" 
+        };
+        const CDN = `https://cdn.jsdelivr.net/gh/${CONFIG.user}/${CONFIG.repo}/`;
 
         const data = [
-            { n: "羽绒服", img: "product4.webp", ids: [23,24,25,26,27,28,29,30,31,32,33,34,35,41,54,55,59,60,61,62] },
-            { n: "外套", img: "product19.webp", ids: [38,39,40,50,51,52,53,77,78] },
-            { n: "毛衫", img: "product3.webp", ids: [17,20,21,57,58,59,60,61,68] },
-            { n: "长裤", img: "product4.webp", ids: [1,8,9,10,11,12,13,14,15,18,22,64,65] },
-            { n: "打折", img: "product16.webp", ids: [5,6,7,51,52,53,56,78] },
-            { n: "配饰", img: "product37.webp", ids: [41,42,43,44,62,63,66,67] }
+            { n: "羽绒服", img: "product4.webp", items: [23,24,25,26,27,28,29,30,31,32,33,34,35,41,54,55,59,60,61,62] },
+            { n: "外套", img: "product19.webp", items: [38,39,40,50,51,52,53,77,78] },
+            { n: "毛衫", img: "product3.webp", items: [17,20,21,57,58,59,60,61,68] },
+            { n: "长裤", img: "product4.webp", items: [1,8,9,10,11,12,13,14,15,18,22,64,65] },
+            { n: "打折", img: "product16.webp", items: [5,6,7,51,52,53,56,78] },
+            { n: "配饰", img: "product37.webp", items: [41,42,43,44,62,63,66,67] }
         ];
 
         const grid = document.getElementById('grid');
-        const ttl = document.getElementById('ttl');
-        const btn = document.getElementById('back');
+        const label = document.getElementById('label');
+        const btn = document.getElementById('back-btn');
 
-        function home() {
+        function goHome() {
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             btn.style.display = "none";
-            ttl.innerText = "FEATURED CATEGORIES";
+            label.innerText = "Featured Categories";
             grid.innerHTML = data.map(c => `
-                <div class="item" onclick="sub('${c.n}')">
-                    <div class="img-wrap"><img src="${CDN}images/${c.img}" onload="this.className='on'"></div>
-                    <p style="font-size:10px; font-weight:bold;">${c.n}</p>
+                <div class="item" onclick="goSub('${c.n}')">
+                    <div class="img-wrap">
+                        <img src="${CDN}images/${c.img}" onload="this.classList.add('loaded')">
+                    </div>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px;">${c.n}</p>
                 </div>
             `).join('');
         }
 
-        function sub(name) {
+        function goSub(name) {
             const cat = data.find(c => c.n === name);
             grid.style.gridTemplateColumns = "repeat(2, 1fr)";
             btn.style.display = "block";
-            ttl.innerText = name;
-            grid.innerHTML = cat.ids.map((id, i) => {
-                const src = `${CDN}images/${name}/product${id}.webp`;
+            label.innerText = name;
+            grid.innerHTML = cat.items.map((id, i) => {
+                const url = `${CDN}images/${name}/product${id}.webp`;
                 return `
                 <div class="item">
-                    <div class="img-wrap"><img src="${src}" loading="${i<4?'eager':'lazy'}" onload="this.className='on'"></div>
-                    <p style="font-size:10px; font-weight:bold;">STYLE NO.${id}</p>
+                    <div class="img-wrap">
+                        <img src="${url}" loading="${i < 4 ? 'eager' : 'lazy'}" onload="this.classList.add('loaded')">
+                    </div>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px;">STYLE NO.${id}</p>
                 </div>`;
             }).join('');
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
-        home();
+        // 初始化首页
+        goHome();
     </script>
 </body>
 </html>
