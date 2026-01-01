@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>General Store | Official</title>
+    <title>General Store Official</title>
     <style>
         body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         .img-container { width: 100%; aspect-ratio: 3/4; background: #fafafa; overflow: hidden; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s ease; }
         .on { opacity: 1 !important; }
         .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px 5px; border-bottom: 1px solid #f0f0f0; }
-        .category-item { font-size: 13px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 15px; border: 1px solid #eee; background: #fff; }
+        .category-item { font-size: 13px; font-weight: bold; color: #222; cursor: pointer; padding: 6px 15px; border: 1px solid #eee; background: #fff; letter-spacing: 1px; }
         .grid { display: grid; gap: 3px; padding: 0 3px; grid-template-columns: repeat(2, 1fr); }
         #back-btn { position: absolute; right: 15px; font-size: 11px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
-        #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; }
-        .err-label { position: absolute; font-size: 10px; color: #ddd; z-index: 1; }
+        #lightbox img { max-height: 98vh; max-width: 98vw; object-fit: contain; cursor: zoom-out; }
+        .sub-nav { display: flex; justify-content: center; gap: 10px; padding: 10px 0; background: #fdfdfd; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -24,7 +24,7 @@
         <div style="font-family:serif; font-size:36px; font-weight:bold; letter-spacing:4px;">General Store</div>
         <nav style="display:flex; justify-content:center; gap:30px; padding:12px 0;">
             <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">HOME</span>
-            <span onclick="triggerSub('可外穿小衫')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">NEW ARRIVALS</span>
+            <span onclick="triggerSub('可外穿小衫')" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
         </nav>
     </header>
 
@@ -38,18 +38,19 @@
         <div style="text-align:center; padding:30px 0 10px; font-family:serif; font-size:16px; letter-spacing:4px;">NEW ARRIVALS</div>
         <div style="padding: 0 4px 50px;">
             <div class="img-container" style="aspect-ratio: 16/9; cursor: default;">
-                <script>
-                    const p02Path = encodeURI('tp/p02.webp') + '?v=' + Date.now();
-                    document.write('<img src="' + p02Path + '" onload="this.classList.add(\'on\')" onerror="this.src=\'tp/p02.jpg\'">');
-                </script>
+                <img src="tp/p02.webp" onload="this.classList.add('on')" onerror="this.src='tp/p02.jpg'">
             </div>
         </div>
     </div>
 
     <main id="main-area">
         <div id="sub-header" style="display:none; position:relative; text-align:center; padding:20px 0 10px;">
-            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px;"></h3>
+            <h3 id="ttl" style="font-family:serif; letter-spacing:4px; margin:0; font-size:16px; text-transform:uppercase;"></h3>
             <div id="back-btn" onclick="goHome()">BACK →</div>
+            
+            <div id="third-level-nav" class="sub-nav" style="display:none;">
+                <div style="font-size:11px; border:1px solid #ccc; padding:4px 12px; cursor:pointer; background:#fff;" onclick="triggerSub('马甲', true)">马甲系列 VEST</div>
+            </div>
         </div>
         <div id="grid" class="grid"></div>
     </main>
@@ -57,9 +58,11 @@
     <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src=""></div>
 
     <script>
+        // 配置对照：严格匹配照片中的文件夹和前缀
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
+            { n: "马甲", prefix: "mj", count: 2, parent: "毛衣" },
             { n: "冲锋衣", prefix: "cfy", count: 4 },
             { n: "国风", prefix: "g", count: 16 },
             { n: "长裤", prefix: "k", count: 13 },
@@ -69,7 +72,10 @@
 
         function initNav() {
             const nav = document.getElementById('cat-nav');
-            nav.innerHTML = config.map(c => `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`).join('');
+            const mainCats = config.filter(c => !c.parent);
+            nav.innerHTML = mainCats.map(c => 
+                `<div class="category-item" onclick="triggerSub('${c.n}')">${c.n}</div>`
+            ).join('');
         }
 
         function goHome() {
@@ -79,27 +85,40 @@
             window.scrollTo(0, 0);
         }
 
-        function triggerSub(name) {
+        function triggerSub(name, isThirdLevel = false) {
             const cat = config.find(c => c.n === name);
+            if (!cat) return;
+
             document.getElementById('home-content').style.display = 'none';
-            document.getElementById('sub-header').style.display = 'block';
+            const subHeader = document.getElementById('sub-header');
+            subHeader.style.display = 'block';
             document.getElementById('ttl').innerText = cat.n;
+            
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
+            
+            // 马甲切换按钮逻辑
+            document.getElementById('third-level-nav').style.display = (name === "毛衣" || isThirdLevel) ? "flex" : "none";
 
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
-                // 重点：对中文文件夹进行 encodeURI 编码，防止 GitHub 路径解析错误
-                const rawPath = `tp/${cat.n}/${cat.prefix}${num}.webp`;
-                const safePath = encodeURI(rawPath);
+                const fileName = `${cat.prefix}${num}.webp`;
+                
+                // 【最核心修改】：强制对中文文件夹名进行网络编码
+                let path;
+                if (isThirdLevel) {
+                    path = `tp/${encodeURIComponent(cat.parent)}/${encodeURIComponent(cat.n)}/${fileName}`;
+                } else {
+                    path = `tp/${encodeURIComponent(cat.n)}/${fileName}`;
+                }
 
                 const div = document.createElement('div');
+                div.style.textAlign = 'center';
                 div.innerHTML = `
                     <div class="img-container">
-                        <span class="err-label">Loading...</span>
-                        <img src="${safePath}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${safePath.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onerror="this.src='${path.replace('.webp', '.jpg')}'" onclick="openLightbox(this.src)">
                     </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888; text-align:center;">${cat.prefix.toUpperCase()}${num}</p>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#888;">${cat.prefix.toUpperCase()}${num}</p>
                 `;
                 grid.appendChild(div);
             }
@@ -107,6 +126,7 @@
         }
 
         function openLightbox(src) {
+            if(!src || src.includes('undefined')) return;
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
