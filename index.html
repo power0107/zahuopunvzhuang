@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        /* 缓慢淡入动画 */
-        @keyframes fadeInElegant {
-            from { opacity: 0; transform: translateY(3px); }
+        /* 品牌文字淡入 */
+        @keyframes rareFade {
+            from { opacity: 0; transform: translateY(2px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .rare-fade { animation: fadeInElegant 3.5s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; }
+        .text-fade { animation: rareFade 3s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; }
 
         body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; overflow-x: hidden; }
-        .img-box { width: 100%; aspect-ratio: 3/4; background: #f8f8f8; overflow: hidden; position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease-out; }
+        .img-container { width: 100%; aspect-ratio: 3/4; background: #f8f8f8; overflow: hidden; position: relative; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease; }
         .on { opacity: 1 !important; }
 
-        .grid { display: grid; gap: 4px; padding: 0 4px; width: 100%; box-sizing: border-box; }
+        .grid { display: grid; gap: 4px; padding: 0 4px; }
         #back-btn { position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
     </style>
 </head>
@@ -39,27 +39,27 @@
         <div style="font-size:11px; color:#999; margin:4px 0 10px 0;">V：lanxiaoqi1981</div>
     </div>
 
-    <section style="width:100%; line-height:0; margin-top:-5px;">
-        <img src="images/product36.webp" style="width:100%; height:auto; display:block;" fetchpriority="high" onload="this.classList.add('on')">
-    </section>
+    <img src="images/p_banner.webp" style="width:100%; height:auto; display:block;" onload="this.className='on'">
 
     <main id="main-area">
         <div style="position:relative; text-align:center; padding:30px 0 20px;">
-            <h3 id="ttl" class="rare-fade">FEATURED CATEGORIES</h3>
+            <h3 id="ttl" class="text-fade">FEATURED CATEGORIES</h3>
             <div id="back-btn" style="display:none" onclick="goHome()">BACK →</div>
         </div>
         <div id="grid" class="grid"></div>
     </main>
 
     <script>
-        // 根据您的截图，我手动校对并录入了您的所有文件名
+        // 【核心操作说明】
+        // 1. 首页图片：存放在 images/ 文件夹下，分别改名为 p1.webp, p2.webp...
+        // 2. 子目录图：存放在 images/分类文件夹/ 下，改名为 p01.webp, p02.webp...
         const data = [
-            { n: "羽绒服", img: "product4", items: ["product55_1", "product59", "product60", "product61", "product78_1"] },
-            { n: "外套", img: "product19", items: ["product2", "product38", "product39", "product40", "product41", "product50", "product53_1", "product54", "product55"] },
-            { n: "毛衣", img: "product3", items: ["product3", "product18_1", "product28_1", "product29_1", "product30", "product31", "product32_1", "product33_1", "product34_1"] },
-            { n: "长裤", img: "product1", items: ["product12", "product13_1", "product14_1", "product15", "product16", "product61_1", "product62", "product64", "product65", "product77_1"] },
-            { n: "打折", img: "product16", items: ["product8", "product22_1", "product23", "product24", "product25", "product26_1", "product27", "product28"] },
-            { n: "配饰", img: "product37", items: ["product4", "product25_1", "product26", "product35_1", "product51_1", "product52_1", "product53"] }
+            { n: "羽绒服", home: "p1", items: ["p01", "p02", "p03", "p04", "p05"] },
+            { n: "外套", home: "p2", items: ["p01", "p02", "p03", "p04", "p05", "p06"] },
+            { n: "毛衣", home: "p3", items: ["p01", "p02", "p03", "p04", "p05"] },
+            { n: "长裤", home: "p4", items: ["p01", "p02", "p03"] },
+            { n: "打折", home: "p5", items: ["p01", "p02", "p03"] },
+            { n: "配饰", home: "p6", items: ["p01", "p02"] }
         ];
 
         const grid = document.getElementById('grid');
@@ -71,14 +71,13 @@
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             btn.style.display = "none";
             ttl.innerText = "FEATURED CATEGORIES";
-            ttl.className = "rare-fade";
+            ttl.className = "text-fade";
 
             data.forEach(c => {
                 const div = document.createElement('div');
-                div.style.textAlign = "center";
                 div.onclick = () => goSub(c.n);
                 div.innerHTML = `
-                    <div class="img-box"><img src="images/${c.img}.webp" onload="this.classList.add('on')"></div>
+                    <div class="img-container"><img src="images/${c.home}.webp" onload="this.className='on'"></div>
                     <p style="font-size:10px; font-weight:bold; margin-top:5px;">${c.n}</p>
                 `;
                 grid.appendChild(div);
@@ -95,13 +94,12 @@
 
             cat.items.forEach((file, index) => {
                 const div = document.createElement('div');
-                div.style.textAlign = "center";
-                const p = `images/${name}/${file}.webp`;
+                const path = `images/${name}/${file}.webp`;
                 div.innerHTML = `
-                    <div class="img-box">
-                        <img src="${p}" loading="${index < 4 ? 'eager' : 'lazy'}" onload="this.classList.add('on')">
+                    <div class="img-container">
+                        <img src="${path}" loading="${index < 4 ? 'eager' : 'lazy'}" onload="this.className='on'">
                     </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:5px;">STYLE NO.${file.replace('product','')}</p>
+                    <p style="font-size:10px; font-weight:bold; margin-top:5px;">STYLE ${file.toUpperCase()}</p>
                 `;
                 grid.appendChild(div);
             });
