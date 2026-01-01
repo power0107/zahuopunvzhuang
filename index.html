@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>General Store | Shopbop Style Official</title>
     <style>
-        @keyframes fadeInElegant { from { opacity: 0; } to { opacity: 1; } }
+        /* 缓慢优雅的淡入动画 */
+        @keyframes fadeInElegant {
+            from { opacity: 0; transform: translateY(3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .fade-in-label { animation: fadeInElegant 3s ease-in-out forwards; }
 
         .img-container {
             width: 100%;
-            aspect-ratio: 3/4;
-            background-color: #f0f0f0;
+            padding-top: 133.33%; 
+            background-color: #f8f8f8;
             position: relative;
             overflow: hidden;
         }
@@ -27,25 +31,41 @@
         }
 
         .loaded { opacity: 1 !important; }
-        .grid-item { text-align: center; cursor: pointer; }
+        .grid-item { text-align: center; cursor: pointer; margin-bottom: 10px; }
     </style>
 </head>
-<body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif;">
+<body style="margin: 0; padding: 0; background: #fff; color: #333; font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
 
-    <header style="padding: 15px 0; text-align: center; border-bottom: 1px solid #eee;">
-        <div style="font-family: serif; font-size: 36px; font-weight: bold; letter-spacing: 4px;">General Store</div>
-        <nav style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
-            <span onclick="renderLevel1()" style="font-size: 11px; font-weight: bold;">HOME</span>
-            <span onclick="enterSale()" style="font-size: 11px; font-weight: bold; color: #d0021b;">SALE</span>
+    <div style="background: #f9f9f9; padding: 6px 0; font-size: 11px; color: #666; text-align: center; border-bottom: 1px solid #eee; letter-spacing: 0.5px;">
+        FREE INTERNATIONAL DELIVERY | CN | $USD | OFFICIAL STORE
+    </div>
+
+    <header style="padding: 10px 0 0; text-align: center; border-bottom: 1px solid #eee;">
+        <div style="font-family: serif; font-size: 38px; font-weight: bold; margin-bottom: 5px; letter-spacing: 4px;">General Store</div>
+        <nav style="display: flex; justify-content: center; gap: 25px; padding-bottom: 8px;">
+            <a onclick="renderLevel1()" style="text-decoration: none; color: #000; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">首页 HOME</a>
+            <a onclick="goSale()" style="text-decoration: none; color: #d0021b; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer;">打折 SALE</a>
         </nav>
     </header>
 
-    <img src="images/product36.webp" style="width: 100%; height: auto; display: block;" onload="this.classList.add('loaded')">
+    <div style="background: #fff; padding: 15px 0 0 0; text-align: center;">
+        <span style="font-size: 9px; color: #888; letter-spacing: 2px; text-transform: uppercase; display: block;">SINCE 2008</span>
+        <h2 style="font-family: serif; font-size: 22px; font-weight: normal; letter-spacing: 5px; margin: 2px 0 0 0;">TIMELESS CHIC</h2>
+        <div style="font-size: 11px; color: #999; margin: 4px 0 10px 0; letter-spacing: 1px;">V：lanxiaoqi1981</div>
+    </div>
 
-    <main id="main-area" style="padding: 0 4px;">
-        <div style="position: relative; text-align: center; padding: 25px 0;">
-            <h3 id="current-label" class="fade-in-label" style="font-size: 14px; letter-spacing: 5px; text-transform: uppercase; margin: 0;">FEATURED CATEGORIES</h3>
-            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; padding: 5px;">BACK →</div>
+    <section style="width: 100%; line-height: 0; font-size: 0; margin-top: -5px;">
+        <img src="images/product36.webp" style="width: 100%; height: auto; display: block;" onload="this.className='loaded'">
+    </section>
+
+    <main id="main-area" style="background: #fff; padding: 0 4px;">
+        <div style="text-align: center; padding: 25px 10px 15px; position: relative; display: flex; align-items: center; justify-content: center;">
+            <h3 id="current-label" class="fade-in-label" style="font-size: 14px; font-family: 'Times New Roman', serif; font-weight: normal; text-transform: uppercase; letter-spacing: 6px; display: inline-block; color: #111; margin: 0;">
+                FEATURED CATEGORIES
+            </h3>
+            <div id="back-btn" onclick="renderLevel1()" style="display: none; position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px;">
+                BACK →
+            </div>
         </div>
         <div id="displayGrid" style="display: grid; gap: 4px; width: 100%;"></div>
     </main>
@@ -55,14 +75,14 @@
     </div>
 
     <script>
-        // 关键数据：请核对文件名是否完全一致
+        // 根据您的实拍文件夹内容，精准匹配文件名
         const categories = [
-            { name: "羽绒服", homeImg: "images/product4.webp", items: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 41, 54, 55, 59, 60, 61, 62] },
-            { name: "外套", homeImg: "images/product19.webp", items: [38, 39, 40, 50, 51, 52, 53, 77, 78] },
-            { name: "毛衫", homeImg: "images/product3.webp", items: [17, 20, 21, 57, 58, 59, 60, 61, 68] },
-            { name: "长裤", homeImg: "images/product4.webp", items: [1, 8, 9, 10, 11, 12, 13, 14, 15, 18, 22, 64, 65] },
-            { name: "打折", homeImg: "images/product16.webp", items: [5, 6, 7, 51, 52, 53, 56, 78] },
-            { name: "配饰", homeImg: "images/product37.webp", items: [41, 42, 43, 44, 62, 63, 66, 67] }
+            { name: "羽绒服", homeImg: "images/product4.webp", items: ["product55_1", "product59", "product60", "product61", "product78_1"] },
+            { name: "外套", homeImg: "images/product19.webp", items: ["product2", "product38", "product39", "product40", "product41", "product50", "product53_1", "product54", "product55"] },
+            { name: "毛衣", homeImg: "images/product3.webp", items: ["product3", "product18_1", "product28_1", "product29_1", "product30", "product31", "product32_1", "product33_1", "product34_1"] },
+            { name: "长裤", homeImg: "images/product1.webp", items: ["product12", "product13_1", "product14_1", "product15", "product16", "product61_1", "product62", "product64", "product65", "product77_1"] },
+            { name: "打折", homeImg: "images/product16.webp", items: ["product8", "product22_1", "product23", "product24", "product25", "product26_1", "product27", "product28"] },
+            { name: "配饰", homeImg: "images/product37.webp", items: ["product4", "product25_1", "product26", "product35_1", "product51_1", "product52_1", "product53"] }
         ];
 
         const grid = document.getElementById('displayGrid');
@@ -71,6 +91,7 @@
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(6, 1fr)";
             document.getElementById('current-label').innerText = "FEATURED CATEGORIES";
+            document.getElementById('current-label').className = "fade-in-label";
             document.getElementById('back-btn').style.display = "none";
 
             categories.forEach(cat => {
@@ -79,7 +100,7 @@
                 card.onclick = () => renderLevel2(cat);
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${cat.homeImg}" onload="this.classList.add('loaded')" onerror="this.src='https://via.placeholder.com/300x400?text=Error'">
+                        <img src="${cat.homeImg}" onload="this.classList.add('loaded')">
                     </div>
                     <p style="font-size: 10px; font-weight: bold; margin-top: 5px;">${cat.name}</p>
                 `;
@@ -91,26 +112,27 @@
             grid.innerHTML = '';
             grid.style.gridTemplateColumns = "repeat(2, 1fr)"; 
             document.getElementById('current-label').innerText = category.name;
+            document.getElementById('current-label').className = "";
             document.getElementById('back-btn').style.display = "block";
 
-            category.items.forEach((id) => {
+            category.items.forEach((fileName) => {
                 const card = document.createElement('div');
                 card.className = 'grid-item';
-                // 注意：这里路径必须和文件夹里的文件夹名完全一致（中文/英文）
-                const webpPath = `images/${category.name}/product${id}.webp`;
+                // 拼接完整路径：images/分类名/文件名.webp
+                const fullPath = `images/${category.name}/${fileName}.webp`;
                 
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${webpPath}" loading="lazy" onload="this.classList.add('loaded')" onclick="openLightbox('${webpPath}')">
+                        <img src="${fullPath}" loading="lazy" onload="this.classList.add('loaded')" onclick="openLightbox('${fullPath}')">
                     </div>
-                    <p style="font-size: 10px; font-weight: bold; margin-top: 5px;">STYLE NO.${id}</p>
+                    <p style="font-size: 10px; font-weight: bold; margin-top: 5px;">${fileName.replace('product','')}</p>
                 `;
                 grid.appendChild(card);
             });
             window.scrollTo(0, 0);
         }
 
-        function enterSale() {
+        function goSale() {
             const sale = categories.find(c => c.name === "打折");
             if(sale) renderLevel2(sale);
         }
