@@ -12,44 +12,23 @@
         }
         .text-fade { animation: rareFade 3s ease-in-out forwards; font-family: 'Times New Roman', serif; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; }
 
-        body { margin: 0; background: #fff; font-family: -apple-system, sans-serif; overflow-x: hidden; }
+        body { margin: 0; padding: 0; background: #fff; color: #333; font-family: -apple-system, sans-serif; overflow-x: hidden; }
         
-        /* 图片容器锁定比例 */
-        .img-container { width: 100%; aspect-ratio: 3/4; background: #f8f8f8; overflow: hidden; position: relative; }
+        /* 图片容器锁定比例 3:4 */
+        .img-container { width: 100%; aspect-ratio: 3/4; background: #f8f8f8; overflow: hidden; position: relative; cursor: pointer; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.3s ease; }
         .on { opacity: 1 !important; }
 
         /* 分类文字并列排版 */
-        .category-nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            padding: 20px 10px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .category-item {
-            font-size: 13px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            padding: 5px 10px;
-            border: 1px solid #eee;
-            border-radius: 2px;
-            background: #fafafa;
-        }
+        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px 10px; border-bottom: 1px solid #f0f0f0; }
+        .category-item { font-size: 13px; font-weight: bold; color: #333; cursor: pointer; padding: 6px 12px; border: 1px solid #eee; background: #fafafa; }
 
         .grid { display: grid; gap: 4px; padding: 0 4px; }
         #back-btn { position: absolute; right: 10px; font-size: 12px; font-weight: 900; color: #000; cursor: pointer; padding: 10px; z-index: 100; }
         
-        .section-title {
-            text-align: center;
-            padding: 20px 0 10px;
-            font-family: serif;
-            font-size: 16px;
-            letter-spacing: 3px;
-            color: #111;
-        }
+        /* 灯箱放大层 */
+        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; justify-content: center; align-items: center; }
+        #lightbox img { max-height: 95vh; max-width: 95vw; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -60,27 +39,29 @@
         <div style="font-family:serif; font-size:38px; font-weight:bold; letter-spacing:4px;">General Store</div>
         <nav style="display:flex; justify-content:center; gap:25px; padding:10px 0;">
             <span onclick="goHome()" style="font-size:11px; font-weight:bold; cursor:pointer;">首页 HOME</span>
-            <span onclick="renderSub(config.find(c=>c.n==='打折'))" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
+            <span onclick="triggerSale()" style="font-size:11px; font-weight:bold; color:#d0021b; cursor:pointer;">SALE</span>
         </nav>
     </header>
 
-    <div style="text-align:center; padding:15px 0 0;">
+    <div id="brand-text" style="text-align:center; padding:15px 0 0;">
         <span style="font-size:9px; color:#888; letter-spacing:2px; display:block;">SINCE 2008</span>
         <h2 style="font-family:serif; font-size:22px; font-weight:normal; letter-spacing:5px; margin:2px 0;">TIMELESS CHIC</h2>
         <div style="font-size:11px; color:#999; margin:4px 0 10px 0;">V：lanxiaoqi1981</div>
     </div>
 
-    <div id="home-header">
-        <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.className='on'">
-        
+    <div id="home-content">
+        <section style="width:100%; line-height:0; margin-top:-5px;">
+            <img src="images/p01.webp" style="width:100%; height:auto; display:block;" onload="this.classList.add('on')" onclick="openLightbox(this.src)">
+        </section>
+
         <div class="category-nav" id="cat-nav"></div>
 
-        <div class="section-title">NEW ARRIVALS</div>
-        <div style="padding: 0 10px 20px;" onclick="renderSub(config.find(c=>c.n==='新款'))">
+        <div style="text-align:center; padding:20px 0 10px; font-family:serif; font-size:16px; letter-spacing:3px;">NEW ARRIVALS</div>
+        <div style="padding: 0 10px 30px;" onclick="triggerNew()">
             <div class="img-container" style="aspect-ratio: 16/9;">
-                <img src="images/p02.webp" onload="this.className='on'">
+                <img src="images/p02.webp" onload="this.classList.add('on')">
             </div>
-            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:8px;">2026 新款上线 COLLECTION</p>
+            <p style="text-align:center; font-size:12px; font-weight:bold; margin-top:10px; letter-spacing:1px;">2026 新款上线系列</p>
         </div>
     </div>
 
@@ -92,8 +73,11 @@
         <div id="grid" class="grid"></div>
     </main>
 
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="lightboxImg" src="">
+    </div>
+
     <script>
-        // 配置：prefix 是图片前缀，count 是文件夹内图片总数
         const config = [
             { n: "衬衫", prefix: "cs", count: 6 },
             { n: "毛衣", prefix: "m", count: 20 },
@@ -102,31 +86,34 @@
             { n: "长裤", prefix: "k", count: 7 },
             { n: "新款", prefix: "ws", count: 24 },
             { n: "打折", prefix: "z", count: 8 },
-            { n: "配饰", prefix: "ps", count: 7 }
+            { n: "配饰", prefix: "ps", count: 7 },
+            { n: "秋冬外套", prefix: "q", count: 4 },
+            { n: "可外穿小衫", prefix: "wsd", count: 24 }
         ];
 
         const grid = document.getElementById('grid');
-        const homeHeader = document.getElementById('home-header');
+        const homeContent = document.getElementById('home-content');
         const subHeader = document.getElementById('sub-header');
         const ttl = document.getElementById('ttl');
-        const catNav = document.getElementById('cat-nav');
 
-        // 初始化文字导航
+        // 初始化导航
         function initNav() {
-            catNav.innerHTML = config.filter(c=>c.n!=='新款').map(c => 
-                `<div class="category-item" onclick="renderSub(${JSON.stringify(c).replace(/"/g, '&quot;')})">${c.n}</div>`
+            const nav = document.getElementById('cat-nav');
+            const navItems = config.filter(c => c.n !== '新款');
+            nav.innerHTML = navItems.map(c => 
+                `<div class="category-item" onclick='renderSub(${JSON.stringify(c)})'>${c.n}</div>`
             ).join('');
         }
 
         function goHome() {
             grid.innerHTML = '';
-            homeHeader.style.display = 'block';
+            homeContent.style.display = 'block';
             subHeader.style.display = 'none';
             window.scrollTo(0, 0);
         }
 
         function renderSub(cat) {
-            homeHeader.style.display = 'none';
+            homeContent.style.display = 'none';
             subHeader.style.display = 'block';
             ttl.innerText = cat.n;
             grid.innerHTML = '';
@@ -135,22 +122,30 @@
             for (let i = 1; i <= cat.count; i++) {
                 const num = i.toString().padStart(2, '0');
                 const fileName = `${cat.prefix}${num}`;
-                // 路径：images/文件夹名/文件名.webp
                 const path = `images/${cat.n}/${fileName}.webp`;
 
                 const div = document.createElement('div');
                 div.style.textAlign = 'center';
-                div.style.marginBottom = '10px';
                 div.innerHTML = `
                     <div class="img-container">
-                        <img src="${path}" loading="${i <= 4 ? 'eager' : 'lazy'}" onload="this.className='on'" onerror="this.src='https://via.placeholder.com/300x400?text=Wait...'">
+                        <img src="${path}" loading="lazy" onload="this.classList.add('on')" onclick="openLightbox('${path}')">
                     </div>
-                    <p style="font-size:10px; font-weight:bold; margin-top:5px;">STYLE ${fileName.toUpperCase()}</p>
+                    <p style="font-size:10px; font-weight:bold; margin-top:6px; color:#555;">STYLE ${fileName.toUpperCase()}</p>
                 `;
                 grid.appendChild(div);
             }
             window.scrollTo(0, 0);
         }
+
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            lb.style.display = 'flex';
+        }
+
+        function triggerSale() { renderSub(config.find(c => c.n === '打折')); }
+        function triggerNew() { renderSub(config.find(c => c.n === '新款')); }
 
         initNav();
         goHome();
